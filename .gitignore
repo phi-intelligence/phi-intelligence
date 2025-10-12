@@ -44,3 +44,4 @@ Thumbs.db
 *-bckp
 .env-*
 *.env.backup*
+phi_intelligence/node_modules/

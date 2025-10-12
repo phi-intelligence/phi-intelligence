@@ -1,0 +1,2569 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+@import 'aos/dist/aos.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 0%, 100%);
+  --card: hsl(0, 0%, 5%);
+  --card-foreground: hsl(0, 0%, 100%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(0, 0%, 100%);
+  --primary: hsl(0, 0%, 100%);
+  --primary-foreground: hsl(0, 0%, 0%);
+  --secondary: hsl(0, 0%, 20%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --muted: hsl(0, 0%, 10%);
+  --muted-foreground: hsl(0, 0%, 70%);
+  --accent: hsl(0, 0%, 5%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 68%, 52%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(0, 0%, 20%);
+  --input: hsl(0, 0%, 20%);
+  --ring: hsl(0, 0%, 100%);
+  --chart-1: hsl(0, 0%, 100%);
+  --chart-2: hsl(0, 0%, 70%);
+  --chart-3: hsl(0, 0%, 50%);
+  --chart-4: hsl(0, 0%, 30%);
+  --chart-5: hsl(0, 0%, 10%);
+  --sidebar: hsl(0, 0%, 5%);
+  --sidebar-foreground: hsl(0, 0%, 100%);
+  --sidebar-primary: hsl(0, 0%, 100%);
+  --sidebar-primary-foreground: hsl(0, 0%, 0%);
+  --sidebar-accent: hsl(0, 0%, 5%);
+  --sidebar-accent-foreground: hsl(0, 0%, 100%);
+  --sidebar-border: hsl(0, 0%, 20%);
+  --sidebar-ring: hsl(0, 0%, 100%);
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius: 0.75rem;
+  --phi-black: hsl(0, 0%, 0%);
+  --phi-white: hsl(0, 0%, 100%);
+  --phi-gray: hsl(0, 0%, 20%);
+  --phi-light: hsl(0, 0%, 96%);
+}
+
+.dark {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 0%, 100%);
+  --card: hsl(0, 0%, 5%);
+  --card-foreground: hsl(0, 0%, 100%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(0, 0%, 100%);
+  --primary: hsl(0, 0%, 100%);
+  --primary-foreground: hsl(0, 0%, 0%);
+  --secondary: hsl(0, 0%, 20%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --muted: hsl(0, 0%, 10%);
+  --muted-foreground: hsl(0, 0%, 70%);
+  --accent: hsl(0, 0%, 5%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 68%, 52%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(0, 0%, 20%);
+  --input: hsl(0, 0%, 20%);
+  --ring: hsl(0, 0%, 100%);
+  --chart-1: hsl(0, 0%, 100%);
+  --chart-2: hsl(0, 0%, 70%);
+  --chart-3: hsl(0, 0%, 50%);
+  --chart-4: hsl(0, 0%, 30%);
+  --chart-5: hsl(0, 0%, 10%);
+  --sidebar: hsl(0, 0%, 5%);
+  --sidebar-foreground: hsl(0, 0%, 100%);
+  --sidebar-primary: hsl(0, 0%, 100%);
+  --sidebar-primary-foreground: hsl(0, 0%, 0%);
+  --sidebar-accent: hsl(0, 0%, 5%);
+  --sidebar-accent-foreground: hsl(0, 0%, 100%);
+  --sidebar-border: hsl(0, 0%, 20%);
+  --sidebar-ring: hsl(0, 0%, 100%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Georgia', 'Times New Roman', serif;
+  }
+  
+  /* Make all elements use serif font */
+  * {
+    font-family: 'Georgia', 'Times New Roman', serif !important;
+  }
+}
+
+@layer utilities {
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-link {
+    transition: all 0.3s ease;
+  }
+
+  .nav-link:hover {
+    opacity: 0.7;
+    transform: translateY(-2px);
+  }
+
+  .service-card {
+    transition: all 0.4s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 96%) 100%);
+    color: hsl(0, 0%, 0%);
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+  }
+
+  .floating-element {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .hero-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  /* Advanced 3D Animation Utilities */
+  .three-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .three-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .three-overlay {
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .three-interactive {
+    pointer-events: auto;
+  }
+
+  /* 3D Transform Utilities */
+  .perspective-3d {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  .transform-3d {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
+
+  /* Advanced Animation Classes */
+  .animate-3d-rotate {
+    animation: 3d-rotate 20s linear infinite;
+  }
+
+  .animate-3d-float {
+    animation: 3d-float 8s ease-in-out infinite;
+  }
+
+  .animate-particle-float {
+    animation: particle-float 4s ease-in-out infinite;
+  }
+
+  /* Performance Optimizations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .smooth-transitions {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Voice Bubble Styles */
+  .voice-bubble {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 0 20px rgba(255, 255, 255, 0.3),
+      inset 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 20;
+    transform-origin: center;
+  }
+
+  .voice-bubble:hover {
+    transform: scale(1.05);
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(255, 255, 255, 1);
+    box-shadow: 
+      0 0 30px rgba(255, 255, 255, 0.4),
+      inset 0 0 30px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Inactive state for voice bubble */
+  .voice-bubble.inactive {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+    transform: scale(0.95);
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.2),
+      inset 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .voice-bubble.inactive:hover {
+    transform: scale(0.95);
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.2),
+      inset 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* NEW: Error state styling */
+  .voice-bubble.error {
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 
+      0 0 20px rgba(239, 68, 68, 0.3),
+      inset 0 0 20px rgba(239, 68, 68, 0.1);
+    animation: errorPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes errorPulse {
+    0% {
+      border-color: rgba(239, 68, 68, 0.6);
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+    50% {
+      border-color: rgba(239, 68, 68, 0.8);
+      box-shadow: 
+        0 0 30px rgba(239, 68, 68, 0.5),
+        0 0 40px rgba(239, 68, 68, 0.2),
+        inset 0 0 20px rgba(239, 68, 68, 0.15);
+    }
+    100% {
+      border-color: rgba(239, 68, 68, 0.6);
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+  }
+
+  /* NEW: Retrying state styling */
+  .voice-bubble.retrying {
+    border-color: rgba(245, 158, 11, 0.6);
+    box-shadow: 
+      0 0 20px rgba(245, 158, 11, 0.3),
+      inset 0 0 20px rgba(245, 158, 11, 0.1);
+    animation: retryingPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes retryingPulse {
+    0% {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+    50% {
+      border-color: rgba(245, 158, 11, 0.8);
+      box-shadow: 
+        0 0 25px rgba(245, 158, 11, 0.4),
+        0 0 35px rgba(245, 158, 11, 0.2),
+        inset 0 0 20px rgba(245, 158, 11, 0.15);
+    }
+    100% {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+  }
+
+  /* Pulsating Animation States */
+  .voice-bubble.speaking {
+    animation: speakingPulse 2s ease-in-out infinite;
+  }
+
+  .voice-bubble.listening {
+    animation: listeningPulse 1.5s ease-in-out infinite;
+  }
+
+  .voice-bubble.paused {
+    animation: pausedPulse 2s ease-in-out infinite;
+  }
+
+  /* Speaking State: 5% growth, strong glow */
+  @keyframes speakingPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 
+        0 0 40px rgba(255, 255, 255, 0.4),
+        0 0 60px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Listening State: 2% growth, subtle glow */
+  @keyframes listeningPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 
+        0 0 25px rgba(255, 255, 255, 0.3),
+        0 0 35px rgba(255, 255, 255, 0.15),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Paused State: 1% growth, minimal glow */
+  @keyframes pausedPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.01);
+      box-shadow: 
+        0 0 22px rgba(255, 255, 255, 0.25),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* OPTIMIZED: Wave Animation System - React-based */
+  .voice-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 240px;
+    height: 240px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: none;
+    z-index: 15;
+    animation: waveExpand 1.5s ease-out forwards;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    filter: blur(0.5px); /* Subtle blur for smoother animation */
+  }
+
+  @keyframes waveExpand {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      border-width: 2px;
+    }
+    50% {
+      opacity: 0.7;
+      border-width: 1.5px;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0;
+      border-width: 1px;
+    }
+  }
+
+  /* NEW: Reduced motion support for voice waves */
+  @media (prefers-reduced-motion: reduce) {
+    .voice-wave {
+      animation-duration: 0.8s;
+      animation-timing-function: ease-out;
+    }
+    
+    .voice-bubble.speaking,
+    .voice-bubble.listening,
+    .voice-bubble.paused,
+    .voice-bubble.error,
+    .voice-bubble.retrying {
+      animation: none;
+      transform: scale(1);
+    }
+  }
+
+  /* NEW: Error boundary fallback styling */
+  .voice-bubble-error-fallback {
+    min-width: 300px;
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(239, 68, 68, 0.1);
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .voice-bubble-error-fallback h3 {
+    color: rgba(239, 68, 68, 0.9);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .voice-bubble-error-fallback p {
+    color: rgba(239, 68, 68, 0.8);
+    line-height: 1.5;
+  }
+
+  .voice-bubble-error-fallback button {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.8), rgba(239, 68, 68, 0.6));
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .voice-bubble-error-fallback button:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(239, 68, 68, 0.7));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+
+  /* Voice Bubble Container */
+  .voice-bubble-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+  }
+
+  /* Status Text */
+  .status-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  /* Transcript Container */
+  .transcript-container {
+    margin-top: 1rem;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .transcript {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .response {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Phi Logo Styles */
+  .phi-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phi-logo {
+    max-width: 100%;
+    height: auto;
+    transition: all 0.3s ease;
+  }
+
+  /* Voice Status Text */
+  .voice-status-text {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    max-width: 400px;
+    line-height: 1.6;
+  }
+
+  /* Connection Status */
+  .connection-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: statusPulse 2s infinite;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* Error Message */
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.5rem;
+    color: rgba(239, 68, 68, 0.9);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .voice-bubble {
+      width: 280px;
+      height: 280px;
+    }
+
+    .phi-logo {
+      width: 120px;
+      height: 120px;
+    }
+
+    .voice-bubble svg {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+
+    .transcript-container {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+  }
+
+  /* ======================================== */
+  /* COMPANY VOICE BUBBLE STYLES */
+  /* ======================================== */
+  
+  .company-voice-bubble {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.05));
+    border: 2px solid rgba(0, 255, 255, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 0 20px rgba(0, 255, 255, 0.2),
+      inset 0 0 20px rgba(0, 255, 255, 0.1);
+    position: relative;
+    z-index: 20;
+    transform-origin: center;
+    padding: 1rem;
+  }
+
+  .company-voice-bubble:hover {
+    transform: scale(1.05);
+    box-shadow: 
+      0 0 30px rgba(0, 255, 255, 0.3),
+      inset 0 0 30px rgba(0, 255, 255, 0.15);
+  }
+
+  /* Inactive state for company voice bubble */
+  .company-voice-bubble.inactive {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+    transform: scale(0.95);
+    box-shadow: 
+      0 0 15px rgba(0, 255, 255, 0.1),
+      inset 0 0 15px rgba(0, 255, 255, 0.05);
+  }
+
+  .company-voice-bubble.inactive:hover {
+    transform: scale(0.95);
+    box-shadow: 
+      0 0 15px rgba(0, 255, 255, 0.1),
+      inset 0 0 15px rgba(0, 255, 255, 0.05);
+  }
+
+  /* Company Error State */
+  .company-voice-bubble.error {
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 
+      0 0 20px rgba(239, 68, 68, 0.3),
+      inset 0 0 20px rgba(239, 68, 68, 0.1);
+    animation: companyErrorPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes companyErrorPulse {
+    0% {
+      border-color: rgba(239, 68, 68, 0.6);
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+    50% {
+      border-color: rgba(239, 68, 68, 0.8);
+      box-shadow: 
+        0 0 30px rgba(239, 68, 68, 0.5),
+        0 0 40px rgba(239, 68, 68, 0.2),
+        inset 0 0 20px rgba(239, 68, 68, 0.15);
+    }
+    100% {
+      border-color: rgba(239, 68, 68, 0.6);
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+  }
+
+  /* Company Retrying State */
+  .company-voice-bubble.retrying {
+    border-color: rgba(245, 158, 11, 0.6);
+    box-shadow: 
+      0 0 20px rgba(245, 158, 11, 0.3),
+      inset 0 0 20px rgba(245, 158, 11, 0.1);
+    animation: companyRetryingPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes companyRetryingPulse {
+    0% {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+    50% {
+      border-color: rgba(245, 158, 11, 0.8);
+      box-shadow: 
+        0 0 25px rgba(245, 158, 11, 0.4),
+        0 0 35px rgba(245, 158, 11, 0.2),
+        inset 0 0 20px rgba(245, 158, 11, 0.15);
+    }
+    100% {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+  }
+
+  /* Company Pulsating Animation States */
+  .company-voice-bubble.speaking {
+    animation: companySpeakingPulse 2s ease-in-out infinite;
+  }
+
+  .company-voice-bubble.listening {
+    animation: companyListeningPulse 1.5s ease-in-out infinite;
+  }
+
+  .company-voice-bubble.paused {
+    animation: companyPausedPulse 2s ease-in-out infinite;
+  }
+
+  /* Company Speaking State: 5% growth, strong purple glow */
+  @keyframes companySpeakingPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(139, 92, 246, 0.2),
+        inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 
+        0 0 40px rgba(139, 92, 246, 0.4),
+        0 0 60px rgba(139, 92, 246, 0.2),
+        inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(139, 92, 246, 0.2),
+        inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+  }
+
+  /* Company Listening State: 2% growth, subtle purple glow */
+  @keyframes companyListeningPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(139, 92, 246, 0.2),
+        inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 
+        0 0 25px rgba(139, 92, 246, 0.3),
+        0 0 35px rgba(139, 92, 246, 0.15),
+        inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(139, 92, 246, 0.2),
+        inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+  }
+
+  /* Company Paused State: 1% growth, minimal purple glow */
+  @keyframes companyPausedPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(139, 92, 246, 0.2),
+        inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+    50% {
+      transform: scale(1.01);
+      box-shadow: 
+        0 0 22px rgba(139, 92, 246, 0.25),
+        inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(139, 92, 246, 0.2),
+        inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+  }
+
+  /* Company Voice Wave Animation System */
+  .company-voice-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 280px;
+    height: 280px;
+    border: 2px solid rgba(0, 255, 255, 0.6);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: none;
+    z-index: 15;
+    animation: companyWaveExpand 1.5s ease-out forwards;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    filter: blur(0.5px);
+  }
+
+  @keyframes companyWaveExpand {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      border-width: 2px;
+    }
+    50% {
+      opacity: 0.7;
+      border-width: 1.5px;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0;
+      border-width: 1px;
+    }
+  }
+
+  /* Company Voice Bubble Container */
+  .company-voice-bubble-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+  }
+
+  /* Company Status Text */
+  .company-status-text {
+    color: rgba(0, 255, 255, 0.9);
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
+  /* Company Transcript Container */
+  .company-transcript-container {
+    margin-top: 1rem;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .company-transcript {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .company-response {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Company Error Message */
+  .company-error-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.5rem;
+    color: rgba(239, 68, 68, 0.9);
+  }
+
+  /* Company Voice Bubble Error Fallback */
+  .company-voice-bubble-error-fallback {
+    min-width: 300px;
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(239, 68, 68, 0.1);
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .company-voice-bubble-error-fallback h3 {
+    color: rgba(239, 68, 68, 0.9);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .company-voice-bubble-error-fallback p {
+    color: rgba(239, 68, 68, 0.8);
+    line-height: 1.5;
+  }
+
+  .company-voice-bubble-error-fallback button {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.8), rgba(239, 68, 68, 0.6));
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .company-voice-bubble-error-fallback button:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(239, 68, 68, 0.7));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+
+  /* Company Symbol Styling */
+  .company-symbol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .company-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .company-robot-container {
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .company-name {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.25rem;
+  }
+
+  .company-stats {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
+  }
+
+  /* Company Voice Bubble Responsive Design */
+  @media (max-width: 768px) {
+    .company-voice-bubble {
+      width: 240px;
+      height: 240px;
+    }
+
+    .company-voice-wave {
+      width: 240px;
+      height: 240px;
+    }
+
+    .company-voice-bubble-container {
+      gap: 0.75rem;
+    }
+
+    .company-status-text {
+      font-size: 0.8rem;
+    }
+
+    .company-transcript-container {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+  }
+
+  /* Company Voice Bubble Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    .company-voice-wave {
+      animation-duration: 0.8s;
+      animation-timing-function: ease-out;
+    }
+    
+    .company-voice-bubble.speaking,
+    .company-voice-bubble.listening,
+    .company-voice-bubble.paused,
+    .company-voice-bubble.error,
+    .company-voice-bubble.retrying {
+      animation: none;
+      transform: scale(1);
+    }
+  }
+
+  /* ======================================== */
+  /* HOTEL VOICE BUBBLE STYLES */
+  /* ======================================== */
+  
+  .hotel-voice-bubble {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 0 20px rgba(255, 255, 255, 0.3),
+      inset 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 20;
+    transform-origin: center;
+    padding: 1rem;
+  }
+
+  .hotel-voice-bubble:hover {
+    transform: scale(1.05);
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(255, 255, 255, 1);
+    box-shadow: 
+      0 0 30px rgba(255, 255, 255, 0.4),
+      inset 0 0 30px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Inactive state for hotel voice bubble */
+  .hotel-voice-bubble.inactive {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+    transform: scale(0.95);
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.2),
+      inset 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .hotel-voice-bubble.inactive:hover {
+    transform: scale(0.95);
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.2),
+      inset 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Hotel Error State */
+  .hotel-voice-bubble.error {
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 
+      0 0 20px rgba(239, 68, 68, 0.3),
+      inset 0 0 20px rgba(239, 68, 68, 0.1);
+    animation: hotelErrorPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes hotelErrorPulse {
+    0% {
+      border-color: rgba(239, 68, 68, 0.6);
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+    50% {
+      border-color: rgba(239, 68, 68, 0.8);
+      box-shadow: 
+        0 0 30px rgba(239, 68, 68, 0.5),
+        0 0 40px rgba(239, 68, 68, 0.2),
+        inset 0 0 20px rgba(239, 68, 68, 0.15);
+    }
+    100% {
+      border-color: rgba(239, 68, 68, 0.6);
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+  }
+
+  /* Hotel Retrying State */
+  .hotel-voice-bubble.retrying {
+    border-color: rgba(245, 158, 11, 0.6);
+    box-shadow: 
+      0 0 20px rgba(245, 158, 11, 0.3),
+      inset 0 0 20px rgba(245, 158, 11, 0.1);
+    animation: hotelRetryingPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes hotelRetryingPulse {
+    0% {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+    50% {
+      border-color: rgba(245, 158, 11, 0.8);
+      box-shadow: 
+        0 0 25px rgba(245, 158, 11, 0.4),
+        0 0 35px rgba(245, 158, 11, 0.2),
+        inset 0 0 20px rgba(245, 158, 11, 0.15);
+    }
+    100% {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+  }
+
+  /* Hotel Pulsating Animation States */
+  .hotel-voice-bubble.speaking {
+    animation: hotelSpeakingPulse 2s ease-in-out infinite;
+  }
+
+  .hotel-voice-bubble.listening {
+    animation: hotelListeningPulse 1.5s ease-in-out infinite;
+  }
+
+  .hotel-voice-bubble.paused {
+    animation: hotelPausedPulse 2s ease-in-out infinite;
+  }
+
+  /* Hotel Speaking State: 5% growth, strong white glow */
+  @keyframes hotelSpeakingPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 
+        0 0 40px rgba(255, 255, 255, 0.4),
+        0 0 60px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Hotel Listening State: 2% growth, subtle white glow */
+  @keyframes hotelListeningPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 
+        0 0 25px rgba(255, 255, 255, 0.3),
+        0 0 35px rgba(255, 255, 255, 0.15),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Hotel Paused State: 1% growth, minimal white glow */
+  @keyframes hotelPausedPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.01);
+      box-shadow: 
+        0 0 22px rgba(255, 255, 255, 0.25),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Hotel Voice Wave Animation System */
+  .hotel-voice-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 240px;
+    height: 240px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: none;
+    z-index: 15;
+    animation: hotelWaveExpand 1.5s ease-out forwards;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    filter: blur(0.5px);
+  }
+
+  @keyframes hotelWaveExpand {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      border-width: 2px;
+    }
+    50% {
+      opacity: 0.7;
+      border-width: 1.5px;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0;
+      border-width: 1px;
+    }
+  }
+
+  /* Hotel Voice Bubble Container */
+  .hotel-voice-bubble-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+  }
+
+  /* Hotel Status Text */
+  .hotel-status-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
+  /* Hotel Transcript Container */
+  .hotel-transcript-container {
+    margin-top: 1rem;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .hotel-transcript {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .hotel-response {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Hotel Error Message */
+  .hotel-error-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.5rem;
+    color: rgba(239, 68, 68, 0.9);
+  }
+
+  /* Hotel Voice Bubble Error Fallback */
+  .hotel-voice-bubble-error-fallback {
+    min-width: 300px;
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(239, 68, 68, 0.1);
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .hotel-voice-bubble-error-fallback h3 {
+    color: rgba(239, 68, 68, 0.9);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .hotel-voice-bubble-error-fallback p {
+    color: rgba(239, 68, 68, 0.8);
+    line-height: 1.5;
+  }
+
+  .hotel-voice-bubble-error-fallback button {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.8), rgba(239, 68, 68, 0.6));
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .hotel-voice-bubble-error-fallback button:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(239, 68, 68, 0.7));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+
+  /* Hotel Symbol Styling */
+  .hotel-symbol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hotel-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .hotel-name {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.25rem;
+  }
+
+  .hotel-location {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
+  }
+
+  /* Hotel Voice Bubble Responsive Design */
+  @media (max-width: 768px) {
+    .hotel-voice-bubble {
+      width: 200px;
+      height: 200px;
+    }
+
+    .hotel-voice-wave {
+      width: 200px;
+      height: 200px;
+    }
+
+    .hotel-voice-bubble-container {
+      gap: 0.75rem;
+    }
+
+    .hotel-status-text {
+      font-size: 0.8rem;
+    }
+
+    .hotel-transcript-container {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+  }
+
+  /* Hotel Voice Bubble Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    .hotel-voice-wave {
+      animation-duration: 0.8s;
+      animation-timing-function: ease-out;
+    }
+    
+    .hotel-voice-bubble.speaking,
+    .hotel-voice-bubble.listening,
+    .hotel-voice-bubble.paused,
+    .hotel-voice-bubble.error,
+    .hotel-voice-bubble.retrying {
+      animation: none;
+      transform: scale(1);
+    }
+  }
+
+  /* ======================================== */
+  /* RESTAURANT VOICE BUBBLE STYLES */
+  /* ======================================== */
+  
+  .restaurant-voice-bubble {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 0 20px rgba(255, 255, 255, 0.3),
+      inset 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 20;
+    transform-origin: center;
+    padding: 1rem;
+  }
+
+  .restaurant-voice-bubble:hover {
+    transform: scale(1.05);
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(255, 255, 255, 1);
+    box-shadow: 
+      0 0 30px rgba(255, 255, 255, 0.4),
+      inset 0 0 30px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Inactive state for restaurant voice bubble */
+  .restaurant-voice-bubble.inactive {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+    transform: scale(0.95);
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.2),
+      inset 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .restaurant-voice-bubble.inactive:hover {
+    transform: scale(0.95);
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.2),
+      inset 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Restaurant Error State */
+  .restaurant-voice-bubble.error {
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 
+      0 0 20px rgba(239, 68, 68, 0.3),
+      inset 0 0 20px rgba(239, 68, 68, 0.1);
+    animation: restaurantErrorPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes restaurantErrorPulse {
+    0% {
+      border-color: rgba(239, 68, 68, 0.6);
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+    50% {
+      border-color: rgba(239, 68, 68, 0.8);
+      box-shadow: 
+        0 0 30px rgba(239, 68, 68, 0.5),
+        0 0 40px rgba(239, 68, 68, 0.2),
+        inset 0 0 20px rgba(239, 68, 68, 0.15);
+    }
+    100% {
+      border-color: rgba(239, 68, 68, 0.6);
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+  }
+
+  /* Restaurant Retrying State */
+  .restaurant-voice-bubble.retrying {
+    border-color: rgba(245, 158, 11, 0.6);
+    box-shadow: 
+      0 0 20px rgba(245, 158, 11, 0.3),
+      inset 0 0 20px rgba(245, 158, 11, 0.1);
+    animation: restaurantRetryingPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes restaurantRetryingPulse {
+    0% {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+    50% {
+      border-color: rgba(245, 158, 11, 0.8);
+      box-shadow: 
+        0 0 25px rgba(245, 158, 11, 0.4),
+        0 0 35px rgba(245, 158, 11, 0.2),
+        inset 0 0 20px rgba(245, 158, 11, 0.15);
+    }
+    100% {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+  }
+
+  /* Restaurant Pulsating Animation States */
+  .restaurant-voice-bubble.speaking {
+    animation: restaurantSpeakingPulse 2s ease-in-out infinite;
+  }
+
+  .restaurant-voice-bubble.listening {
+    animation: restaurantListeningPulse 1.5s ease-in-out infinite;
+  }
+
+  .restaurant-voice-bubble.paused {
+    animation: restaurantPausedPulse 2s ease-in-out infinite;
+  }
+
+  /* Restaurant Speaking State: 5% growth, strong white glow */
+  @keyframes restaurantSpeakingPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 
+        0 0 40px rgba(255, 255, 255, 0.4),
+        0 0 60px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Restaurant Listening State: 2% growth, subtle white glow */
+  @keyframes restaurantListeningPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 
+        0 0 25px rgba(255, 255, 255, 0.3),
+        0 0 35px rgba(255, 255, 255, 0.15),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Restaurant Paused State: 1% growth, minimal white glow */
+  @keyframes restaurantPausedPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.01);
+      box-shadow: 
+        0 0 22px rgba(255, 255, 255, 0.25),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Restaurant Voice Wave Animation System */
+  .restaurant-voice-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 240px;
+    height: 240px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: none;
+    z-index: 15;
+    animation: restaurantWaveExpand 1.5s ease-out forwards;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    filter: blur(0.5px);
+  }
+
+  @keyframes restaurantWaveExpand {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      border-width: 2px;
+    }
+    50% {
+      opacity: 0.7;
+      border-width: 1.5px;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0;
+      border-width: 1px;
+    }
+  }
+
+  /* Restaurant Voice Bubble Container */
+  .restaurant-voice-bubble-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+  }
+
+  /* Restaurant Status Text */
+  .restaurant-status-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
+  /* Restaurant Transcript Container */
+  .restaurant-transcript-container {
+    margin-top: 1rem;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .restaurant-transcript {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .restaurant-response {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Restaurant Error Message */
+  .restaurant-error-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.5rem;
+    color: rgba(239, 68, 68, 0.9);
+  }
+
+  /* Restaurant Voice Bubble Error Fallback */
+  .restaurant-voice-bubble-error-fallback {
+    min-width: 300px;
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(239, 68, 68, 0.1);
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .restaurant-voice-bubble-error-fallback h3 {
+    color: rgba(239, 68, 68, 0.9);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .restaurant-voice-bubble-error-fallback p {
+    color: rgba(239, 68, 68, 0.8);
+    line-height: 1.5;
+  }
+
+  .restaurant-voice-bubble-error-fallback button {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.8), rgba(239, 68, 68, 0.6));
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .restaurant-voice-bubble-error-fallback button:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(239, 68, 68, 0.7));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+
+  /* Restaurant Symbol Styling */
+  .restaurant-symbol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .restaurant-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .restaurant-name {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.25rem;
+  }
+
+  .restaurant-location {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
+  }
+
+  /* Restaurant Voice Bubble Responsive Design */
+  @media (max-width: 768px) {
+    .restaurant-voice-bubble {
+      width: 200px;
+      height: 200px;
+    }
+
+    .restaurant-voice-wave {
+      width: 200px;
+      height: 200px;
+    }
+
+    .restaurant-voice-bubble-container {
+      gap: 0.75rem;
+    }
+
+    .restaurant-status-text {
+      font-size: 0.8rem;
+    }
+
+    .restaurant-transcript-container {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+  }
+
+  /* Restaurant Voice Bubble Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    .restaurant-voice-wave {
+      animation-duration: 0.8s;
+      animation-timing-function: ease-out;
+    }
+    
+    .restaurant-voice-bubble.speaking,
+    .restaurant-voice-bubble.listening,
+    .restaurant-voice-bubble.paused,
+    .restaurant-voice-bubble.error,
+    .restaurant-voice-bubble.retrying {
+      animation: none;
+      transform: scale(1);
+    }
+  }
+
+  /* ======================================== */
+  /* HOSPITAL VOICE BUBBLE STYLES */
+  /* ======================================== */
+  
+  .hospital-voice-bubble {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 0 20px rgba(255, 255, 255, 0.3),
+      inset 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 20;
+    transform-origin: center;
+    padding: 1rem;
+  }
+
+  .hospital-voice-bubble:hover {
+    transform: scale(1.05);
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(255, 255, 255, 1);
+    box-shadow: 
+      0 0 30px rgba(255, 255, 255, 0.4),
+      inset 0 0 30px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Inactive state for hospital voice bubble */
+  .hospital-voice-bubble.inactive {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+    transform: scale(0.95);
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.2),
+      inset 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .hospital-voice-bubble.inactive:hover {
+    transform: scale(0.95);
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+      0 0 15px rgba(255, 255, 255, 0.2),
+      inset 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Hospital Error State */
+  .hospital-voice-bubble.error {
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow: 
+      0 0 20px rgba(239, 68, 68, 0.3),
+      inset 0 0 20px rgba(239, 68, 68, 0.1);
+    animation: hospitalErrorPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes hospitalErrorPulse {
+    0% {
+      border-color: rgba(239, 68, 68, 0.6);
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+    50% {
+      border-color: rgba(239, 68, 68, 0.8);
+      box-shadow: 
+        0 0 30px rgba(239, 68, 68, 0.5),
+        0 0 40px rgba(239, 68, 68, 0.2),
+        inset 0 0 20px rgba(239, 68, 68, 0.15);
+    }
+    100% {
+      border-color: rgba(239, 68, 68, 0.6);
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+  }
+
+  /* Hospital Retrying State */
+  .hospital-voice-bubble.retrying {
+    border-color: rgba(245, 158, 11, 0.6);
+    box-shadow: 
+      0 0 20px rgba(245, 158, 11, 0.3),
+      inset 0 0 20px rgba(245, 158, 11, 0.1);
+    animation: hospitalRetryingPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes hospitalRetryingPulse {
+    0% {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+    50% {
+      border-color: rgba(245, 158, 11, 0.8);
+      box-shadow: 
+        0 0 25px rgba(245, 158, 11, 0.4),
+        0 0 35px rgba(245, 158, 11, 0.2),
+        inset 0 0 20px rgba(245, 158, 11, 0.15);
+    }
+    100% {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 
+        0 0 20px rgba(245, 158, 11, 0.3),
+        inset 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+  }
+
+  /* Hospital Pulsating Animation States */
+  .hospital-voice-bubble.speaking {
+    animation: hospitalSpeakingPulse 2s ease-in-out infinite;
+  }
+
+  .hospital-voice-bubble.listening {
+    animation: hospitalListeningPulse 1.5s ease-in-out infinite;
+  }
+
+  .hospital-voice-bubble.paused {
+    animation: hospitalPausedPulse 2s ease-in-out infinite;
+  }
+
+  /* Hospital Speaking State: 5% growth, strong white glow */
+  @keyframes hospitalSpeakingPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 
+        0 0 40px rgba(255, 255, 255, 0.4),
+        0 0 60px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Hospital Listening State: 2% growth, subtle white glow */
+  @keyframes hospitalListeningPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 
+        0 0 25px rgba(255, 255, 255, 0.3),
+        0 0 35px rgba(255, 255, 255, 0.15),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Hospital Paused State: 1% growth, minimal white glow */
+  @keyframes hospitalPausedPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      transform: scale(1.01);
+      box-shadow: 
+        0 0 22px rgba(255, 255, 255, 0.25),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  /* Hospital Voice Wave Animation System */
+  .hospital-voice-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 240px;
+    height: 240px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: none;
+    z-index: 15;
+    animation: hospitalWaveExpand 1.5s ease-out forwards;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    filter: blur(0.5px);
+  }
+
+  @keyframes hospitalWaveExpand {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      border-width: 2px;
+    }
+    50% {
+      opacity: 0.7;
+      border-width: 1.5px;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0;
+      border-width: 1px;
+    }
+  }
+
+  /* Hospital Voice Bubble Container */
+  .hospital-voice-bubble-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+  }
+
+  /* Hospital Status Text */
+  .hospital-status-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
+  /* Hospital Transcript Container */
+  .hospital-transcript-container {
+    margin-top: 1rem;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .hospital-transcript {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .hospital-response {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Hospital Error Message */
+  .hospital-error-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.5rem;
+    color: rgba(239, 68, 68, 0.9);
+  }
+
+  /* Hospital Voice Bubble Error Fallback */
+  .hospital-voice-bubble-error-fallback {
+    min-width: 300px;
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(239, 68, 68, 0.1);
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .hospital-voice-bubble-error-fallback h3 {
+    color: rgba(239, 68, 68, 0.9);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .hospital-voice-bubble-error-fallback p {
+    color: rgba(239, 68, 68, 0.8);
+    line-height: 1.5;
+  }
+
+  .hospital-voice-bubble-error-fallback button {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.8), rgba(239, 68, 68, 0.6));
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .hospital-voice-bubble-error-fallback button:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(239, 68, 68, 0.7));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+
+  /* Hospital Symbol Styling */
+  .hospital-symbol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hospital-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .hospital-name {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.25rem;
+  }
+
+  .hospital-location {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
+  }
+
+  /* Hospital Voice Bubble Responsive Design */
+  @media (max-width: 768px) {
+    .hospital-voice-bubble {
+      width: 200px;
+      height: 200px;
+    }
+
+    .hospital-voice-wave {
+      width: 200px;
+      height: 200px;
+    }
+
+    .hospital-voice-bubble-container {
+      gap: 0.75rem;
+    }
+
+    .hospital-status-text {
+      font-size: 0.8rem;
+    }
+
+    .hospital-transcript-container {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+  }
+
+  /* Hospital Voice Bubble Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    .hospital-voice-wave {
+      animation-duration: 0.8s;
+      animation-timing-function: ease-out;
+    }
+    
+    .hospital-voice-bubble.speaking,
+    .hospital-voice-bubble.listening,
+    .hospital-voice-bubble.paused,
+    .hospital-voice-bubble.error,
+    .hospital-voice-bubble.retrying {
+      animation: none;
+      transform: scale(1);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+  /* Hero Circuit Animation Styles */
+  .hero-circuit-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero-circuit-circuit-svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.15));
+  }
+
+  /* Circuit path animations with precise control */
+  .circuit-path {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .circuit-component {
+    transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-origin: center;
+  }
+
+  .central-chip {
+    transition: all 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: center;
+  }
+
+  .data-flow {
+    transition: opacity 0.8s ease-out;
+  }
+
+  .connection-point {
+    transition: opacity 1s ease-out;
+  }
+
+  .background-trace {
+    transition: opacity 1.5s ease-out;
+  }
+
+  /* Hero Circuit Image Styles */
+  .hero-circuit-image {
+    transition: all 0.3s ease-in-out;
+    filter: grayscale(100%) contrast(200%) brightness(0.8);
+  }
+
+  .hero-circuit-image:hover {
+    filter: grayscale(100%) contrast(250%) brightness(1);
+    transform: scale(1.02);
+  }
+
+  /* Enhanced hover effects for interactive elements */
+  .hero-circuit-container:hover .central-chip {
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.4));
+    transform: scale(1.02);
+  }
+
+  .hero-circuit-container:hover .circuit-path {
+    stroke-width: 2.5;
+    opacity: 0.9 !important;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+  }
+
+  .hero-circuit-container:hover .circuit-component {
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.25));
+  }
+
+  /* Animation performance optimizations */
+  .hero-circuit-svg * {
+    will-change: transform, opacity, stroke-dashoffset;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-circuit-svg {
+      opacity: 0.7;
+    }
+    
+    .circuit-path {
+      stroke-width: 1.5;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-circuit-svg {
+      opacity: 0.6;
+    }
+    
+    .circuit-path {
+      stroke-width: 1;
+    }
+  }
+
+/* City Animation Styles */
+.city-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.city-animation canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Hero section with animation overlay */
+.hero-with-animation {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-with-animation .city-animation {
+  opacity: 0.8;
+  filter: contrast(1.2) brightness(0.8);
+}
+
+/* Ensure text is readable over animation */
+.hero-with-animation .relative.z-20 {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Animation performance optimizations */
+.city-animation canvas {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Responsive adjustments for animation */
+@media (max-width: 768px) {
+  .city-animation {
+    opacity: 0.6;
+  }
+  
+  .hero-with-animation .city-animation {
+    filter: contrast(1.1) brightness(0.9);
+  }
+}
+
+@media (max-width: 480px) {
+  .city-animation {
+    opacity: 0.5;
+  }
+}
+
+/* Waveform Animation Styles */
+.waveform-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.waveform-animation canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  will-change: transform;
+  transform: translateZ(0);
+  /* Removed blur filter to preserve sharp glow effect */
+}
+
+/* Voice Solutions Section with Animation */
+#voice-solutions {
+  position: relative;
+  overflow: hidden;
+}
+
+#voice-solutions .relative.z-10 {
+  position: relative;
+  z-index: 10;
+}
+
+/* Operations Animation Styles */
+.operations-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.operations-animation canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  filter: blur(0.3px);
+}
+
+/* Operations Section with Animation */
+#agentic-operations {
+  position: relative;
+  overflow: hidden;
+}
+
+#agentic-operations .relative.z-10 {
+  position: relative;
+  z-index: 10;
+}
+
+/* Cube Grid Animation Styles */
+.cube-grid-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.cube-grid-animation canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Particle Waves Animation Styles */
+.particle-waves-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle-waves-animation canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Services Hero Section with Animation */
+#services-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+#services-hero .relative.z-20 {
+  position: relative;
+  z-index: 20;
+}
+
+/* Neural Network Animation Styles */
+.neural-network-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Hero Section Animation Container */
+.hero-animation-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.neural-network-animation canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Neural Network Animation with Interaction */
+.neural-network-animation[style*="pointer-events: auto"] {
+  pointer-events: auto;
+}
+
+.neural-network-animation[style*="pointer-events: auto"] canvas {
+  cursor: grab;
+}
+
+.neural-network-animation[style*="pointer-events: auto"] canvas:active {
+  cursor: grabbing;
+}
+
+/* Robot Arm Animation Specific Styles */
+.robot-arm-animation {
+  position: relative !important;
+  overflow: hidden !important;
+  contain: layout style paint;
+}
+
+.robot-arm-animation canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0 !important;
+  display: block !important;
+}
+
+/* Card Animation Styles */
+.card-animate {
+  transition: all 0.3s ease-out;
+}
+
+.card-animate:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}

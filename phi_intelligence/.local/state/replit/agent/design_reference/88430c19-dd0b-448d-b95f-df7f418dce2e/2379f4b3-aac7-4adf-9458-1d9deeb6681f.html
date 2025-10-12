@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phi Intelligence - AI Solutions for Business</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    'inter': ['Inter', 'sans-serif'],
+                },
+                colors: {
+                    'phi-black': '#000000',
+                    'phi-white': '#FFFFFF',
+                    'phi-gray': '#333333',
+                    'phi-light': '#F5F5F5'
+                }
+            }
+        }
+    };
+    </script>
+    
+    <style>
+        body {
+            background-color: #000000;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            opacity: 0.7;
+            transform: translateY(-2px);
+        }
+        
+        .service-card {
+            transition: all 0.4s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 100%);
+            color: #000000;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-phi-black text-phi-white font-inter">
+
+    <!-- Navigation -->
+    <!-- @COMPONENT: Navigation [fixed header with logo and navigation links] -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glassmorphism">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold glow-text">
+                    <i class="fas fa-brain mr-2"></i>
+                    Phi Intelligence
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link font-medium">Home</a>
+                    <a href="#services" class="nav-link font-medium">Services</a>
+                    <a href="#products" class="nav-link font-medium">Products</a>
+                    <a href="#contact" class="nav-link font-medium">Contact</a>
+                    <a href="#careers" class="nav-link font-medium">Careers</a>
+                    <a href="#blog" class="nav-link font-medium">Blog</a>
+                </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="md:hidden text-phi-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: Navigation -->
+
+    <!-- Hero Section -->
+    <!-- @COMPONENT: HeroSection [main landing area with 3D animation and CTA] -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- 3D Animation Container -->
+        <div id="hero-canvas" class="hero-animation"></div>
+        
+        <div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+            <div class="fade-in">
+                <h1 class="hero-title text-6xl md:text-8xl font-light mb-6 glow-text">
+                    AI Solutions
+                </h1>
+                <h2 class="text-3xl md:text-5xl font-bold mb-8">
+                    For Modern Business
+                </h2>
+                <p class="text-xl md:text-2xl font-light mb-12 max-w-3xl mx-auto opacity-80">
+                    Deliver AI-driven products and custom software that make operations smarter, faster, and more efficient
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <button class="btn-primary px-8 py-4 rounded-lg font-semibold text-lg">
+                        Explore Our Services
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <button class="border-2 border-phi-white text-phi-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-phi-white hover:text-phi-black transition-all duration-300">
+                        Contact Us Today
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HeroSection -->
+
+    <!-- Services Section -->
+    <!-- @COMPONENT: ServicesSection [showcase of main AI service offerings] -->
+    <section id="services" class="py-24 px-6">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6 glow-text">Our Services</h2>
+                <p class="text-xl opacity-80 max-w-3xl mx-auto">
+                    Comprehensive AI solutions designed to transform your business operations and drive growth
+                </p>
+            </div>
+            
+            <!-- @MAP: services.map(service => ( -->
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="service-card p-8 rounded-xl border border-phi-gray">
+                    <!-- Professional AI technology workspace with modern computers and data visualization -->
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" 
+                         alt="AI Technology Workspace" 
+                         class="w-full h-48 object-cover rounded-lg mb-6" data-mock-image="true">
+                    
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">
+                            <i class="fas fa-microphone-alt"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Custom Voice Agents</h3>
+                        <p class="opacity-80 mb-6">
+                            AI-powered assistants for calls, bookings, and customer support, available 24/7 to enhance your customer experience.
+                        </p>
+                        <button class="text-phi-white border-b border-phi-white hover:opacity-70 transition-opacity">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="service-card p-8 rounded-xl border border-phi-gray">
+                    <!-- Business team collaborating in modern office environment -->
+                    <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" 
+                         alt="Business Team Collaboration" 
+                         class="w-full h-48 object-cover rounded-lg mb-6" data-mock-image="true">
+                    
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">
+                            <i class="fas fa-users-cog"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Workforce Management</h3>
+                        <p class="opacity-80 mb-6">
+                            Real-time scheduling, attendance tracking, and analytics applications for multiple sectors and industries.
+                        </p>
+                        <button class="text-phi-white border-b border-phi-white hover:opacity-70 transition-opacity">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="service-card p-8 rounded-xl border border-phi-gray">
+                    <!-- Corporate consulting meeting in modern conference room -->
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" 
+                         alt="Corporate Consulting Meeting" 
+                         class="w-full h-48 object-cover rounded-lg mb-6" data-mock-image="true">
+                    
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Custom Software Development</h3>
+                        <p class="opacity-80 mb-6">
+                            Bespoke AI automation and integrations tailored specifically to your unique business requirements.
+                        </p>
+                        <button class="text-phi-white border-b border-phi-white hover:opacity-70 transition-opacity">
+                            Learn More <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- @END_MAP )) -->
+        </div>
+    </section>
+    <!-- @END_COMPONENT: ServicesSection -->
+
+    <!-- Products Section -->
+    <!-- @COMPONENT: ProductsSection [detailed showcase of AI products] -->
+    <section id="products" class="py-24 px-6 bg-gradient-to-b from-phi-black to-phi-gray">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6 glow-text">Our Products</h2>
+                <p class="text-xl opacity-80 max-w-3xl mx-auto">
+                    Cutting-edge AI products designed to revolutionize how businesses operate and interact with customers
+                </p>
+            </div>
+            
+            <!-- Feature Product 1 -->
+            <div class="grid md:grid-cols-2 gap-16 items-center mb-24">
+                <div>
+                    <h3 class="text-4xl font-bold mb-6">AI Voice Assistant Platform</h3>
+                    <p class="text-xl opacity-80 mb-8">
+                        Our flagship voice AI platform enables businesses to deploy intelligent voice assistants that handle customer inquiries, process bookings, and provide support around the clock.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle mr-3 text-phi-light"></i>
+                            <span>24/7 Customer Support Automation</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle mr-3 text-phi-light"></i>
+                            <span>Multi-language Support</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle mr-3 text-phi-light"></i>
+                            <span>CRM Integration</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle mr-3 text-phi-light"></i>
+                            <span>Advanced Analytics Dashboard</span>
+                        </li>
+                    </ul>
+                    <button class="btn-primary px-8 py-4 rounded-lg font-semibold">
+                        Request Demo
+                    </button>
+                </div>
+                <div class="floating-element">
+                    <!-- Modern AI interface on computer screens showing voice analytics -->
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
+                         alt="AI Interface Dashboard" 
+                         class="rounded-xl shadow-2xl w-full" data-mock-image="true">
+                </div>
+            </div>
+            
+            <!-- Feature Product 2 -->
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="order-2 md:order-1 floating-element">
+                    <!-- Professional workforce management dashboard on tablets and computers -->
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
+                         alt="Workforce Management Dashboard" 
+                         class="rounded-xl shadow-2xl w-full" data-mock-image="true">
+                </div>
+                <div class="order-1 md:order-2">
+                    <h3 class="text-4xl font-bold mb-6">Workforce Analytics Suite</h3>
+                    <p class="text-xl opacity-80 mb-8">
+                        Comprehensive workforce management solution with real-time analytics, automated scheduling, and performance tracking for enhanced operational efficiency.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle mr-3 text-phi-light"></i>
+                            <span>Real-time Attendance Tracking</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle mr-3 text-phi-light"></i>
+                            <span>Intelligent Scheduling</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle mr-3 text-phi-light"></i>
+                            <span>Performance Analytics</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle mr-3 text-phi-light"></i>
+                            <span>Mobile Accessibility</span>
+                        </li>
+                    </ul>
+                    <button class="btn-primary px-8 py-4 rounded-lg font-semibold">
+                        View Features
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: ProductsSection -->
+
+    <!-- Contact Section -->
+    <!-- @COMPONENT: ContactSection [contact form and business information] -->
+    <section id="contact" class="py-24 px-6">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6 glow-text">Get In Touch</h2>
+                <p class="text-xl opacity-80 max-w-3xl mx-auto">
+                    Ready to transform your business with AI? Contact our team of experts to discuss your requirements.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-16">
+                <!-- Contact Form -->
+                <div class="glassmorphism p-8 rounded-xl">
+                    <h3 class="text-2xl font-bold mb-6">Send Us a Message</h3>
+                    <form class="space-y-6" data-implementation="Add form validation and submission handling">
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="name">Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 bg-phi-gray text-phi-white rounded-lg border border-phi-light focus:ring-2 focus:ring-phi-white focus:border-transparent outline-none transition-all" data-mock="true" placeholder="Your Full Name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="email">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 bg-phi-gray text-phi-white rounded-lg border border-phi-light focus:ring-2 focus:ring-phi-white focus:border-transparent outline-none transition-all" data-mock="true" placeholder="your.email@company.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="company">Company</label>
+                            <input type="text" id="company" class="w-full px-4 py-3 bg-phi-gray text-phi-white rounded-lg border border-phi-light focus:ring-2 focus:ring-phi-white focus:border-transparent outline-none transition-all" data-mock="true" placeholder="Your Company Name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="service">Service Interest</label>
+                            <select id="service" class="w-full px-4 py-3 bg-phi-gray text-phi-white rounded-lg border border-phi-light focus:ring-2 focus:ring-phi-white focus:border-transparent outline-none transition-all" data-mock="true">
+                                <option>Select a Service</option>
+                                <option>Custom Voice Agents</option>
+                                <option>Workforce Management</option>
+                                <option>Custom Software Development</option>
+                                <option>AI Consulting</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="message">Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-3 bg-phi-gray text-phi-white rounded-lg border border-phi-light focus:ring-2 focus:ring-phi-white focus:border-transparent outline-none transition-all" data-mock="true" placeholder="Tell us about your project requirements..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full py-4 rounded-lg font-semibold text-lg" data-event="click:handleSubmit">
+                            Send Message
+                            <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-phi-gray rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-phi-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Address</h4>
+                                    <p class="opacity-80" data-mock="true">London, United Kingdom</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-phi-gray rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-phone text-phi-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Phone</h4>
+                                    <p class="opacity-80" data-mock="true">+44 20 7946 0958</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-phi-gray rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-envelope text-phi-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Email</h4>
+                                    <p class="opacity-80" data-mock="true">info@phiintelligence.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-phi-gray rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                                    <i class="fas fa-clock text-phi-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Business Hours</h4>
+                                    <p class="opacity-80" data-mock="true">Mon - Fri: 9:00 AM - 6:00 PM GMT</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: ContactSection -->
+
+    <!-- Careers Section -->
+    <!-- @COMPONENT: CareersSection [job listings and recruitment information] -->
+    <section id="careers" class="py-24 px-6 bg-gradient-to-b from-phi-black to-phi-gray">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6 glow-text">Join Our Team</h2>
+                <p class="text-xl opacity-80 max-w-3xl mx-auto">
+                    Be part of the AI revolution. We're looking for talented individuals to help shape the future of business automation.
+                </p>
+            </div>
+            
+            <!-- Job Listings -->
+            <!-- @MAP: jobListings.map(job => ( -->
+            <div class="grid gap-6 max-w-4xl mx-auto">
+                <div class="glassmorphism p-8 rounded-xl hover:bg-opacity-10 transition-all duration-300">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2" data-mock="true">Senior AI Engineer</h3>
+                            <p class="opacity-80" data-mock="true">London, UK • Full Time</p>
+                        </div>
+                        <button class="btn-primary px-6 py-3 rounded-lg font-semibold mt-4 md:mt-0">
+                            Apply Now
+                        </button>
+                    </div>
+                    <p class="opacity-80 mb-4" data-mock="true">
+                        Lead the development of cutting-edge AI solutions, working with machine learning models and natural language processing systems.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">Python</span>
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">TensorFlow</span>
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">AWS</span>
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">Docker</span>
+                    </div>
+                </div>
+                
+                <div class="glassmorphism p-8 rounded-xl hover:bg-opacity-10 transition-all duration-300">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2" data-mock="true">Product Manager - AI Solutions</h3>
+                            <p class="opacity-80" data-mock="true">London, UK • Full Time</p>
+                        </div>
+                        <button class="btn-primary px-6 py-3 rounded-lg font-semibold mt-4 md:mt-0">
+                            Apply Now
+                        </button>
+                    </div>
+                    <p class="opacity-80 mb-4" data-mock="true">
+                        Drive product strategy and roadmap for our AI platforms, collaborating with engineering and client success teams.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">Product Strategy</span>
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">AI/ML</span>
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">Agile</span>
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">Leadership</span>
+                    </div>
+                </div>
+                
+                <div class="glassmorphism p-8 rounded-xl hover:bg-opacity-10 transition-all duration-300">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2" data-mock="true">Frontend Developer</h3>
+                            <p class="opacity-80" data-mock="true">London, UK • Full Time</p>
+                        </div>
+                        <button class="btn-primary px-6 py-3 rounded-lg font-semibold mt-4 md:mt-0">
+                            Apply Now
+                        </button>
+                    </div>
+                    <p class="opacity-80 mb-4" data-mock="true">
+                        Build beautiful and intuitive user interfaces for our AI-powered applications using modern web technologies.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">React</span>
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">TypeScript</span>
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">Three.js</span>
+                        <span class="px-3 py-1 bg-phi-gray rounded-full text-sm" data-mock="true">Tailwind CSS</span>
+                    </div>
+                </div>
+            </div>
+            <!-- @END_MAP )) -->
+            
+            <div class="text-center mt-16">
+                <button class="btn-primary px-8 py-4 rounded-lg font-semibold text-lg">
+                    View All Positions
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: CareersSection -->
+
+    <!-- Blog Section -->
+    <!-- @COMPONENT: BlogSection [articles, case studies, and company updates] -->
+    <section id="blog" class="py-24 px-6">
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6 glow-text">Insights & Updates</h2>
+                <p class="text-xl opacity-80 max-w-3xl mx-auto">
+                    Stay informed about the latest developments in AI, case studies from our projects, and industry insights.
+                </p>
+            </div>
+            
+            <!-- Featured Article -->
+            <div class="mb-16">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <!-- Corporate professional reading tech news on tablet -->
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
+                             alt="Professional Reading Tech News" 
+                             class="rounded-xl shadow-2xl w-full" data-mock-image="true">
+                    </div>
+                    <div>
+                        <span class="text-phi-light text-sm font-medium" data-mock="true">FEATURED ARTICLE</span>
+                        <h3 class="text-4xl font-bold mb-4 mt-2" data-mock="true">
+                            The Future of AI in Small Business Operations
+                        </h3>
+                        <p class="text-xl opacity-80 mb-6" data-mock="true">
+                            Explore how artificial intelligence is transforming small and medium businesses, from customer service automation to predictive analytics.
+                        </p>
+                        <div class="flex items-center mb-6">
+                            <span class="text-sm opacity-60" data-mock="true">Published on January 15, 2024</span>
+                            <span class="mx-3 opacity-30">•</span>
+                            <span class="text-sm opacity-60" data-mock="true">8 min read</span>
+                        </div>
+                        <button class="text-phi-white border-b border-phi-white hover:opacity-70 transition-opacity">
+                            Read Article <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Grid -->
+            <!-- @MAP: blogPosts.map(post => ( -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <article class="glassmorphism p-6 rounded-xl hover:bg-opacity-10 transition-all duration-300">
+                    <div class="aspect-video mb-4 overflow-hidden rounded-lg">
+                        <!-- Business consulting team analyzing data charts -->
+                        <img src="https://images.unsplash.com/photo-1553484771-371a605b060b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=450" 
+                             alt="Business Analytics Team" 
+                             class="w-full h-full object-cover" data-mock-image="true">
+                    </div>
+                    <h4 class="text-xl font-bold mb-3" data-mock="true">Case Study: 40% Efficiency Boost</h4>
+                    <p class="opacity-80 text-sm mb-4" data-mock="true">
+                        How our workforce management solution helped a retail chain improve operational efficiency.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs opacity-60" data-mock="true">Jan 10, 2024</span>
+                        <button class="text-phi-white text-sm hover:opacity-70">
+                            Read More <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </article>
+                
+                <article class="glassmorphism p-6 rounded-xl hover:bg-opacity-10 transition-all duration-300">
+                    <div class="aspect-video mb-4 overflow-hidden rounded-lg">
+                        <!-- Professional AI development team working on computers -->
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=450" 
+                             alt="AI Development Team" 
+                             class="w-full h-full object-cover" data-mock-image="true">
+                    </div>
+                    <h4 class="text-xl font-bold mb-3" data-mock="true">AI Development Best Practices</h4>
+                    <p class="opacity-80 text-sm mb-4" data-mock="true">
+                        Essential guidelines for building robust and scalable AI applications for business use.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs opacity-60" data-mock="true">Jan 5, 2024</span>
+                        <button class="text-phi-white text-sm hover:opacity-70">
+                            Read More <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </article>
+                
+                <article class="glassmorphism p-6 rounded-xl hover:bg-opacity-10 transition-all duration-300">
+                    <div class="aspect-video mb-4 overflow-hidden rounded-lg">
+                        <!-- Modern office space with AI technology displays -->
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=450" 
+                             alt="Modern AI Office Space" 
+                             class="w-full h-full object-cover" data-mock-image="true">
+                    </div>
+                    <h4 class="text-xl font-bold mb-3" data-mock="true">Voice AI Trends 2024</h4>
+                    <p class="opacity-80 text-sm mb-4" data-mock="true">
+                        Exploring the latest trends and innovations in voice AI technology for business applications.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs opacity-60" data-mock="true">Dec 28, 2023</span>
+                        <button class="text-phi-white text-sm hover:opacity-70">
+                            Read More <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </article>
+            </div>
+            <!-- @END_MAP )) -->
+            
+            <div class="text-center mt-16">
+                <button class="btn-primary px-8 py-4 rounded-lg font-semibold text-lg">
+                    View All Articles
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: BlogSection -->
+
+    <!-- Footer -->
+    <!-- @COMPONENT: Footer [company information and links] -->
+    <footer class="py-16 px-6 border-t border-phi-gray">
+        <div class="container mx-auto max-w-7xl">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="text-2xl font-bold mb-4 glow-text">
+                        <i class="fas fa-brain mr-2"></i>
+                        Phi Intelligence
+                    </div>
+                    <p class="opacity-80 mb-6" data-mock="true">
+                        Delivering AI-driven products and custom software that make operations smarter, faster, and more efficient.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-phi-gray rounded-lg flex items-center justify-center hover:bg-phi-white hover:text-phi-black transition-all">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-phi-gray rounded-lg flex items-center justify-center hover:bg-phi-white hover:text-phi-black transition-all">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-phi-gray rounded-lg flex items-center justify-center hover:bg-phi-white hover:text-phi-black transition-all">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Services</h4>
+                    <ul class="space-y-2 opacity-80">
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">Voice Agents</a></li>
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">Workforce Management</a></li>
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">Custom Development</a></li>
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">AI Consulting</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 opacity-80">
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">About Us</a></li>
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">Careers</a></li>
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">Blog</a></li>
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 opacity-80">
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">Terms of Service</a></li>
+                        <li><a href="#" class="hover:opacity-60 transition-opacity" data-mock="true">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-phi-gray pt-8 text-center">
+                <p class="opacity-60" data-mock="true">
+                    © 2024 Phi Intelligence. All rights reserved. | Made with ❤️ in London, UK
+                </p>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: Footer -->
+
+    <script>
+        // TODO: Implement business logic, API calls, or state management
+        
+        // Professional 3D Animation Setup using Three.js
+        (() => {
+            // @FUNCTIONALITY: This creates professional 3D animations using Three.js for the hero section
+            // @STATE: scene, camera, renderer, geometry objects
+            
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
+
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            canvas.appendChild(renderer.domElement);
+
+            // Create professional geometric elements
+            const geometries = [];
+            const materials = [];
+            const meshes = [];
+
+            // Floating geometric shapes with professional white materials
+            for (let i = 0; i < 15; i++) {
+                const geometry = new THREE.BoxGeometry(
+                    Math.random() * 2 + 0.5,
+                    Math.random() * 2 + 0.5,
+                    Math.random() * 2 + 0.5
+                );
+                const material = new THREE.MeshBasicMaterial({
+                    color: 0xffffff,
+                    wireframe: true,
+                    opacity: 0.1,
+                    transparent: true
+                });
+                const mesh = new THREE.Mesh(geometry, material);
+                
+                mesh.position.set(
+                    (Math.random() - 0.5) * 50,
+                    (Math.random() - 0.5) * 30,
+                    (Math.random() - 0.5) * 50
+                );
+                
+                mesh.userData = {
+                    originalY: mesh.position.y,
+                    floatSpeed: Math.random() * 0.02 + 0.01,
+                    rotationSpeed: Math.random() * 0.02 + 0.005
+                };
+                
+                geometries.push(geometry);
+                materials.push(material);
+                meshes.push(mesh);
+                scene.add(mesh);
+            }
+
+            camera.position.z = 30;
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                meshes.forEach((mesh) => {
+                    // Professional floating animation
+                    mesh.position.y = mesh.userData.originalY + Math.sin(Date.now() * mesh.userData.floatSpeed) * 2;
+                    
+                    // Subtle rotation
+                    mesh.rotation.x += mesh.userData.rotationSpeed;
+                    mesh.rotation.y += mesh.userData.rotationSpeed * 0.7;
+                });
+
+                renderer.render(scene, camera);
+            }
+
+            // Responsive handling
+            function handleResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            window.addEventListener('resize', handleResize);
+            animate();
+        })();
+
+        // Smooth scrolling navigation
+        (() => {
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        })();
+
+        // Scroll-based animations
+        (() => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements that should animate on scroll
+            const animateElements = document.querySelectorAll('.service-card, .glassmorphism, .floating-element');
+            animateElements.forEach(el => observer.observe(el));
+        })();
+    </script>
+</body>
+</html>
