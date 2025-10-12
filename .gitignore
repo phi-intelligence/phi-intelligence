@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+.venv/
+
+# Build outputs
+dist/
+build/
+
+# Environment files with secrets
+.env
+phi_intelligence/.env
+phi_voice/.env
+phi_voice/token_servers/*/.env
+
+# Keep AWS templates (safe, no secrets)
+!env.aws.template
+
+# SSH keys and credentials
+*.pem
+*.backup
+aws-account-info.txt
+lightsail-ip.txt
+amplify-url.txt
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Backup files (may contain secrets)
+*.backup.*
+*-bckp
+.env-*
+*.env.backup*

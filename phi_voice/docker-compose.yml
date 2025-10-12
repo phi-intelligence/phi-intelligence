@@ -1,0 +1,53 @@
+services:
+  # Phi Token Server - Azure Key Vault Enabled
+  phi_token_server:
+    build: ./token_servers/phi_token_server
+    ports:
+      - "8001:8001"
+    environment:
+      # Azure Key Vault Configuration
+      - AZURE_KEY_VAULT_URL=https://phi-intelligence-vault.vault.azure.net/
+      - AZURE_TENANT_ID=48d9c583-6ecc-4c11-a457-41e40ade8d37
+      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
+      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
+      
+      # Application Configuration
+      - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app
+    restart: unless-stopped
+    networks:
+      - phi_voice_network
+
+  # Company Token Server - Azure Key Vault Enabled
+  company_token_server:
+    build: ./token_servers/company_token_server
+    ports:
+      - "8002:8002"
+    environment:
+      # Azure Key Vault Configuration
+      - AZURE_KEY_VAULT_URL=https://phi-intelligence-vault.vault.azure.net/
+      - AZURE_TENANT_ID=48d9c583-6ecc-4c11-a457-41e40ade8d37
+      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
+      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET}
+      
+      # Application Configuration
+      - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app
+    restart: unless-stopped
+    networks:
+      - phi_voice_network
+    volumes:
+      - ./storage:/app/storage
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - phi_voice_network
+
+networks:
+  phi_voice_network:
+    driver: bridge

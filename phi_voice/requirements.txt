@@ -1,0 +1,141 @@
+# =============================================================================
+# PHI VOICE UNIFIED REQUIREMENTS - PRODUCTION READY
+# =============================================================================
+# This file contains all dependencies for both token servers and shared services
+# Optimized for production deployment with version pinning for stability
+
+# =============================================================================
+# CORE WEB FRAMEWORK
+# =============================================================================
+fastapi==0.116.1
+uvicorn[standard]==0.35.0
+python-multipart==0.0.20
+starlette==0.47.2
+
+# =============================================================================
+# AUTHENTICATION & SECURITY
+# =============================================================================
+PyJWT==2.3.0
+python-dotenv==1.1.1
+bcrypt==4.3.0
+
+# =============================================================================
+# DATA VALIDATION & SERIALIZATION
+# =============================================================================
+pydantic==2.11.7
+pydantic_core==2.33.2
+
+# =============================================================================
+# DATABASE & STORAGE
+# =============================================================================
+# Redis for caching and session management
+redis==6.4.0
+
+# Pinecone for vector database
+pinecone==7.3.0
+
+# Cloudflare R2 (S3-compatible)
+boto3==1.40.22
+botocore==1.40.22
+
+# =============================================================================
+# AI & MACHINE LEARNING
+# =============================================================================
+# OpenAI for embeddings and AI analysis
+openai==1.99.9
+tiktoken==0.11.0
+
+# =============================================================================
+# DOCUMENT PROCESSING
+# =============================================================================
+# PDF processing
+PyPDF2==3.0.1
+
+# Microsoft Word documents
+python-docx==1.2.0
+
+# Legacy Word documents
+olefile==0.47
+
+# =============================================================================
+# HTTP & NETWORKING
+# =============================================================================
+httpx==0.28.1
+aiohttp==3.12.14
+requests==2.32.5
+urllib3==1.26.5
+httpcore==1.0.9
+
+# =============================================================================
+# ASYNC & CONCURRENCY
+# =============================================================================
+asyncio==3.4.3
+aiofiles==24.1.0
+anyio==4.9.0
+
+# =============================================================================
+# UTILITIES & HELPERS
+# =============================================================================
+# Date and time handling
+python-dateutil==2.9.0.post0
+
+# Note: pathlib is built-in to Python 3.4+, no need for pathlib2
+
+# JSON handling
+orjson==3.11.0
+
+# Environment and configuration (already included above)
+# python-dotenv==1.1.1
+
+# =============================================================================
+# LOGGING & MONITORING
+# =============================================================================
+coloredlogs==15.0.1
+
+# =============================================================================
+# DEVELOPMENT & TESTING (Optional)
+# =============================================================================
+# Uncomment for development environments
+# pytest==7.4.3
+# pytest-asyncio==0.21.1
+# black==23.11.0
+# flake8==6.1.0
+
+# =============================================================================
+# PRODUCTION OPTIMIZATIONS
+# =============================================================================
+# Performance improvements
+uvloop==0.21.0
+# hiredis==2.2.3  # Redis 6.4.0 includes high-performance client
+
+# =============================================================================
+# SECURITY & COMPLIANCE
+# =============================================================================
+# SSL/TLS support
+certifi==2025.7.14
+
+# =============================================================================
+# COMPATIBILITY
+# =============================================================================
+# Python version compatibility
+typing-extensions==4.14.1
+
+# =============================================================================
+# ADDITIONAL PRODUCTION DEPENDENCIES
+# =============================================================================
+# File system operations
+watchfiles==1.1.0
+
+# Async context managers
+contextlib2==21.6.0
+
+# =============================================================================
+# NOTES
+# =============================================================================
+# 1. All versions are pinned for production stability
+# 2. Redis with hiredis for better performance
+# 3. uvloop for better async performance on Linux
+# 4. Comprehensive document processing support
+# 5. Full AI/ML pipeline support
+# 6. Production-ready security and monitoring
+# =============================================================================

@@ -1,0 +1,350 @@
+# ========================================
+# Docker Compose for AWS Lightsail Deployment
+# ========================================
+# This configuration removes Azure Key Vault dependencies
+# and uses environment variables loaded from AWS Secrets Manager
+
+services:
+  # ========================================
+  # Phi Intelligence Container (Frontend + Backend)
+  # ========================================
+  phi_intelligence:
+    build: 
+      context: ./phi_intelligence
+      dockerfile: Dockerfile
+    container_name: phi_intelligence
+    ports:
+      - "5000:5000"
+    environment:
+      # Application Configuration
+      - NODE_ENV=production
+      - PORT=5000
+      - REDIS_URL=redis://redis:6379
+      
+      # CORS (loaded from .env file)
+      - VITE_ALLOWED_ORIGINS=${VITE_ALLOWED_ORIGINS}
+      
+      # Database (from AWS Secrets Manager via env)
+      - DATABASE_URL=${DATABASE_URL}
+      
+      # AI API Keys
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+      
+      # LiveKit Phi
+      - LIVEKIT_PHI_URL=${LIVEKIT_PHI_URL}
+      - LIVEKIT_PHI_API_KEY=${LIVEKIT_PHI_API_KEY}
+      - LIVEKIT_PHI_API_SECRET=${LIVEKIT_PHI_API_SECRET}
+      
+      # LiveKit Company
+      - LIVEKIT_COMPANY_URL=${LIVEKIT_COMPANY_URL}
+      - LIVEKIT_COMPANY_API_KEY=${LIVEKIT_COMPANY_API_KEY}
+      - LIVEKIT_COMPANY_API_SECRET=${LIVEKIT_COMPANY_API_SECRET}
+      
+      # JWT Secrets
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - SESSION_SECRET=${SESSION_SECRET}
+      
+      # Cloudflare R2
+      - R2_ACCESS_KEY_ID=${R2_ACCESS_KEY_ID}
+      - R2_SECRET_ACCESS_KEY=${R2_SECRET_ACCESS_KEY}
+      - R2_BUCKET_NAME=${R2_BUCKET_NAME}
+      - R2_ENDPOINT=${R2_ENDPOINT}
+      - CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID}
+    volumes:
+      - phi_intelligence_uploads:/app/uploads
+      - phi_intelligence_logs:/app/logs
+    networks:
+      - phi_network
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:5000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ========================================
+  # Phi Token Server (General AI)
+  # ========================================
+  phi_token_server:
+    build: 
+      context: ./phi_voice/token_servers/phi_token_server
+      dockerfile: Dockerfile
+    container_name: phi_token_server
+    ports:
+      - "8001:8001"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app
+      - NODE_ENV=production
+      
+      # LiveKit Phi
+      - LIVEKIT_PHI_URL=${LIVEKIT_PHI_URL}
+      - LIVEKIT_PHI_API_KEY=${LIVEKIT_PHI_API_KEY}
+      - LIVEKIT_PHI_API_SECRET=${LIVEKIT_PHI_API_SECRET}
+      
+      # API Keys
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - phi_voice_logs:/app/logs
+    networks:
+      - phi_network
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8001/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ========================================
+  # Company Token Server (RAG AI)
+  # ========================================
+  company_token_server:
+    build: 
+      context: ./phi_voice/token_servers/company_token_server
+      dockerfile: Dockerfile
+    container_name: company_token_server
+    ports:
+      - "8002:8002"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app
+      - NODE_ENV=production
+      
+      # LiveKit Company
+      - LIVEKIT_COMPANY_URL=${LIVEKIT_COMPANY_URL}
+      - LIVEKIT_COMPANY_API_KEY=${LIVEKIT_COMPANY_API_KEY}
+      - LIVEKIT_COMPANY_API_SECRET=${LIVEKIT_COMPANY_API_SECRET}
+      
+      # AI API Keys
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+      
+      # Pinecone
+      - PINECONE_API_KEY=${PINECONE_API_KEY}
+      - PINECONE_ENVIRONMENT=${PINECONE_ENVIRONMENT}
+      - PINECONE_INDEX_NAME=${PINECONE_INDEX_NAME}
+      
+      # Cloudflare R2
+      - R2_ACCESS_KEY_ID=${R2_ACCESS_KEY_ID}
+      - R2_SECRET_ACCESS_KEY=${R2_SECRET_ACCESS_KEY}
+      - R2_BUCKET_NAME=${R2_BUCKET_NAME}
+      - R2_ENDPOINT=${R2_ENDPOINT}
+      - CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID}
+    volumes:
+      - phi_voice_storage:/app/storage
+      - phi_voice_logs:/app/logs
+    networks:
+      - phi_network
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8002/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ========================================
+  # Hotel Token Server (Custom Voice Agent)
+  # ========================================
+  hotel_token_server:
+    build: 
+      context: ./phi_voice/token_servers/hotel_token_server
+      dockerfile: Dockerfile
+    container_name: hotel_token_server
+    ports:
+      - "8004:8004"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app
+      - NODE_ENV=production
+      
+      # LiveKit Hotel
+      - LIVEKIT_URL=${LIVEKIT_HOTEL_URL}
+      - LIVEKIT_API_KEY=${LIVEKIT_HOTEL_API_KEY}
+      - LIVEKIT_API_SECRET=${LIVEKIT_HOTEL_API_SECRET}
+      
+      # API Keys
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+    volumes:
+      - phi_voice_logs:/app/logs
+    networks:
+      - phi_network
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8004/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ========================================
+  # Restaurant Token Server (Custom Voice Agent)
+  # ========================================
+  restaurant_token_server:
+    build: 
+      context: ./phi_voice/token_servers/restaurant_token_server
+      dockerfile: Dockerfile
+    container_name: restaurant_token_server
+    ports:
+      - "8005:8005"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app
+      - NODE_ENV=production
+      
+      # LiveKit Restaurant
+      - LIVEKIT_URL=${LIVEKIT_RESTAURANT_URL}
+      - LIVEKIT_API_KEY=${LIVEKIT_RESTAURANT_API_KEY}
+      - LIVEKIT_API_SECRET=${LIVEKIT_RESTAURANT_API_SECRET}
+      
+      # API Keys
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+    volumes:
+      - phi_voice_logs:/app/logs
+    networks:
+      - phi_network
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8005/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ========================================
+  # Hospital Token Server (Custom Voice Agent)
+  # ========================================
+  hospital_token_server:
+    build: 
+      context: ./phi_voice/token_servers/hospital_token_server
+      dockerfile: Dockerfile
+    container_name: hospital_token_server
+    ports:
+      - "8006:8006"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PYTHONPATH=/app
+      - NODE_ENV=production
+      
+      # LiveKit Hospital
+      - LIVEKIT_URL=${LIVEKIT_HOSPITAL_URL}
+      - LIVEKIT_API_KEY=${LIVEKIT_HOSPITAL_API_KEY}
+      - LIVEKIT_API_SECRET=${LIVEKIT_HOSPITAL_API_SECRET}
+      
+      # API Keys
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+    volumes:
+      - phi_voice_logs:/app/logs
+    networks:
+      - phi_network
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8006/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ========================================
+  # Redis Service (Shared Cache & Session Storage)
+  # ========================================
+  redis:
+    image: redis:7-alpine
+    container_name: phi_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./phi_voice/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+      - phi_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+  # ========================================
+  # Nginx Reverse Proxy (Production)
+  # ========================================
+  nginx:
+    image: nginx:alpine
+    container_name: phi_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - nginx_logs:/var/log/nginx
+    networks:
+      - phi_network
+    depends_on:
+      - phi_intelligence
+      - phi_token_server
+      - company_token_server
+      - hotel_token_server
+      - restaurant_token_server
+      - hospital_token_server
+    restart: unless-stopped
+    profiles:
+      - production
+
+# ========================================
+# Volumes for Data Persistence
+# ========================================
+volumes:
+  phi_intelligence_uploads:
+    driver: local
+  phi_intelligence_logs:
+    driver: local
+  phi_voice_storage:
+    driver: local
+  phi_voice_logs:
+    driver: local
+  redis_data:
+    driver: local
+  nginx_logs:
+    driver: local
+
+# ========================================
+# Networks for Service Communication
+# ========================================
+networks:
+  phi_network:
+    driver: bridge
+    name: phi_network
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
