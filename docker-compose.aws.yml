@@ -317,8 +317,6 @@ services:
       - restaurant_token_server
       - hospital_token_server
     restart: unless-stopped
-    profiles:
-      - production
 
 # ========================================
 # Volumes for Data Persistence

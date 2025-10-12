@@ -90,13 +90,23 @@ class PhiTokenServer:
         self.initialized = False
     
     async def initialize(self):
-        """Initialize server with secrets from Key Vault"""
+        """Initialize server with secrets from environment or Key Vault"""
         try:
-            # Load LiveKit credentials from Key Vault
-            self.livekit_api_key, self.livekit_api_secret, self.livekit_url = await key_vault_service.get_livekit_credentials('phi')
+            # Priority 1: Check environment variables (AWS deployment)
+            self.livekit_api_key = os.getenv("LIVEKIT_PHI_API_KEY")
+            self.livekit_api_secret = os.getenv("LIVEKIT_PHI_API_SECRET")
+            self.livekit_url = os.getenv("LIVEKIT_PHI_URL")
+            
+            if all([self.livekit_api_key, self.livekit_api_secret, self.livekit_url]):
+                logger.info("✅ Using LiveKit credentials from environment variables")
+            else:
+                # Priority 2: Try Azure Key Vault (for Azure deployments)
+                logger.info("Environment variables not set, attempting Azure Key Vault...")
+                self.livekit_api_key, self.livekit_api_secret, self.livekit_url = await key_vault_service.get_livekit_credentials('phi')
+                logger.info("✅ Loaded credentials from Azure Key Vault")
             
             if not all([self.livekit_api_key, self.livekit_api_secret, self.livekit_url]):
-                raise ValueError("Missing required LiveKit credentials from Key Vault")
+                raise ValueError("Missing required LiveKit credentials (set LIVEKIT_PHI_* env vars or configure Key Vault)")
             
             self.config = PhiTokenConfig(
                 api_key=self.livekit_api_key,
@@ -105,7 +115,7 @@ class PhiTokenServer:
             )
             
             self.initialized = True
-            logger.info("✅ Phi Token Server initialized with Key Vault credentials")
+            logger.info("✅ Phi Token Server initialized")
             logger.info(f"Phi Intelligence token server initialized for LiveKit URL: {self.livekit_url}")
             logger.info(f"API Key configured: {bool(self.livekit_api_key)}")
             logger.info(f"API Secret configured: {bool(self.livekit_api_secret)}")

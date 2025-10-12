@@ -1042,30 +1042,40 @@ rag_service = PineconeRAGService()
 company_token_server = None
 
 async def initialize_company_token_server():
-    """Initialize company token server with Key Vault credentials"""
+    """Initialize company token server with credentials from environment or Key Vault"""
     global company_token_server
-    try:
-        # Load LiveKit credentials from Key Vault
-        api_key, api_secret, url = await key_vault_service.get_livekit_credentials('company')
-        
-        if not all([api_key, api_secret, url]):
-            raise ValueError("Missing required LiveKit credentials from Key Vault")
-        
-        config = CompanyTokenConfig(
-            api_key=api_key,
-            api_secret=api_secret,
-            livekit_url=url
-        )
-        
-        company_token_server = CompanyTokenServer(config)
-        logger.info("✅ Company Token Server initialized with Key Vault credentials")
-        logger.info(f"Company LiveKit URL: {url}")
-        logger.info(f"Company API Key configured: {bool(api_key)}")
-        logger.info(f"Company API Secret configured: {bool(api_secret)}")
-        
-    except Exception as e:
-        logger.error(f"❌ Failed to initialize Company Token Server: {e}")
-        raise
+    
+    # Priority 1: Check environment variables (AWS deployment)
+    api_key = os.getenv("LIVEKIT_COMPANY_API_KEY")
+    api_secret = os.getenv("LIVEKIT_COMPANY_API_SECRET")
+    url = os.getenv("LIVEKIT_COMPANY_URL")
+    
+    if all([api_key, api_secret, url]):
+        logger.info("✅ Using LiveKit credentials from environment variables")
+    else:
+        # Priority 2: Try Azure Key Vault (for Azure deployments)
+        try:
+            logger.info("Environment variables not set, attempting Azure Key Vault...")
+            api_key, api_secret, url = await key_vault_service.get_livekit_credentials('company')
+            logger.info("✅ Loaded credentials from Azure Key Vault")
+        except Exception as e:
+            logger.error(f"❌ Failed to load credentials from Key Vault: {e}")
+            pass  # Will check if credentials are valid below
+    
+    if not all([api_key, api_secret, url]):
+        raise ValueError("Missing required LiveKit credentials (set LIVEKIT_COMPANY_* env vars or configure Key Vault)")
+    
+    config = CompanyTokenConfig(
+        api_key=api_key,
+        api_secret=api_secret,
+        livekit_url=url
+    )
+    
+    company_token_server = CompanyTokenServer(config)
+    logger.info("✅ Company Token Server initialized")
+    logger.info(f"Company LiveKit URL: {url}")
+    logger.info(f"Company API Key configured: {bool(api_key)}")
+    logger.info(f"Company API Secret configured: {bool(api_secret)}")
 
 
 
