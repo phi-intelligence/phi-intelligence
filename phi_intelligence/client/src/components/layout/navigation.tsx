@@ -19,7 +19,6 @@ const navItems = [
     ]
   },
   { href: "/products", label: "PRODUCTS" },
-  { href: "/voicebot-dashboard", label: "VOICE" },
   { href: "/careers", label: "CAREERS" },
   { href: "/blog", label: "BLOG" },
   { 
