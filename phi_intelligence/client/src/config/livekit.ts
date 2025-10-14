@@ -29,7 +29,8 @@ export const LIVEKIT_CONFIG = {
 // Initialize LiveKit configuration from API
 export async function initializeLiveKitConfig() {
   try {
-    const response = await fetch('/api/livekit/config');
+    const apiUrl = import.meta.env.VITE_API_URL || '';
+    const response = await fetch(`${apiUrl}/api/livekit/config`);
     const config = await response.json();
     
     LIVEKIT_CONFIG.LIVEKIT_URL = config.phi.url;

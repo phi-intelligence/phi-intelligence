@@ -40,12 +40,13 @@ class ChatbotService {
   // Initialize API key from backend
   async initializeApiKey(): Promise<void> {
     try {
-      const response = await fetch('/api/openai/key');
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/openai/key`);
       const data = await response.json();
       this.apiKey = data.apiKey;
-      console.log('✅ OpenAI API key loaded from Key Vault');
+      console.log('✅ OpenAI API key loaded from backend');
     } catch (error) {
-      console.warn('Failed to load API key from Key Vault, using environment variable');
+      console.warn('Failed to load API key from backend, using environment variable');
       this.apiKey = import.meta.env.VITE_OPENAI_API_KEY || '';
     }
   }
