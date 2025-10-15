@@ -1136,8 +1136,15 @@ if os.getenv("NODE_ENV") != "production":
         "https://127.0.0.1:4173",
     ])
 
-# Filter out empty strings
-ALLOWED_ORIGINS = [origin.strip() for origin in ALLOWED_ORIGINS if origin.strip()]
+# Always add production domains for Amplify deployment
+ALLOWED_ORIGINS.extend([
+    "https://main.d3ozd8k0s4za13.amplifyapp.com",
+    "https://phiintelligence.com",
+    "https://www.phiintelligence.com"
+])
+
+# Filter out empty strings and duplicates
+ALLOWED_ORIGINS = list(set([origin.strip() for origin in ALLOWED_ORIGINS if origin.strip()]))
 
 app.add_middleware(
     CORSMiddleware,
