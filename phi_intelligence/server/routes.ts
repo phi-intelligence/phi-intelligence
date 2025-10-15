@@ -1196,19 +1196,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // OpenAI API key endpoint for frontend
-  app.get("/api/openai/key", async (req, res) => {
+  // Chat endpoint - Proxy to OpenAI (SECURE - API key hidden from frontend)
+  app.post("/api/chat", async (req, res) => {
     try {
-      // Use environment variable directly (AWS Secrets Manager loads it)
+      const { message, conversationHistory } = req.body;
+      
+      if (!message || !message.trim()) {
+        return res.status(400).json({ error: 'Message is required' });
+      }
+
       const apiKey = process.env.OPENAI_API_KEY;
       if (!apiKey) {
-        throw new Error('OpenAI API key not found in environment');
+        throw new Error('OpenAI API key not configured');
       }
-      res.json({ apiKey });
+
+      // Prepare messages with system prompt
+      const messages = [
+        {
+          role: 'system',
+          content: 'You are Phi Intelligence, a professional AI assistant specializing in AI solutions, business automation, workforce management, and industrial automation. You help businesses optimize operations, reduce costs, and implement AI solutions. Provide helpful, accurate, and concise responses. Use a friendly but professional tone. Keep responses under 150 words unless the user asks for detailed information. Focus on practical business applications and ROI.'
+        },
+        ...(conversationHistory || [])
+      ];
+
+      // Call OpenAI from backend (secure)
+      const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          messages: messages,
+          temperature: 0.7,
+          max_tokens: 500,
+          stream: false
+        }),
+      });
+
+      if (openaiResponse.ok) {
+        const data = await openaiResponse.json();
+        res.json({
+          success: true,
+          message: {
+            role: 'assistant',
+            content: data.choices[0].message.content
+          }
+        });
+      } else {
+        const errorData = await openaiResponse.json().catch(() => ({}));
+        console.error('OpenAI API Error:', errorData);
+        res.status(openaiResponse.status).json({ 
+          error: errorData.error?.message || 'OpenAI API request failed' 
+        });
+      }
     } catch (error) {
-      console.error('Failed to get OpenAI API key:', error);
-      res.status(500).json({ error: 'Failed to load OpenAI API key' });
+      console.error('Chat endpoint error:', error);
+      res.status(500).json({ error: 'Failed to process chat message' });
     }
+  });
+
+  // DEPRECATED: Remove API key exposure endpoint (security risk)
+  // Frontend should call /api/chat instead of getting the key
+  app.get("/api/openai/key", async (req, res) => {
+    console.warn('⚠️ DEPRECATED: /api/openai/key endpoint accessed - use /api/chat instead');
+    res.status(410).json({ 
+      error: 'This endpoint is deprecated for security reasons. Use /api/chat instead.',
+      migration: 'Call POST /api/chat with {message, conversationHistory} instead of calling OpenAI directly'
+    });
   });
 
   // Register monitoring routes

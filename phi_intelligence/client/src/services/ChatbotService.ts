@@ -64,7 +64,7 @@ class ChatbotService {
     return this.conversationHistory;
   }
 
-  // Send message to OpenAI and get response
+  // Send message via BACKEND (not directly to OpenAI - CORS/Security fix)
   async sendMessage(userMessage: string): Promise<ChatResponse> {
     if (this.isProcessing) {
       throw new Error('Already processing a message. Please wait.');
@@ -72,15 +72,6 @@ class ChatbotService {
 
     if (!userMessage.trim()) {
       throw new Error('Message cannot be empty.');
-    }
-
-    // Initialize API key if not already done
-    if (!this.apiKey) {
-      await this.initializeApiKey();
-    }
-
-    if (!this.isAvailable()) {
-      throw new Error('Chatbot service is not available. Please check your configuration.');
     }
 
     this.isProcessing = true;
@@ -95,45 +86,36 @@ class ChatbotService {
       };
       this.conversationHistory.push(userMsg);
 
-      // Prepare messages for OpenAI API
-      const messages = [
-        {
-          role: 'system' as const,
-          content: 'You are Phi Intelligence, a professional AI assistant specializing in AI solutions, business automation, workforce management, and industrial automation. You help businesses optimize operations, reduce costs, and implement AI solutions. Provide helpful, accurate, and concise responses. Use a friendly but professional tone. Keep responses under 150 words unless the user asks for detailed information. Focus on practical business applications and ROI.'
-        },
-        // Include recent conversation history (last 10 messages for context)
-        ...this.conversationHistory.slice(-10).map(msg => ({
-          role: msg.role,
-          content: msg.content
-        }))
-      ];
+      // Prepare conversation history (last 10 messages for context)
+      const conversationHistory = this.conversationHistory.slice(-10).map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }));
 
-      console.log('Sending message to OpenAI:', userMessage);
+      console.log('Sending message via backend API:', userMessage);
       
-      const response = await fetch(this.apiUrl, {
+      // Call BACKEND endpoint instead of OpenAI directly (fixes CORS + security)
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`,
         },
         body: JSON.stringify({
-          model: this.model,
-          messages: messages,
-          temperature: 0.7,
-          max_tokens: 500, // Reduced for live chat
-          stream: false
+          message: userMessage.trim(),
+          conversationHistory: conversationHistory
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log('OpenAI response received:', data);
+        console.log('✅ Chat response received from backend');
         
         // Add AI response to conversation history
         const aiMessage: ChatMessage = {
           id: this.generateId(),
           role: 'assistant',
-          content: data.choices[0].message.content,
+          content: data.message.content,
           timestamp: new Date()
         };
         this.conversationHistory.push(aiMessage);
@@ -146,15 +128,11 @@ class ChatbotService {
 
       } else {
         const errorData = await response.json().catch(() => ({}));
-        console.error('OpenAI API Error:', errorData);
+        console.error('Chat API Error:', errorData);
         
         let errorMessage = 'Sorry, I encountered an error. Please try again.';
-        if (errorData.error?.type === 'insufficient_quota') {
-          errorMessage = 'API quota exceeded. Please check your OpenAI account.';
-        } else if (errorData.error?.type === 'invalid_api_key') {
-          errorMessage = 'Invalid API key. Please check your configuration.';
-        } else if (errorData.error?.message) {
-          errorMessage = `Error: ${errorData.error.message}`;
+        if (errorData.error) {
+          errorMessage = `Error: ${errorData.error}`;
         }
         
         throw new Error(errorMessage);
