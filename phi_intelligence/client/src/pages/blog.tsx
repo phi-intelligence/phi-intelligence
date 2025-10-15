@@ -80,15 +80,18 @@ export default function Blog() {
     );
   };
 
+  // Use full API URL instead of relative path (consistent with chatbot)
+  const apiUrl = import.meta.env.VITE_API_URL || '';
+  
   // Fetch news articles
   const { data: newsArticles = [], isLoading, refetch } = useQuery<NewsArticle[]>({
-    queryKey: ["/api/news", selectedCategory, selectedSource],
+    queryKey: [`${apiUrl}/api/news`, selectedCategory, selectedSource],
     queryFn: async () => {
       const params = new URLSearchParams();
       if (selectedCategory !== 'all') params.append('category', selectedCategory);
       if (selectedSource !== 'all') params.append('source', selectedSource);
       
-      const response = await fetch(`/api/news?${params.toString()}`);
+      const response = await fetch(`${apiUrl}/api/news?${params.toString()}`);
       if (!response.ok) throw new Error('Failed to fetch news');
       return response.json();
     }
@@ -96,9 +99,9 @@ export default function Blog() {
 
   // Fetch featured news articles
   const { data: featuredNews = [] } = useQuery<NewsArticle[]>({
-    queryKey: ["/api/news/featured"],
+    queryKey: [`${apiUrl}/api/news/featured`],
     queryFn: async () => {
-      const response = await fetch('/api/news/featured');
+      const response = await fetch(`${apiUrl}/api/news/featured`);
       if (!response.ok) throw new Error('Failed to fetch featured news');
       return response.json();
     }
@@ -225,7 +228,7 @@ export default function Blog() {
     try {
       await refetch();
       // Trigger news fetch on backend
-      await fetch('/api/news/fetch', { method: 'POST' });
+      await fetch(`${apiUrl}/api/news/fetch`, { method: 'POST' });
     } finally {
       setIsRefreshing(false);
     }

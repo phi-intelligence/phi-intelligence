@@ -94,6 +94,9 @@ services:
       
       # API Keys
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      
+      # CORS Configuration
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
     volumes:
       - phi_voice_logs:/app/logs
     networks:
@@ -144,6 +147,9 @@ services:
       - R2_BUCKET_NAME=${R2_BUCKET_NAME}
       - R2_ENDPOINT=${R2_ENDPOINT}
       - CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID}
+      
+      # CORS Configuration
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
     volumes:
       - phi_voice_storage:/app/storage
       - phi_voice_logs:/app/logs
@@ -183,6 +189,9 @@ services:
       # API Keys
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+      
+      # CORS Configuration
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
     volumes:
       - phi_voice_logs:/app/logs
     networks:
@@ -221,6 +230,9 @@ services:
       # API Keys
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+      
+      # CORS Configuration
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
     volumes:
       - phi_voice_logs:/app/logs
     networks:
@@ -259,6 +271,9 @@ services:
       # API Keys
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+      
+      # CORS Configuration
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
     volumes:
       - phi_voice_logs:/app/logs
     networks:

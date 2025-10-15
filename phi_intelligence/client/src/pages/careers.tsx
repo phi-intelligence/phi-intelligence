@@ -10,8 +10,11 @@ import { useState } from "react";
 export default function Careers() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   
+  // Use full API URL instead of relative path (consistent with chatbot)
+  const apiUrl = import.meta.env.VITE_API_URL || '';
+  
   const { data: jobs, isLoading, error, refetch } = useQuery<Job[]>({
-    queryKey: ["/api/jobs"],
+    queryKey: [`${apiUrl}/api/jobs`],
     placeholderData: [],
     retry: 2,
     retryDelay: 1000,

@@ -128,6 +128,10 @@ echo "✓ VITE_ALLOWED_ORIGINS set"
 export VITE_API_URL="https://api.phiintelligence.com"
 echo "✓ VITE_API_URL set"
 
+# Token Server CORS Configuration (for Python FastAPI services)
+export ALLOWED_ORIGINS="https://www.phiintelligence.com,https://phiintelligence.com,https://main.d3ozd8k0s4za13.amplifyapp.com"
+echo "✓ ALLOWED_ORIGINS set for token servers"
+
 # Load additional CORS from .env file if exists
 if [ -f ".env.aws" ]; then
     export $(grep -v '^#' .env.aws | xargs)
@@ -137,7 +141,7 @@ fi
 echo ""
 echo "✅ All secrets loaded successfully!"
 echo "   Region: $AWS_REGION"
-echo "   Secrets loaded: 29"
+echo "   Secrets loaded: 29 (+ 1 override)"
 echo "   CORS Origins: $VITE_ALLOWED_ORIGINS"
 echo "   API URL: $VITE_API_URL"
 echo ""
