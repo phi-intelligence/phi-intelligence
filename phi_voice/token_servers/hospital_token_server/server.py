@@ -19,8 +19,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
-# ✅ ADD: Key Vault service import
-from key_vault_service import key_vault_service
+# Azure Key Vault removed - using environment variables for AWS deployment
 
 # Load environment variables (development fallback)
 load_dotenv()

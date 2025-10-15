@@ -48,8 +48,7 @@ from shared.pinecone_service import PineconeService
 # ✅ ADD: Redis service import
 from shared.redis_service import redis_service
 
-# ✅ ADD: Key Vault service import
-from shared.key_vault_service import key_vault_service
+# Azure Key Vault removed - using environment variables for AWS deployment
 
 # Load environment variables (development fallback)
 load_dotenv(override=True)
@@ -1053,17 +1052,11 @@ async def initialize_company_token_server():
     if all([api_key, api_secret, url]):
         logger.info("✅ Using LiveKit credentials from environment variables")
     else:
-        # Priority 2: Try Azure Key Vault (for Azure deployments)
-        try:
-            logger.info("Environment variables not set, attempting Azure Key Vault...")
-            api_key, api_secret, url = await key_vault_service.get_livekit_credentials('company')
-            logger.info("✅ Loaded credentials from Azure Key Vault")
-        except Exception as e:
-            logger.error(f"❌ Failed to load credentials from Key Vault: {e}")
-            pass  # Will check if credentials are valid below
+        # Removed Azure Key Vault fallback - environment variables required for AWS deployment
+        pass  # Will check if credentials are valid below
     
     if not all([api_key, api_secret, url]):
-        raise ValueError("Missing required LiveKit credentials (set LIVEKIT_COMPANY_* env vars or configure Key Vault)")
+        raise ValueError("Missing required LiveKit credentials (set LIVEKIT_COMPANY_* environment variables)")
     
     config = CompanyTokenConfig(
         api_key=api_key,
@@ -1740,7 +1733,7 @@ if __name__ == "__main__":
     import uvicorn
 
     logger.info("Starting Company Voice Agent Token & RAG Server (Pinecone)...")
-    logger.info("Company LiveKit credentials will be loaded from Azure Key Vault")
+    logger.info("Company LiveKit credentials will be loaded from environment variables")
     logger.info(f"OpenAI API Key configured: {bool(OPENAI_API_KEY)}")
 
     uvicorn.run(

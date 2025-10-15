@@ -1156,21 +1156,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // LiveKit configuration endpoint for frontend
   app.get("/api/livekit/config", async (req, res) => {
     try {
-      const [phiCredentials, companyCredentials] = await Promise.all([
-        keyVaultService.getLiveKitCredentials('phi'),
-        keyVaultService.getLiveKitCredentials('company')
-      ]);
+      // Use environment variables directly (AWS Secrets Manager loads them)
+      const phiUrl = process.env.LIVEKIT_PHI_URL;
+      const phiApiKey = process.env.LIVEKIT_PHI_API_KEY;
+      const phiApiSecret = process.env.LIVEKIT_PHI_API_SECRET;
+      const companyUrl = process.env.LIVEKIT_COMPANY_URL;
+      const companyApiKey = process.env.LIVEKIT_COMPANY_API_KEY;
+      const companyApiSecret = process.env.LIVEKIT_COMPANY_API_SECRET;
+
+      if (!phiUrl || !phiApiKey || !phiApiSecret || !companyUrl || !companyApiKey || !companyApiSecret) {
+        throw new Error('LiveKit credentials not found in environment');
+      }
 
       res.json({
         phi: {
-          url: phiCredentials.url,
-          apiKey: phiCredentials.apiKey,
-          apiSecret: phiCredentials.apiSecret
+          url: phiUrl,
+          apiKey: phiApiKey,
+          apiSecret: phiApiSecret
         },
         company: {
-          url: companyCredentials.url,
-          apiKey: companyCredentials.apiKey,
-          apiSecret: companyCredentials.apiSecret
+          url: companyUrl,
+          apiKey: companyApiKey,
+          apiSecret: companyApiSecret
         }
       });
     } catch (error) {
@@ -1182,7 +1189,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // OpenAI API key endpoint for frontend
   app.get("/api/openai/key", async (req, res) => {
     try {
-      const apiKey = await keyVaultService.getOpenAIApiKey();
+      // Use environment variable directly (AWS Secrets Manager loads it)
+      const apiKey = process.env.OPENAI_API_KEY;
+      if (!apiKey) {
+        throw new Error('OpenAI API key not found in environment');
+      }
       res.json({ apiKey });
     } catch (error) {
       console.error('Failed to get OpenAI API key:', error);

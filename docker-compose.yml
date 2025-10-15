@@ -1,5 +1,8 @@
 # ========================================
-# Updated Docker Compose for Current Codebase
+# ⚠️ DEPRECATED - Use docker-compose.aws.yml for AWS Deployment
+# ========================================
+# This file contains Azure Key Vault configuration and is kept for reference only.
+# For production deployment on AWS Lightsail, use: docker-compose.aws.yml
 # ========================================
 
 services:

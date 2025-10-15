@@ -1,5 +1,5 @@
-import { DefaultAzureCredential } from '@azure/identity';
-import { SecretClient } from '@azure/keyvault-secrets';
+// Azure Key Vault removed - using environment variables for AWS deployment
+// This service now acts as a simple environment variable accessor with caching
 
 interface CachedSecret {
   value: string;
@@ -7,16 +7,11 @@ interface CachedSecret {
 }
 
 class KeyVaultService {
-  private client: SecretClient;
   private cache: Map<string, CachedSecret> = new Map();
   private cacheTimeout = 5 * 60 * 1000; // 5 minutes
 
   constructor() {
-    const credential = new DefaultAzureCredential();
-    this.client = new SecretClient(
-      'https://phi-intelligence-vault.vault.azure.net/',
-      credential
-    );
+    console.log('✅ KeyVault Service initialized (environment variables mode)');
   }
 
   async getSecret(secretName: string): Promise<string> {
@@ -26,21 +21,22 @@ class KeyVaultService {
       return cached.value;
     }
 
-    try {
-      const secret = await this.client.getSecret(secretName);
-      const value = secret.value || '';
-      
-      // Cache the secret
-      this.cache.set(secretName, {
-        value,
-        expires: Date.now() + this.cacheTimeout
-      });
-      
-      return value;
-    } catch (error) {
-      console.error(`Failed to get secret ${secretName}:`, error);
-      throw error;
+    // Get from environment variable instead of Azure
+    const envKey = secretName.toUpperCase().replace(/-/g, '_');
+    const value = process.env[envKey] || '';
+    
+    if (!value) {
+      console.warn(`⚠️ Environment variable ${envKey} not found for secret ${secretName}`);
+      return '';
     }
+    
+    // Cache the value
+    this.cache.set(secretName, {
+      value,
+      expires: Date.now() + this.cacheTimeout
+    });
+    
+    return value;
   }
 
   // Database secrets
@@ -112,16 +108,18 @@ class KeyVaultService {
     this.cache.clear();
   }
 
-  // Test connection
+  // Test connection (now just checks environment variables)
   async testConnection(): Promise<boolean> {
     try {
-      await this.getSecret('openai-api-key');
-      return true;
+      const testKey = process.env.OPENAI_API_KEY;
+      return !!testKey;
     } catch (error) {
-      console.error('Key Vault connection test failed:', error);
+      console.error('Environment variable access failed:', error);
       return false;
     }
   }
 }
+
+// Note: All methods now read from environment variables instead of Azure Key Vault
 
 export default new KeyVaultService();

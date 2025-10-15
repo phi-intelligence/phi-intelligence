@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/neon-http';
 import { neon } from '@neondatabase/serverless';
 import * as schema from '../shared/schema';
-import keyVaultService from './services/keyVaultService';
+// keyVaultService removed - using environment variables for AWS deployment
 
 // Database connection - will be initialized when needed
 let sql: any = null;
@@ -9,19 +9,14 @@ let db: any = null;
 
 async function getDatabase() {
   if (!sql || !db) {
-    // Try Key Vault first, fallback to environment
-    let databaseUrl: string;
-    try {
-      databaseUrl = await keyVaultService.getDatabaseUrl('phi');
-    } catch (error) {
-      console.warn('Failed to get database URL from Key Vault, using environment variable');
-      databaseUrl = process.env.DATABASE_URL || '';
-    }
+    // Use environment variable directly (AWS deployment)
+    const databaseUrl = process.env.DATABASE_URL;
     
     if (!databaseUrl) {
-      throw new Error('DATABASE_URL not available from Key Vault or environment variables');
+      throw new Error('DATABASE_URL not found in environment variables. Ensure load-aws-secrets.sh is executed.');
     }
     
+    console.log('✅ Using DATABASE_URL from environment variables');
     sql = neon(databaseUrl);
     db = drizzle(sql, { schema });
   }

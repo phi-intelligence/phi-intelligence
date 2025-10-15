@@ -21,8 +21,7 @@ from dotenv import load_dotenv
 # ✅ ADD: Redis service import
 from shared.redis_service import redis_service
 
-# ✅ ADD: Key Vault service import
-from shared.key_vault_service import key_vault_service
+# Azure Key Vault removed - using environment variables for AWS deployment
 
 # Load environment variables (development fallback)
 load_dotenv()
@@ -99,14 +98,10 @@ class PhiTokenServer:
             
             if all([self.livekit_api_key, self.livekit_api_secret, self.livekit_url]):
                 logger.info("✅ Using LiveKit credentials from environment variables")
-            else:
-                # Priority 2: Try Azure Key Vault (for Azure deployments)
-                logger.info("Environment variables not set, attempting Azure Key Vault...")
-                self.livekit_api_key, self.livekit_api_secret, self.livekit_url = await key_vault_service.get_livekit_credentials('phi')
-                logger.info("✅ Loaded credentials from Azure Key Vault")
+            # Removed Azure Key Vault fallback - environment variables required for AWS deployment
             
             if not all([self.livekit_api_key, self.livekit_api_secret, self.livekit_url]):
-                raise ValueError("Missing required LiveKit credentials (set LIVEKIT_PHI_* env vars or configure Key Vault)")
+                raise ValueError("Missing required LiveKit credentials (set LIVEKIT_PHI_* environment variables)")
             
             self.config = PhiTokenConfig(
                 api_key=self.livekit_api_key,
@@ -128,7 +123,7 @@ class PhiTokenServer:
             self.livekit_api_secret = os.getenv("LIVEKIT_PHI_API_SECRET")
             
             if not all([self.livekit_api_key, self.livekit_api_secret, self.livekit_url]):
-                raise ValueError("Missing required LiveKit credentials from Key Vault and environment")
+                raise ValueError("Missing required LiveKit credentials from environment variables")
             
             self.config = PhiTokenConfig(
                 api_key=self.livekit_api_key,
@@ -336,7 +331,6 @@ async def add_cors_headers(request, call_next):
 @app.get("/health", response_model=HealthResponse)
 async def health_check():
     """Health check endpoint for Phi Intelligence token server"""
-    keyvault_status = await key_vault_service.test_connection()
     
     return HealthResponse(
         status="healthy" if phi_token_server.initialized else "unhealthy",

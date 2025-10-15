@@ -172,12 +172,18 @@ app.use((req, res, next) => {
   // Setup Vite in development mode only
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
-  } else {
-    // Production: Serve static files
+  } else if (process.env.SKIP_FRONTEND_SERVE !== 'true') {
+    // Production: Serve static files (only if not using external frontend like Amplify)
     serveStatic(app);
     
     // Production logging
-    console.log('🚀 Production mode enabled');
+    console.log('🚀 Production mode enabled - Serving static files');
+    console.log('🔒 Security middleware: Helmet, Rate Limiting, CORS');
+    console.log('📊 Error monitoring and logging enabled');
+  } else {
+    // Production: API-only mode (frontend served externally)
+    console.log('🚀 Production API-only mode enabled');
+    console.log('📡 Frontend served externally (e.g., AWS Amplify)');
     console.log('🔒 Security middleware: Helmet, Rate Limiting, CORS');
     console.log('📊 Error monitoring and logging enabled');
   }

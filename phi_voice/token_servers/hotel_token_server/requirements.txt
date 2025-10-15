@@ -20,8 +20,7 @@ python-dotenv==1.1.1
 bcrypt==4.3.0
 
 # Azure Key Vault for secure secret management
-azure-identity==1.15.0
-azure-keyvault-secrets==4.7.0
+# Azure dependencies removed - using environment variables for AWS deployment
 
 # =============================================================================
 # DATA VALIDATION & SERIALIZATION

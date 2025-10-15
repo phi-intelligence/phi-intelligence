@@ -20,9 +20,13 @@ services:
       - NODE_ENV=production
       - PORT=5000
       - REDIS_URL=redis://redis:6379
+      - SKIP_FRONTEND_SERVE=true
       
       # CORS (loaded from .env file)
       - VITE_ALLOWED_ORIGINS=${VITE_ALLOWED_ORIGINS}
+      
+      # Backend API URL for frontend
+      - VITE_API_URL=${VITE_API_URL}
       
       # Database (from AWS Secrets Manager via env)
       - DATABASE_URL=${DATABASE_URL}

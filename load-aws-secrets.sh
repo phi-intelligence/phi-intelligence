@@ -120,16 +120,26 @@ echo "✓ R2_ENDPOINT loaded"
 export CLOUDFLARE_ACCOUNT_ID=$(get_secret "cloudflare-account-id")
 echo "✓ CLOUDFLARE_ACCOUNT_ID loaded"
 
-# Load CORS from .env file if exists
+# CORS Configuration for Custom Domain
+export VITE_ALLOWED_ORIGINS="https://www.phiintelligence.com,https://phiintelligence.com,https://main.d3ozd8k0s4za13.amplifyapp.com"
+echo "✓ VITE_ALLOWED_ORIGINS set"
+
+# Backend API URL (CRITICAL for frontend-backend communication)
+export VITE_API_URL="https://api.phiintelligence.com"
+echo "✓ VITE_API_URL set"
+
+# Load additional CORS from .env file if exists
 if [ -f ".env.aws" ]; then
     export $(grep -v '^#' .env.aws | xargs)
-    echo "✓ CORS configuration loaded from .env.aws"
+    echo "✓ Additional configuration loaded from .env.aws"
 fi
 
 echo ""
 echo "✅ All secrets loaded successfully!"
 echo "   Region: $AWS_REGION"
 echo "   Secrets loaded: 29"
+echo "   CORS Origins: $VITE_ALLOWED_ORIGINS"
+echo "   API URL: $VITE_API_URL"
 echo ""
 echo "Now you can run: docker compose -f docker-compose.aws.yml up -d"
 
