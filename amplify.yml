@@ -32,12 +32,11 @@ frontend:
           value: 'SAMEORIGIN'
         - key: 'X-Content-Type-Options'
           value: 'nosniff'
+  redirects:
+    - source: '</^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json|webp|glb)$)([^.]+$)/>'
+      target: '/index.html'
+      status: '200'
   rewrites:
     - source: '/api/<*>'
       target: 'https://api.phiintelligence.com/api/<*>'
       status: '200'
-      type: 'REWRITE'
-    - source: '/<*>'
-      target: '/index.html'
-      status: '200'
-      condition: '<US>'
