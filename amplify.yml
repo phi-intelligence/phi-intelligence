@@ -32,11 +32,6 @@ frontend:
           value: 'SAMEORIGIN'
         - key: 'X-Content-Type-Options'
           value: 'nosniff'
-  customHeaders:
-    - pattern: '/'
-      headers:
-        - key: 'Cache-Control'
-          value: 'no-cache'
   redirects:
     - source: '/<*>'
       target: '/index.html'
