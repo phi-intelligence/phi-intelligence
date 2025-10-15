@@ -31,6 +31,16 @@ import keyVaultService from "./services/keyVaultService";
 const newsScheduler = new NewsSchedulerService(storage);
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Health check endpoint (must be first for Docker healthcheck)
+  app.get("/health", async (req, res) => {
+    res.json({ 
+      status: "healthy", 
+      timestamp: new Date().toISOString(),
+      mode: process.env.SKIP_FRONTEND_SERVE === 'true' ? 'api-only' : 'full-stack',
+      database: !!process.env.DATABASE_URL
+    });
+  });
+
   // Auto-initialize news system on server start
   console.log('🚀 Auto-initializing news system...');
   try {
