@@ -37,6 +37,7 @@ frontend:
       target: 'https://api.phiintelligence.com/api/<*>'
       status: '200'
       type: 'REWRITE'
-    - source: '</^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json|webp|glb)$)([^.]+$)/>'
+    - source: '/<*>'
       target: '/index.html'
       status: '200'
+      condition: '<US>'
