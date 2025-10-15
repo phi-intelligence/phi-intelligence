@@ -62,6 +62,17 @@ function Router() {
   const { info } = useConditionalLogging();
   const [location] = useLocation();
 
+  // Normalize trailing slashes for consistent routing
+  useEffect(() => {
+    const path = window.location.pathname;
+    // Remove trailing slash (except for root /)
+    if (path !== '/' && path.endsWith('/')) {
+      const newPath = path.slice(0, -1);
+      window.history.replaceState(null, '', newPath + window.location.search + window.location.hash);
+      info(`Normalized URL: ${path} → ${newPath}`, undefined, 'Router', 'url-normalization');
+    }
+  }, [info]);
+
   // Scroll to top when route changes and initialize AOS
   useEffect(() => {
     window.scrollTo(0, 0);
