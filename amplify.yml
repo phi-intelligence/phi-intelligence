@@ -33,9 +33,6 @@ frontend:
         - key: 'X-Content-Type-Options'
           value: 'nosniff'
   customRules:
-    - source: '</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json)$)([^.]+$)/>'
-      target: '/index.html'
-      status: '200'
-    - source: '/<*>'
+    - source: '</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json|wasm|glb|gltf|bin|dae)$)([^.]+$)/>'
       target: '/index.html'
       status: '200'
