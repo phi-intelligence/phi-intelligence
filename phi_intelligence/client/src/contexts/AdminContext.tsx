@@ -59,7 +59,8 @@ export const AdminProvider: React.FC<AdminProviderProps> = ({ children }) => {
     try {
       setIsLoading(true);
       
-      const response = await fetch('/api/admin/login', {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,8 +97,9 @@ export const AdminProvider: React.FC<AdminProviderProps> = ({ children }) => {
 
   const logout = async () => {
     try {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       // Call server logout to clear cookie
-      await fetch('/api/admin/logout', {
+      await fetch(`${apiUrl}/api/admin/logout`, {
         method: 'POST',
         credentials: 'include',
       });
@@ -113,7 +115,8 @@ export const AdminProvider: React.FC<AdminProviderProps> = ({ children }) => {
 
   const refreshAccessToken = useCallback(async (): Promise<boolean> => {
     try {
-      const response = await fetch('/api/admin/refresh', {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/admin/refresh`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
