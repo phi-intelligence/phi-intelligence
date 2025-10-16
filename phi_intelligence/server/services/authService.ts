@@ -21,7 +21,8 @@ export class AuthService {
   static async authenticateAdmin(username: string, password: string): Promise<LoginResult> {
     try {
       // Get admin user from database
-      const adminUser = await getDb()
+      const db = await getDb();
+      const adminUser = await db
         .select()
         .from(adminUsers)
         .where(eq(adminUsers.username, username))

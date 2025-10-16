@@ -49,7 +49,8 @@ export const adminAuthMiddleware = async (
     const payload = await JWTService.verifyAccessToken(token);
     
     // Get admin user from database
-    const adminUser = await getDb()
+    const db = await getDb();
+    const adminUser = await db
       .select({
         id: adminUsers.id,
         username: adminUsers.username,
