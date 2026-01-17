@@ -8,7 +8,7 @@ import NeuralNetworkAnimation from "@/components/three/NeuralNetworkAnimation";
 
 interface NewsArticle {
   id: string; title: string; url: string; excerpt: string; author: string;
-  publishedAt: Date; category: string; tags: string[]; imageUrl?: string;
+  publishedAt: Date | string; category: string; tags: string[]; imageUrl?: string;
   readTime: string; isFeatured: boolean; sourceName?: string;
 }
 
@@ -17,11 +17,14 @@ export default function Blog() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL || '';
 
-  const { data: newsArticles = [], isLoading, refetch } = useQuery<NewsArticle[]>({
+  const { data: newsArticles = [], isLoading, error, refetch } = useQuery<NewsArticle[]>({
     queryKey: [`${apiUrl}/api/news`, selectedCategory],
     queryFn: async () => {
       const url = selectedCategory === 'all' ? `${apiUrl}/api/news` : `${apiUrl}/api/news?category=${selectedCategory}`;
       const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch articles: ${res.statusText}`);
+      }
       return res.json();
     }
   });
@@ -82,6 +85,13 @@ export default function Blog() {
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map(i => <div key={i} className="aspect-[4/5] rounded-[2.5rem] bg-white/5 animate-pulse" />)}
+          </div>
+        ) : error ? (
+          <div className="p-20 rounded-[3rem] border border-red-500/20 text-center space-y-6">
+            <p className="text-red-400 text-xl">Error loading articles: {error.message}</p>
+            <Button onClick={() => refetch()} variant="outline" className="pill-button border-white/10">
+              Retry
+            </Button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">

@@ -13,6 +13,10 @@ export default function Careers() {
   
   const { data: jobs, isLoading, error, refetch } = useQuery<Job[]>({
     queryKey: [`${apiUrl}/api/jobs`],
+    queryFn: async () => {
+      const res = await fetch(`${apiUrl}/api/jobs`);
+      return res.json();
+    },
     placeholderData: [],
     retry: 2,
     refetchOnWindowFocus: false,
@@ -36,7 +40,7 @@ export default function Careers() {
             className="text-7xl md:text-9xl font-bold tracking-tighter"
           >
             JOIN THE<br />
-            <span className="opacity-20 uppercase">Revolution.</span>
+            <span className="opacity-20 uppercase">Mission.</span>
           </motion.h1>
           <p className="text-xl md:text-2xl opacity-40 max-w-3xl mt-8 font-light leading-relaxed">
             We're building the industrial intelligence layer of the future. Join us in Nottingham or remotely to redefine what's possible with PhiAI.

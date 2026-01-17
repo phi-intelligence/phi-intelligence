@@ -24,11 +24,10 @@ VITE_API_URL = https://api.phiintelligence.com
 ```
 VITE_PHI_TOKEN_SERVER_URL = https://api.phiintelligence.com/voice/phi
 VITE_COMPANY_TOKEN_SERVER_URL = https://api.phiintelligence.com/voice/company
-VITE_HOTEL_RECEPTIONIST_TOKEN_SERVER_URL = https://api.phiintelligence.com/voice/hotel
-VITE_RESTAURANT_ORDER_TOKEN_SERVER_URL = https://api.phiintelligence.com/voice/restaurant
-VITE_HOSPITAL_APPOINTMENT_TOKEN_SERVER_URL = https://api.phiintelligence.com/voice/hospital
 ```
 **Purpose**: Voice features (LiveKit token generation)
+
+**Note**: Hotel, Restaurant, and Hospital token servers have been removed from the backend.
 
 ### LiveKit WebSocket URLs
 ```
@@ -115,9 +114,6 @@ For easy setup, here's the complete list in Amplify format:
 VITE_API_URL=https://api.phiintelligence.com
 VITE_PHI_TOKEN_SERVER_URL=https://api.phiintelligence.com/voice/phi
 VITE_COMPANY_TOKEN_SERVER_URL=https://api.phiintelligence.com/voice/company
-VITE_HOTEL_RECEPTIONIST_TOKEN_SERVER_URL=https://api.phiintelligence.com/voice/hotel
-VITE_RESTAURANT_ORDER_TOKEN_SERVER_URL=https://api.phiintelligence.com/voice/restaurant
-VITE_HOSPITAL_APPOINTMENT_TOKEN_SERVER_URL=https://api.phiintelligence.com/voice/hospital
 VITE_LIVEKIT_URL=wss://phi-intelligence-general-pwgb54ng.livekit.cloud
 VITE_LIVEKIT_COMPANY_URL=wss://phi-intelligence-company-tku4otnx.livekit.cloud
 ```
@@ -137,9 +133,6 @@ aws amplify update-branch \
     VITE_API_URL="https://api.phiintelligence.com" \
     VITE_PHI_TOKEN_SERVER_URL="https://api.phiintelligence.com/voice/phi" \
     VITE_COMPANY_TOKEN_SERVER_URL="https://api.phiintelligence.com/voice/company" \
-    VITE_HOTEL_RECEPTIONIST_TOKEN_SERVER_URL="https://api.phiintelligence.com/voice/hotel" \
-    VITE_RESTAURANT_ORDER_TOKEN_SERVER_URL="https://api.phiintelligence.com/voice/restaurant" \
-    VITE_HOSPITAL_APPOINTMENT_TOKEN_SERVER_URL="https://api.phiintelligence.com/voice/hospital" \
     VITE_LIVEKIT_URL="wss://phi-intelligence-general-pwgb54ng.livekit.cloud" \
     VITE_LIVEKIT_COMPANY_URL="wss://phi-intelligence-company-tku4otnx.livekit.cloud"
 
@@ -156,7 +149,7 @@ After completing setup, you should see:
 
 ### In Amplify Build Logs:
 ```
-✓ Environment variables loaded (8)
+✓ Environment variables loaded (5)
 ✓ VITE_API_URL configured
 ✓ Build completed successfully
 ✓ Deployment succeeded

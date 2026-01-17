@@ -28,6 +28,7 @@ import { Send } from "lucide-react";
 export default function ContactForm() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const apiUrl = import.meta.env.VITE_API_URL || '';
 
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
@@ -42,7 +43,7 @@ export default function ContactForm() {
 
   const submitContactMutation = useMutation({
     mutationFn: async (data: InsertContact) => {
-      const response = await apiRequest("POST", "/api/contacts", data);
+      const response = await apiRequest("POST", `${apiUrl}/api/contacts`, data);
       return response.json();
     },
     onSuccess: () => {
@@ -51,7 +52,7 @@ export default function ContactForm() {
         description: "Thank you for your message. We'll get back to you soon!",
       });
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["/api/contacts"] });
+      queryClient.invalidateQueries({ queryKey: [`${apiUrl}/api/contacts`] });
     },
     onError: (error) => {
       toast({

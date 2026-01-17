@@ -1,0 +1,39 @@
+{
+    "app": {
+        "appId": "d3ozd8k0s4za13",
+        "appArn": "arn:aws:amplify:eu-west-2:454096721257:apps/d3ozd8k0s4za13",
+        "name": "PHIAI",
+        "tags": {},
+        "description": "Phi Intelligence - AI-powered business solutions platform",
+        "repository": "https://github.com/phi-intelligence/phi-intelligence",
+        "platform": "WEB",
+        "createTime": "2025-10-12T01:44:19.811000+01:00",
+        "updateTime": "2025-10-14T14:12:02.966000+01:00",
+        "defaultDomain": "d3ozd8k0s4za13.amplifyapp.com",
+        "enableBranchAutoBuild": false,
+        "enableBranchAutoDeletion": false,
+        "enableBasicAuth": false,
+        "customRules": [
+            {
+                "source": "https://phiintelligence.com",
+                "target": "https://www.phiintelligence.com",
+                "status": "302"
+            }
+        ],
+        "productionBranch": {
+            "lastDeployTime": "2025-10-15T15:19:55.135000+01:00",
+            "status": "SUCCEED",
+            "branchName": "main"
+        },
+        "customHeaders": "",
+        "enableAutoBranchCreation": false,
+        "repositoryCloneMethod": "TOKEN",
+        "cacheConfig": {
+            "type": "AMPLIFY_MANAGED_NO_COOKIES"
+        },
+        "webhookCreateTime": "2025-10-12T03:03:10.494000+01:00",
+        "jobConfig": {
+            "buildComputeType": "STANDARD_8GB"
+        }
+    }
+}
