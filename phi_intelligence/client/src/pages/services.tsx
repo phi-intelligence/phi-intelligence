@@ -103,11 +103,11 @@ export default function Services() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-32 lg:py-48 bg-white text-black text-center px-6">
+      <section className="py-32 lg:py-48 text-white text-center px-6">
         <h2 className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 uppercase">Ready to Transform?</h2>
         <div className="flex justify-center">
           <Link href="/company/contact">
-            <Button className="pill-button bg-black text-white px-12 py-8 text-xl lg:text-2xl font-bold">Get in touch</Button>
+            <Button className="pill-button bg-white text-black px-12 py-8 text-xl lg:text-2xl font-bold">Get in touch</Button>
           </Link>
         </div>
       </section>

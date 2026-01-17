@@ -418,7 +418,7 @@ export default function Home() {
       </section>
 
       {/* 6. Final CTA */}
-      <section className="py-48 lg:py-64 text-center bg-white text-black border-t border-white/10">
+      <section className="py-48 lg:py-64 text-center text-white border-t border-white/10">
         <div className="max-w-5xl mx-auto px-6 space-y-12">
           <h3 className="text-6xl sm:text-8xl md:text-9xl font-bold tracking-tighter uppercase">START YOUR JOURNEY</h3>
           <p className="text-2xl md:text-3xl opacity-60 font-light leading-relaxed max-w-3xl mx-auto">
@@ -426,7 +426,7 @@ export default function Home() {
           </p>
           <div className="pt-8">
              <Link href="/company/contact">
-               <Button className="pill-button bg-black text-white px-16 py-10 text-2xl font-bold hover:scale-105 transition-all duration-500 shadow-2xl">
+               <Button className="pill-button bg-white text-black px-16 py-10 text-2xl font-bold hover:scale-105 transition-all duration-500 shadow-2xl">
                  Book Consultation
                </Button>
              </Link>
