@@ -8,7 +8,7 @@ import Robot3D from "@/components/three/robotvoice";
 import VoiceBubble from "@/components/voice/VoiceBubble";
 import { FrameworkWrapper } from "@/components/voice/FrameworkWrapper";
 import { useState } from "react";
-import phiDocsVideo from "@/assets/Minimal_Phi_Logo_Animation_Generation.mp4";
+import phiDocsImage from "@/assets/phi.jpeg";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState('');
@@ -272,16 +272,14 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-5 relative group">
-               <div className="absolute -inset-1 bg-white/5 rounded-[3rem] blur-2xl opacity-10 group-hover:opacity-30 transition-opacity duration-1000" />
+               <div className="absolute -inset-1 bg-gradient-to-tr from-white/10 to-transparent rounded-[3rem] blur-2xl opacity-10 group-hover:opacity-30 transition-opacity duration-1000" />
                <div className="relative aspect-square rounded-[3rem] border border-white/10 overflow-hidden bg-white/[0.01] flex items-center justify-center p-8 sm:p-12">
-                  <video 
-                    src={phiDocsVideo}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
+                  <img 
+                    src={phiDocsImage}
                     className="w-full h-full object-contain grayscale opacity-50 transition-all duration-1000 hover:grayscale-0 hover:opacity-100"
+                    alt="Document Synthesis Engine"
                   />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-1000 pointer-events-none" />
                </div>
             </div>
           </div>
