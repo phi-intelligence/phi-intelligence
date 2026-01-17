@@ -413,21 +413,23 @@ const VoiceBubble: React.FC = () => {
           ))}
         </div>
         
-        {/* Tap to talk text */}
-        <div className="text-center mt-2">
-          <p className="text-sm text-phi-light opacity-80">Tap to talk</p>
+        {/* Tap to talk text - ABSOLUTE to avoid shifting the circle */}
+        <div className="absolute top-[calc(100%+1rem)] left-1/2 -translate-x-1/2 w-max text-center">
+          <p className="text-sm text-phi-light opacity-80 font-medium tracking-widest uppercase">Tap to talk</p>
         </div>
         
-        {/* Real-time transcriptions and responses */}
-        <div className="transcript-container">
+        {/* Real-time transcriptions and responses - ABSOLUTE */}
+        <div className="absolute top-[calc(100%+3rem)] left-1/2 -translate-x-1/2 w-80 sm:w-96 text-center space-y-4">
           {transcript && (
-            <div className="transcript">
-              <strong>You:</strong> {transcript}
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+              <strong className="text-xs uppercase opacity-40 block mb-1">You</strong> 
+              <span className="text-sm font-light leading-relaxed">{transcript}</span>
             </div>
           )}
           {response && (
-            <div className="response">
-              <strong>Phi:</strong> {response}
+            <div className="p-4 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md">
+              <strong className="text-xs uppercase opacity-40 block mb-1">Phi</strong> 
+              <span className="text-sm font-light leading-relaxed">{response}</span>
             </div>
           )}
         </div>

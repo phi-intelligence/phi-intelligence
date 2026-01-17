@@ -96,10 +96,11 @@ export default function ANNAnimation({
       this.neurons = [];
       this.connections = [];
       
-      // Create layered network structure - optimized neuron count
-      const layers = [3, 4, 5, 4, 3]; // Input -> Hidden -> Output (3-4-5-4-3 configuration)
-      const layerSpacing = this.canvas.width / (layers.length + 1);
-      const margin = Math.min(60, this.canvas.height * 0.08); // Responsive margin
+      // Create layered network structure - Restored 3-4-5-4-3 configuration
+      const layers = [3, 4, 5, 4, 3]; 
+      const horizontalPadding = this.canvas.width * 0.05; // Reduced padding (5%)
+      const layerSpacing = (this.canvas.width - (2 * horizontalPadding)) / (layers.length - 1);
+      const margin = Math.min(30, this.canvas.height * 0.08); 
       
       let neuronId = 0;
       
@@ -108,29 +109,28 @@ export default function ANNAnimation({
         const neuronsInLayer = layers[layerIndex];
         const availableHeight = this.canvas.height - (2 * margin);
         const neuronSpacing = availableHeight / Math.max(neuronsInLayer - 1, 1);
-        const x = layerSpacing * (layerIndex + 1);
+        const x = horizontalPadding + (layerSpacing * layerIndex);
         
         for (let neuronIndex = 0; neuronIndex < neuronsInLayer; neuronIndex++) {
           let y;
           
           if (layerIndex === 0 || layerIndex === layers.length - 1) {
             // Center the input and output layers vertically
-            const totalSpacing = (neuronsInLayer - 1) * (availableHeight / Math.max(neuronsInLayer - 1, 1) * 0.4);
+            const totalSpacing = (neuronsInLayer - 1) * (availableHeight / Math.max(neuronsInLayer - 1, 1) * 0.6); // Increased spread
             const startY = margin + (availableHeight - totalSpacing) / 2;
-            y = startY + (neuronIndex * (availableHeight / Math.max(neuronsInLayer - 1, 1) * 0.4));
+            y = startY + (neuronIndex * (availableHeight / Math.max(neuronsInLayer - 1, 1) * 0.6));
           } else {
-            // Normal positioning for hidden layers
             y = margin + (neuronIndex * neuronSpacing);
           }
           
           this.neurons.push({
             id: neuronId++,
-            x: x, // Perfect alignment, no randomness
+            x: x,
             y: y,
             layer: layerIndex,
             activation: 0,
             targetActivation: 0,
-            radius: Math.min(18, Math.min(this.canvas.width, this.canvas.height) * 0.025), // Increased from 12 to 18 and from 0.015 to 0.025 for larger neurons
+            radius: Math.min(20, Math.min(this.canvas.width, this.canvas.height) * 0.03), 
             lastActivation: 0,
             connections: []
           });

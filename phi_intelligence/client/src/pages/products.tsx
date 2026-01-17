@@ -1,278 +1,108 @@
-import { CheckCircle, ArrowRight, Mic, Users, BarChart3, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Link } from "wouter";
-import AudioBarsAnimation from "@/components/three/AudioBarsAnimation";
+import { Mic, Layout, ArrowRight, Layers, MessageSquare, Zap, Cpu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
-import AdvancedNetworkAnimation from "@/components/three/AdvancedNetworkAnimation";
+const products = [
+  {
+    title: "WORKSTREAM",
+    id: "workstream",
+    description: "Agentic workforce management for industrial-scale efficiency. Automate scheduling, tracking, and task delegation.",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000",
+    features: ["Task Automation", "Team Analytics", "Real-time Tracking"],
+    href: "/products/workstream",
+    icon: Layout
+  },
+  {
+    title: "VOICEBOT BUILDER",
+    id: "voicebot-builder",
+    description: "Build custom AI voice agents in minutes. No-code interface for complex conversational flows and logic.",
+    image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=1000",
+    features: ["Drag-and-Drop Logic", "Multilingual Support", "CRM Integration"],
+    href: "/products/voicebot-builder",
+    icon: Mic
+  }
+];
 
-export default function Products() {
-  const products = [
-    {
-      id: "voice-platform",
-      title: "AI Voice Assistant Platform",
-      description: "Enterprise-grade voice AI platform that enables businesses to deploy intelligent voice assistants for customer service, sales, and support operations.",
-      features: [
-        "Natural Language Understanding (NLU)",
-        "Multi-language Support (20+ languages)",
-        "Real-time Speech Recognition",
-        "Voice Synthesis & Customization",
-        "CRM & API Integrations",
-        "Advanced Analytics Dashboard",
-        "24/7 Automated Support",
-        "Sentiment Analysis",
-        "Call Recording & Transcription",
-        "Scalable Cloud Infrastructure"
-      ],
-      useCases: [
-        "Customer Support Automation",
-        "Appointment Scheduling",
-        "Lead Qualification",
-        "Order Processing",
-        "FAQ Handling"
-      ],
-      pricing: "From £500/month"
-    },
-    {
-      id: "workforce-suite",
-      title: "Workforce Analytics Suite",
-      description: "Comprehensive workforce management solution with AI-powered scheduling, performance tracking, and predictive analytics for optimal resource utilization.",
-      features: [
-        "Intelligent Scheduling Algorithm",
-        "Real-time Attendance Tracking",
-        "Performance Analytics & KPIs",
-        "Predictive Workforce Planning",
-        "Mobile App for Employees",
-        "GPS-based Clock In/Out",
-        "Automated Payroll Integration",
-        "Compliance Monitoring",
-        "Resource Optimization",
-        "Custom Reporting Tools"
-      ],
-      useCases: [
-        "Retail Staff Management",
-        "Healthcare Scheduling",
-        "Manufacturing Shifts",
-        "Field Service Teams",
-        "Restaurant Operations"
-      ],
-      pricing: "From £10/employee/month"
-    },
-    {
-      id: "analytics-platform",
-      title: "Business Intelligence Platform",
-      description: "AI-powered business intelligence platform that transforms raw data into actionable insights with predictive analytics and automated reporting.",
-      features: [
-        "Automated Data Collection",
-        "Predictive Analytics Models",
-        "Real-time Dashboards",
-        "Custom Report Generation",
-        "Data Visualization Tools",
-        "Machine Learning Insights",
-        "Trend Analysis",
-        "Alert & Notification System",
-        "Multi-source Data Integration",
-        "Export & Sharing Capabilities"
-      ],
-      useCases: [
-        "Sales Performance Analysis",
-        "Customer Behavior Insights",
-        "Operational Efficiency",
-        "Financial Forecasting",
-        "Market Trend Analysis"
-      ],
-      pricing: "From £200/month"
-    }
-  ];
-
+export default function ProductsPage() {
   return (
-    <div className="min-h-screen bg-phi-black text-phi-white">
-      {/* Hero Section */}
-      <section id="products-hero" className="relative h-screen flex items-center justify-center overflow-hidden" data-testid="products-hero">
-        {/* Advanced Neural Network Animation Background */}
-        <div className="absolute inset-0 z-0">
-          <AdvancedNetworkAnimation 
-            className="w-full h-full"
-            enableInteraction={true}
-          />
-        </div>
+    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black pt-32 pb-20">
+      <div className="container mx-auto max-w-7xl px-6">
         
-        {/* Subtle overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10"></div>
-        
-        {/* Content Overlay */}
-        <div className="relative z-20 text-center px-4 max-w-7xl mx-auto">
-          <h1 className="text-6xl md:text-7xl font-light glow-text text-white mb-8">
-            Our Products
-          </h1>
-          <p className="text-xl md:text-2xl opacity-90 max-w-4xl mx-auto mb-12 text-white">
-            Discover our suite of AI-powered products designed to revolutionize how businesses 
-            operate, engage with customers, and make data-driven decisions.
+        {/* Header */}
+        <div className="mb-32">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-7xl md:text-9xl font-bold tracking-tighter"
+          >
+            OUR<br />
+            <span className="opacity-20 uppercase">Products.</span>
+          </motion.h1>
+          <p className="text-xl md:text-2xl opacity-40 max-w-2xl mt-8 font-light">
+            Scalable AI platforms built to empower your organizational growth.
           </p>
-          <Link href="/company/contact">
-            <Button 
-              className="btn-primary px-8 py-4 rounded-lg font-semibold text-lg bg-white text-black hover:bg-opacity-90 transition-all duration-300"
-              data-testid="button-request-demo"
-            >
-              Request Demo
-            </Button>
-          </Link>
         </div>
-      </section>
 
-      {/* Products Section */}
-      <section className="py-24 px-6" data-testid="products-list">
-        <div className="container mx-auto max-w-7xl">
-          {products.map((product, index) => (
-            <div 
-              key={product.id} 
-              className={`grid lg:grid-cols-2 gap-16 items-center mb-32 ${
-                index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
-              }`}
-              data-testid={`product-${product.id}`}
-            >
-              {/* Product Info */}
-              <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                <div className="mb-6">
-                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
-                    {product.title}
-                  </h3>
-                  <p className="text-xl opacity-80 mb-8">
+        {/* Products List */}
+        <div className="space-y-48">
+          {products.map((product, idx) => (
+            <div key={product.id} className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+              <div className={idx % 2 !== 0 ? "lg:order-2" : ""}>
+                <div className="space-y-8">
+                  <div className="inline-flex p-4 rounded-2xl bg-white/5 border border-white/10">
+                    <product.icon className="w-8 h-8 opacity-40" />
+                  </div>
+                  <h2 className="text-5xl font-bold tracking-tight">{product.title}</h2>
+                  <p className="text-xl opacity-60 leading-relaxed font-light">
                     {product.description}
                   </p>
-                </div>
-
-                <div className="mb-8">
-                  <h4 className="text-2xl font-semibold mb-6">Key Features:</h4>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {product.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center">
-                        <CheckCircle className="mr-3 h-5 w-5 text-phi-light flex-shrink-0" />
-                        <span className="opacity-80">{feature}</span>
+                  <div className="flex flex-col gap-4">
+                    {product.features.map(f => (
+                      <div key={f} className="flex items-center gap-4 py-4 border-b border-white/5 opacity-80 group transition-all duration-300 hover:pl-4">
+                        <div className="w-1.5 h-1.5 rounded-full bg-white group-hover:scale-150 transition-transform" />
+                        <span className="text-lg font-light tracking-wide">{f}</span>
                       </div>
                     ))}
                   </div>
-                </div>
-
-                <div className="mb-8">
-                  <h4 className="text-2xl font-semibold mb-4">Use Cases:</h4>
-                  <div className="flex flex-wrap gap-3">
-                    {product.useCases.map((useCase, useCaseIndex) => (
-                      <span 
-                        key={useCaseIndex}
-                        className="px-4 py-2 bg-phi-gray rounded-full text-sm"
-                      >
-                        {useCase}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                  <div className="flex gap-4">
-                    <Link href={index === 0 ? "/products/voicebot-builder" : "/company/contact"}>
-                      <Button 
-                        className="btn-primary px-6 py-3 rounded-lg font-semibold"
-                        data-testid={`button-get-started-${product.id}`}
-                      >
-                        {index === 0 ? "Build Voice Agent" : "Get Started"}
-                      </Button>
-                    </Link>
-                    <Link href="/company/contact">
-                      <Button 
-                        variant="outline" 
-                        className="border-phi-white text-phi-white px-6 py-3 rounded-lg font-semibold hover:bg-phi-white hover:text-phi-black transition-all duration-300"
-                        data-testid={`button-contact-us-${product.id}`}
-                      >
-                        Contact Us
+                  <div className="pt-8">
+                    <Link href={product.href}>
+                      <Button className="pill-button bg-white text-black px-12">
+                        Get Started <ArrowRight className="ml-2 w-5 h-5" />
                       </Button>
                     </Link>
                   </div>
                 </div>
               </div>
-
-              {/* Product Visual */}
-              <div className={`floating-element ${index % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                <Card className="glassmorphism p-8 rounded-xl">
-                  <div className="bg-black/20 border border-white/10 rounded-lg h-80 flex items-center justify-center overflow-hidden">
-                    {index === 0 ? (
-                      <AudioBarsAnimation 
-                        className="w-full h-full"
-                        barCount={7}
-                        animationSpeed={1.2}
-                        enableInteraction={false}
-                      />
-                    ) : index === 1 ? (
-                      <img
-                        src="/assets/arddash.gif"
-                        alt="Workforce Analytics Suite Dashboard"
-                        className="w-full h-full object-contain rounded-lg"
-                        style={{
-                          filter: 'grayscale(100%) brightness(1.1) contrast(1.2)',
-                          mixBlendMode: 'luminosity'
-                        }}
-                      />
-                    ) : (
-                      <img
-                        src="/assets/bi.gif"
-                        alt="Business Intelligence Platform Dashboard"
-                        className="w-full h-full object-contain rounded-lg"
-                        style={{
-                          filter: 'grayscale(100%) brightness(1.1) contrast(1.2)',
-                          mixBlendMode: 'luminosity'
-                        }}
-                      />
-                    )}
-                  </div>
-                </Card>
+              
+              <div className={`relative group ${idx % 2 !== 0 ? "lg:order-1" : ""}`}>
+                <div className="absolute -inset-4 bg-white/5 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                <div className="relative aspect-square rounded-[3rem] border border-white/10 bg-white/[0.02] p-2 overflow-hidden shadow-2xl">
+                  <img 
+                    src={product.image} 
+                    className="w-full h-full object-cover rounded-[2.5rem] grayscale group-hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-110"
+                    alt={product.title}
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:opacity-0 transition-opacity duration-1000" />
+                </div>
               </div>
             </div>
           ))}
         </div>
-      </section>
 
-
-
-      {/* CTA Section */}
-      <section className="py-24 px-6" data-testid="products-cta">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 glow-text">
-            Ready to Experience the Future?
-          </h2>
-          <p className="text-xl opacity-80 mb-12">
-            Schedule a personalized demo to see how our AI products can transform your business operations.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link href="/products/voicebot-builder">
-              <Button 
-                className="btn-primary px-8 py-4 rounded-lg font-semibold text-lg"
-                data-testid="button-build-voice-agent"
-              >
-                Build Custom Voice Agent
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href="/company/contact">
-              <Button 
-                variant="outline" 
-                className="border-phi-white text-phi-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-phi-white hover:text-phi-black transition-all duration-300"
-                data-testid="button-schedule-demo"
-              >
-                Schedule Demo
-              </Button>
-            </Link>
-            <Link href="/services">
-              <Button 
-                variant="outline" 
-                className="border-phi-white text-phi-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-phi-white hover:text-phi-black transition-all duration-300"
-                data-testid="button-view-services"
-              >
-                View Services
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+        {/* Custom Solutions CTA */}
+        <section className="mt-48 p-20 rounded-[3rem] bg-white text-black text-center space-y-8">
+           <h2 className="text-4xl md:text-6xl font-bold tracking-tight">NEED SOMETHING CUSTOM?</h2>
+           <p className="text-xl opacity-60 font-light max-w-2xl mx-auto leading-relaxed">
+             Our engineering team specializes in building bespoke AI solutions tailored to unique enterprise requirements.
+           </p>
+           <div className="pt-8">
+             <Link href="/company/contact">
+               <Button className="pill-button bg-black text-white px-16 py-8 text-xl font-bold">Inquire Now</Button>
+             </Link>
+           </div>
+        </section>
+      </div>
     </div>
   );
 }

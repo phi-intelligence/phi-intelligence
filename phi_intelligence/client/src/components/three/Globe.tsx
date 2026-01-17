@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import { useThreeCleanup } from '@/hooks/use-three-cleanup';
 
 import { TextureLoader } from 'three';
-// Logo path updated to public folder
 
 interface GlobeProps {
   className?: string;
@@ -312,7 +311,6 @@ const Globe = React.memo(function Globe({ className = '', isMobile = false }: Gl
       // Rotate only the globe particles and lines
       if (particlesRef.current) {
         particlesRef.current.rotation.y += 0.001;
-        lines.rotation.y += 0.001;
       }
       
       // Logo stays completely static - explicitly reset rotation to correct orientation

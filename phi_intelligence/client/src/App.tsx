@@ -43,10 +43,6 @@ import CustomAnalyticsPage from "@/pages/services/CustomAnalyticsPage";
 import WebDevelopmentPage from "@/pages/services/WebDevelopmentPage";
 import MobileDevelopmentPage from "@/pages/services/MobileDevelopmentPage";
 
-// Product Pages
-import WorkstreamPage from "@/pages/products/WorkstreamPage";
-import VoicebotBuilderPage from "@/pages/products/VoicebotBuilderPage";
-
 // Company Pages
 import RDPage from "@/pages/company/RDPage";
 import ContactPage from "@/pages/company/ContactPage";
@@ -116,11 +112,6 @@ function Router() {
         <Route path="/services/custom-analytics" component={CustomAnalyticsPage} />
         <Route path="/services/web-development" component={WebDevelopmentPage} />
         <Route path="/services/mobile-development" component={MobileDevelopmentPage} />
-        
-        {/* Product Routes */}
-        <Route path="/products" component={Products} />
-        <Route path="/products/workstream" component={WorkstreamPage} />
-        <Route path="/products/voicebot-builder" component={VoicebotBuilderPage} />
         
         {/* Company Routes */}
         <Route path="/about" component={AboutPage} />

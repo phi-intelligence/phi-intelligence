@@ -1,296 +1,95 @@
 import { Link } from "wouter";
-import { Mic, Phone, Clock, Users, ArrowRight, CheckCircle, Zap, Shield, Smartphone, Globe, Building2, ShoppingBag, Utensils, Car, DollarSign, TrendingUp, Smile, BarChart3 } from "lucide-react";
+import { Mic, Phone, Clock, Users, ArrowRight, CheckCircle, Zap, Shield, Smartphone, Globe, Building2, ShoppingBag, Utensils, Car } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import AudioBarsAnimation from "@/components/three/AudioBarsAnimation";
 
 export default function CustomVoiceBotsPage() {
   return (
-    <div className="min-h-screen bg-phi-black text-phi-white pt-24">
-      {/* Hero Section */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 glow-text">
-                Custom Voice Bots
-              </h1>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                AI-Powered Voice Assistants
-              </h2>
-              <p className="text-xl opacity-80 mb-8">
-                Intelligent voice assistants that can answer calls, handle bookings, provide support, and mimic your brand tone with 24/7 availability. Transform customer interactions with natural, conversational AI that never sleeps.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/products/voicebot-builder">
-                  <Button className="btn-primary px-8 py-4 rounded-lg font-semibold text-lg">
-                    Build Your Agent
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link href="/company/contact">
-                  <Button
-                    variant="outline"
-                    className="border-2 border-phi-white text-phi-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-phi-white hover:text-phi-black transition-all duration-300"
-                  >
-                    Contact for Implementation
-                  </Button>
-                </Link>
-              </div>
+    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black pt-28 lg:pt-32 pb-20">
+      <div className="container mx-auto max-w-7xl px-6">
+        
+        {/* Hero Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-24 lg:mb-32">
+          <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
+            <div className="inline-block px-4 py-1.5 rounded-full border border-white/10 text-[10px] lg:text-xs font-bold tracking-[0.2em] uppercase opacity-40">
+              Vocal Intelligence
             </div>
-            <div className="floating-element">
-              <div className="glassmorphism p-8 rounded-xl">
-                <div className="bg-black/20 border border-white/10 rounded-lg h-64 flex items-center justify-center overflow-hidden">
-                  <AudioBarsAnimation 
-                    barCount={7}
-                    animationSpeed={1.2}
-                    enableInteraction={false}
-                    className="w-full h-full"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Key Features Section */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 glow-text">
-              Key Features
-            </h2>
-            <p className="text-xl opacity-80 max-w-3xl mx-auto">
-              Advanced voice bot capabilities designed to enhance customer experience and streamline operations
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none"
+            >
+              VOICE<br />
+              <span className="opacity-20 uppercase">Agents.</span>
+            </motion.h1>
+            <p className="text-lg lg:text-2xl opacity-40 max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
+              Proprietary vocal synthesis architectures designed for high-precision business automation.
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="p-6 border border-phi-gray bg-transparent hover:bg-opacity-10 transition-all duration-300">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-phi-gray rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Clock className="h-8 w-8 text-phi-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">24/7 Availability</h3>
-                <p className="opacity-80">Never miss a customer call with round-the-clock availability and instant response times</p>
-              </div>
-            </Card>
-
-            <Card className="p-6 border border-phi-gray bg-transparent hover:bg-opacity-10 transition-all duration-300">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-phi-gray rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Mic className="h-8 w-8 text-phi-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Natural Conversations</h3>
-                <p className="opacity-80">Human-like voice interactions with natural language processing and context awareness</p>
-              </div>
-            </Card>
-
-            <Card className="p-6 border border-phi-gray bg-transparent hover:bg-opacity-10 transition-all duration-300">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-phi-gray rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-8 w-8 text-phi-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Brand Consistency</h3>
-                <p className="opacity-80">Maintain your brand voice and personality across all customer interactions</p>
-              </div>
-            </Card>
-
-            <Card className="p-6 border border-phi-gray bg-transparent hover:bg-opacity-10 transition-all duration-300">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-phi-gray rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Phone className="h-8 w-8 text-phi-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Multi-Channel Support</h3>
-                <p className="opacity-80">Handle calls, texts, and voice messages across multiple communication channels</p>
-              </div>
-            </Card>
-
-            <Card className="p-6 border border-phi-gray bg-transparent hover:bg-opacity-10 transition-all duration-300">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-phi-gray rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="h-8 w-8 text-phi-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Instant Responses</h3>
-                <p className="opacity-80">Lightning-fast response times with no waiting or hold times for customers</p>
-              </div>
-            </Card>
-
-            <Card className="p-6 border border-phi-gray bg-transparent hover:bg-opacity-10 transition-all duration-300">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-phi-gray rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Shield className="h-8 w-8 text-phi-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Secure & Compliant</h3>
-                <p className="opacity-80">Enterprise-grade security with GDPR and industry compliance standards</p>
-              </div>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases Section */}
-      <section className="py-24 px-6 bg-phi-black">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 glow-text">
-              Use Cases & Applications
-            </h2>
-            <p className="text-xl opacity-80 max-w-3xl mx-auto">
-              Discover how custom voice bots can transform your business operations and customer service
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-16">
-            <div>
-              <h3 className="text-3xl font-bold mb-8">Customer Service</h3>
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <CheckCircle className="mr-4 h-6 w-6 text-phi-light mt-1" />
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">24/7 Support</h4>
-                    <p className="opacity-80">Provide round-the-clock customer support without additional staffing costs</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-4 h-6 w-6 text-phi-light mt-1" />
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">Frequently Asked Questions</h4>
-                    <p className="opacity-80">Automatically answer common customer questions and reduce support ticket volume</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-4 h-6 w-6 text-phi-light mt-1" />
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">Issue Resolution</h4>
-                    <p className="opacity-80">Guide customers through troubleshooting steps and resolve simple issues</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-4 h-6 w-6 text-phi-light mt-1" />
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">Escalation Management</h4>
-                    <p className="opacity-80">Seamlessly transfer complex issues to human agents when needed</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-3xl font-bold mb-8">Appointment Booking</h3>
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <CheckCircle className="mr-4 h-6 w-6 text-phi-light mt-1" />
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">Calendar Integration</h4>
-                    <p className="opacity-80">Sync with your existing calendar systems for seamless scheduling</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-4 h-6 w-6 text-phi-light mt-1" />
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">Availability Checking</h4>
-                    <p className="opacity-80">Instantly check and confirm available time slots with customers</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-4 h-6 w-6 text-phi-light mt-1" />
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">Rescheduling</h4>
-                    <p className="opacity-80">Handle appointment changes and cancellations automatically</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-4 h-6 w-6 text-phi-light mt-1" />
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">Reminders</h4>
-                    <p className="opacity-80">Send automated appointment reminders and confirmations</p>
-                  </div>
-                </div>
-              </div>
+            <div className="pt-4 flex flex-wrap justify-center lg:justify-start gap-4">
+               <Link href="/company/contact">
+                 <Button className="pill-button bg-white text-black px-10">Deploy Agent</Button>
+               </Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Industries Section */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 glow-text">
-              Industries We Serve
-            </h2>
-            <p className="text-xl opacity-80 max-w-3xl mx-auto">
-              Custom voice bots designed for specific industry needs and compliance requirements
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="p-6 border border-phi-gray bg-transparent text-center">
-              <div className="w-16 h-16 bg-phi-gray rounded-full flex items-center justify-center mx-auto mb-4">
-                <Building2 className="h-8 w-8 text-phi-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Healthcare</h3>
-              <p className="opacity-80">HIPAA-compliant voice bots for appointment scheduling and patient support</p>
-            </Card>
-
-            <Card className="p-6 border border-phi-gray bg-transparent text-center">
-              <div className="w-16 h-16 bg-phi-gray rounded-full flex items-center justify-center mx-auto mb-4">
-                <ShoppingBag className="h-8 w-8 text-phi-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Retail</h3>
-              <p className="opacity-80">Customer service and order management for e-commerce and brick-and-mortar stores</p>
-            </Card>
-
-            <Card className="p-6 border border-phi-gray bg-transparent text-center">
-              <div className="w-16 h-16 bg-phi-gray rounded-full flex items-center justify-center mx-auto mb-4">
-                <Utensils className="h-8 w-8 text-phi-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Hospitality</h3>
-              <p className="opacity-80">Reservation management and guest services for hotels and restaurants</p>
-            </Card>
-
-            <Card className="p-6 border border-phi-gray bg-transparent text-center">
-              <div className="w-16 h-16 bg-phi-gray rounded-full flex items-center justify-center mx-auto mb-4">
-                <Car className="h-8 w-8 text-phi-white" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Automotive</h3>
-              <p className="opacity-80">Service scheduling and customer support for dealerships and repair shops</p>
-            </Card>
+          
+          <div className="relative aspect-square rounded-[2rem] lg:rounded-[3rem] overflow-hidden border border-white/10 bg-white/[0.02] h-[300px] sm:h-[450px] lg:h-auto flex items-center justify-center">
+             <div className="w-full h-full opacity-60">
+                <AudioBarsAnimation barCount={12} animationSpeed={1.5} />
+             </div>
           </div>
         </div>
-      </section>
 
-
-
-      {/* CTA Section */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-7xl text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 glow-text">
-            Ready to Transform Your Customer Service?
-          </h2>
-          <p className="text-xl opacity-80 max-w-3xl mx-auto mb-12">
-            Join hundreds of businesses already using our custom voice bots to enhance customer experience and streamline operations.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Link href="/company/contact">
-              <Button className="btn-primary px-8 py-4 rounded-lg font-semibold text-lg">
-                Get Started Today
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href="/company/contact">
-              <Button
-                variant="outline"
-                className="border-2 border-phi-white text-phi-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-phi-white hover:text-phi-black transition-all duration-300"
-              >
-                Schedule a Demo
-              </Button>
-            </Link>
+        {/* Features Section */}
+        <section className="space-y-16 mb-48">
+          <h2 className="text-4xl lg:text-6xl font-bold tracking-tight border-b border-white/5 pb-8 uppercase">Key Capabilities</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {[
+              { title: "24/7 Response", icon: Clock, desc: "Autonomous call handling with zero downtime." },
+              { title: "NLP Engine", icon: Mic, desc: "Proprietary natural language processing for fluid conversation." },
+              { title: "Brand Voice", icon: Users, desc: "Custom vocal profiles tailored to your corporate identity." },
+              { title: "Multi-Channel", icon: Phone, desc: "Unified synthesis across phone, web, and social API." },
+              { title: "Low Latency", icon: Zap, desc: "Near-instant response generation for human-like interaction." },
+              { title: "Encrypted", icon: Shield, desc: "End-to-end encryption for all vocal data streams." }
+            ].map((f) => (
+              <div key={f.title} className="p-8 lg:p-10 rounded-[2rem] lg:rounded-[2.5rem] border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 group">
+                <f.icon className="w-8 h-8 mb-6 opacity-20 group-hover:opacity-100 transition-opacity" />
+                <h3 className="text-xl lg:text-2xl font-bold mb-4 uppercase tracking-tight">{f.title}</h3>
+                <p className="opacity-40 font-light leading-relaxed text-sm lg:text-base">{f.desc}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Industries Grid */}
+        <section className="space-y-16">
+          <h2 className="text-4xl lg:text-6xl font-bold tracking-tight border-b border-white/5 pb-8 uppercase">Verticals</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+             {[
+               { name: "Healthcare", icon: Building2 },
+               { name: "Retail", icon: ShoppingBag },
+               { name: "Hospitality", icon: Utensils },
+               { name: "Logistics", icon: Car }
+             ].map(i => (
+               <div key={i.name} className="p-10 rounded-[2rem] border border-white/5 bg-white/[0.01] flex flex-col items-center text-center group hover:border-white/20 transition-all">
+                  <i.icon className="w-10 h-10 mb-6 opacity-20 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                  <h4 className="text-lg font-bold tracking-widest uppercase">{i.name}</h4>
+               </div>
+             ))}
+          </div>
+        </section>
+
+        {/* Closing CTA */}
+        <section className="mt-48 p-12 lg:p-24 rounded-[3rem] lg:rounded-[5rem] bg-white text-black text-center space-y-8">
+           <h2 className="text-4xl lg:text-8xl font-bold tracking-tighter uppercase leading-none">Vocal.<br />Autonomous.</h2>
+           <div className="pt-8 flex justify-center">
+              <Link href="/company/contact">
+                <Button className="pill-button bg-black text-white px-10 py-6 lg:px-16 lg:py-10 text-lg lg:text-2xl font-bold">Initialize Deployment</Button>
+              </Link>
+           </div>
+        </section>
+
+      </div>
     </div>
   );
 }

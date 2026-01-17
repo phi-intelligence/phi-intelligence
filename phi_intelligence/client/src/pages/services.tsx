@@ -1,293 +1,117 @@
-import { Mic, Users, Code, Brain, ArrowRight, CheckCircle, Home, Camera, Bell, BarChart3, PieChart, TrendingUp, Database, Target, Zap, Shield, GitBranch, Cpu } from "lucide-react";
+import { Brain, Cpu, Code, Database, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { motion } from "framer-motion";
 import ParticleWavesAnimation from "@/components/three/ParticleWavesAnimation";
-
 
 export default function Services() {
   return (
-    <div className="min-h-screen bg-phi-black text-phi-white">
-      {/* Hero Section */}
-      <section id="services-hero" className="relative h-screen flex items-center justify-center overflow-hidden" data-testid="services-hero">
-        {/* Particle Waves Animation Background */}
-        <ParticleWavesAnimation />
+    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black pt-20">
+      
+      {/* Services Hero */}
+      <section className="relative h-[50vh] sm:h-[60vh] lg:h-[70vh] flex items-center border-b border-white/5 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <ParticleWavesAnimation />
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
         
-        {/* Subtle overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10"></div>
-        
-        {/* Content Overlay */}
-        <div className="relative z-20 text-center px-4 max-w-7xl mx-auto">
-          <h1 className="text-6xl md:text-7xl font-light glow-text text-white mb-8">
-            Our Services
-          </h1>
-          <p className="text-xl md:text-2xl opacity-90 max-w-4xl mx-auto mb-12 text-white">
-            Comprehensive AI solutions designed to transform your business operations, 
-            enhance customer experiences, and drive sustainable growth in the digital age.
+        <div className="container mx-auto px-6 relative z-10 text-center">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter"
+          >
+            SERVICES
+          </motion.h1>
+          <p className="text-lg sm:text-xl md:text-2xl opacity-40 max-w-2xl mx-auto mt-6 font-light">
+            Engineered intelligence for the industrial frontier.
           </p>
+        </div>
+      </section>
+
+      {/* Service Categories */}
+      <section className="py-20 lg:py-24 space-y-32 lg:space-y-48">
+        <div className="container mx-auto px-6">
+          
+          {/* AI & ML */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            <div className="space-y-6 lg:space-y-8 text-center lg:text-left order-2 lg:order-1">
+              <div className="inline-flex p-4 rounded-2xl bg-white/5 border border-white/10 mb-2 lg:mb-4">
+                <Brain className="w-6 h-6 lg:w-8 lg:h-8" />
+              </div>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight uppercase">AI & MACHINE LEARNING</h2>
+              <p className="text-lg md:text-xl opacity-60 leading-relaxed font-light">
+                Production-ready AI that streamlines operations and scales with confidence.
+              </p>
+              <div className="flex flex-col gap-2 lg:gap-4 pt-4 text-left">
+                {["Custom Voice Bots", "Conversational AI", "Agentic Operations"].map(s => (
+                  <div key={s} className="flex items-center gap-3 py-3 lg:py-4 border-b border-white/5 opacity-80">
+                    <div className="w-1 h-1 rounded-full bg-white" />
+                    <span className="text-sm lg:text-base">{s}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="pt-6 lg:pt-8 flex justify-center lg:justify-start">
+                <Link href="/services/ai-ml">
+                  <Button className="pill-button bg-white text-black px-10">Explore AI/ML</Button>
+                </Link>
+              </div>
+            </div>
+            <div className="aspect-video bg-white/5 rounded-[2rem] lg:rounded-[3rem] overflow-hidden border border-white/10 p-1 order-1 lg:order-2">
+              <img 
+                src="/assets/ai.gif" 
+                className="w-full h-full object-cover rounded-[1.8rem] lg:rounded-[2.8rem] grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-1000" 
+                alt="AI Machine Learning"
+              />
+            </div>
+          </div>
+
+          {/* IoT & Industrial */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            <div className="aspect-video bg-white/5 rounded-[2rem] lg:rounded-[3rem] overflow-hidden border border-white/10 p-1">
+              <img 
+                src="/assets/iothme.gif" 
+                className="w-full h-full object-contain rounded-[1.8rem] lg:rounded-[2.8rem] grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-1000" 
+                alt="IoT Industrial"
+              />
+            </div>
+            <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
+              <div className="inline-flex p-4 rounded-2xl bg-white/5 border border-white/10 mb-2 lg:mb-4">
+                <Cpu className="w-6 h-6 lg:w-8 lg:h-8" />
+              </div>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight uppercase">Industrial IoT</h2>
+              <p className="text-lg md:text-xl opacity-60 leading-relaxed font-light">
+                Connect and automate environments with AI-driven IoT solutions.
+              </p>
+              <div className="flex flex-col gap-2 lg:gap-4 pt-4 text-left">
+                {["Smart Facility Automation", "Real-Time Monitoring", "IoT Data Dashboards"].map(s => (
+                  <div key={s} className="flex items-center gap-3 py-3 lg:py-4 border-b border-white/5 opacity-80">
+                    <div className="w-1 h-1 rounded-full bg-white" />
+                    <span className="text-sm lg:text-base">{s}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="pt-6 lg:pt-8 flex justify-center lg:justify-start">
+                <Link href="/services/iot">
+                  <Button className="pill-button bg-white text-black px-10">Explore IoT</Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-32 lg:py-48 bg-white text-black text-center px-6">
+        <h2 className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 uppercase">Ready to Transform?</h2>
+        <div className="flex justify-center">
           <Link href="/company/contact">
-            <Button 
-              className="btn-primary px-8 py-4 rounded-lg font-semibold text-lg bg-white text-black hover:bg-opacity-90 transition-all duration-300"
-              data-testid="button-get-started"
-            >
-              Get Started Today
-            </Button>
+            <Button className="pill-button bg-black text-white px-12 py-8 text-xl lg:text-2xl font-bold">Get in touch</Button>
           </Link>
         </div>
       </section>
 
-      {/* AI/ML Solutions Section */}
-      <section className="py-24 px-6 bg-phi-black">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h3 className="text-4xl md:text-5xl font-bold mb-6 glow-text">
-                AI & ML Solutions
-              </h3>
-              <p className="text-xl opacity-80 mb-8 text-justify">
-                We design, build, and deploy production-ready AI that streamlines operations, reduces costs, and improves customer engagement — enabling your organisation to operate more efficiently and scale with confidence.
-              </p>
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">Custom Voice Bots (24/7 Agents) – AI-driven voice automation for calls, bookings, and enquiries, available at all times.</span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">Conversational AI (Web, Chat & Social) – Context-aware chat solutions across web platforms, messaging apps, and social channels.</span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">Agentic Operations Software – Intelligent workforce and process management for real-time visibility and performance optimisation.</span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">LLM Applications & Custom AI Software – Bespoke large language model integrations and tailored AI products aligned with your data and workflows.</span>
-                </div>
-              </div>
-              <div>
-                <Link href="/services/ai-ml">
-                  <Button
-                    variant="ghost"
-                    className="text-phi-white border-b border-phi-white hover:opacity-70 transition-opacity bg-transparent"
-                  >
-                    Explore AI/ML Services <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <div className="floating-element flex justify-center items-center">
-              <div className="glassmorphism p-8 rounded-xl">
-                <div className="bg-black/20 border border-white/10 rounded-lg h-64 w-64 flex items-center justify-center overflow-hidden shadow-2xl">
-                  <img 
-                    src="/assets/ai.gif"
-                    alt="AI & Machine Learning Solutions Animation"
-                    className="w-full h-full object-cover rounded-lg"
-                    style={{
-                      filter: 'grayscale(100%) brightness(1.1) contrast(1.2)',
-                      mixBlendMode: 'luminosity'
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Software Development Section */}
-      <section className="py-24 px-6 bg-phi-black">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="floating-element md:order-1 order-2">
-              <div className="glassmorphism p-8 rounded-xl">
-                <div className="bg-black/20 border border-white/10 rounded-lg h-80 w-96 flex items-center justify-center overflow-hidden mx-auto">
-                  <img 
-                    src="/assets/Thumbnail-The-Competitive-Edge-Harnessing-Generative-AI-Tools-for-Modern-Software-Development.jpg"
-                    alt="AI-Enhanced Software Development showing generative AI tools and modern development practices"
-                    className="w-full h-full object-cover rounded-lg"
-                    style={{
-                      filter: 'grayscale(100%) brightness(1.1) contrast(1.2)',
-                      mixBlendMode: 'luminosity'
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="md:order-2 order-1">
-              <h3 className="text-4xl md:text-5xl font-bold mb-6 glow-text">
-                AI-Enhanced Software Solutions
-              </h3>
-              <p className="text-xl opacity-80 mb-8 text-justify">
-                Build smarter applications with AI-powered features, seamless automation, and scalable architecture.
-              </p>
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">AI-Enhanced Web App Development – Intelligent web solutions with integrated AI capabilities</span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">AI-Enhanced Mobile App Development – Smart mobile applications powered by AI-driven features</span>
-                </div>
-              </div>
-              <div>
-                <Link href="/services/software-development">
-                  <Button
-                    variant="ghost"
-                    className="text-phi-white border-b border-phi-white hover:opacity-70 transition-opacity bg-transparent"
-                  >
-                    Explore Software Development <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* IoT Solutions Section */}
-      <section className="py-24 px-6 bg-phi-black">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h3 className="text-4xl md:text-5xl font-bold mb-6 glow-text">
-                AI-Powered IoT Systems
-              </h3>
-              <p className="text-xl opacity-80 mb-8 text-justify">
-                Connect, monitor, and automate environments with AI-driven IoT solutions that improve efficiency, security, and control — across homes, facilities, and business operations.
-              </p>
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">Smart Facility & Home Automation – AI-enabled lighting, energy, and security management</span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">Real-Time Monitoring & Alerts – Intelligent notifications that keep you informed instantly</span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">IoT Data Intelligence – Turn connected device data into actionable dashboards and insights</span>
-                </div>
-              </div>
-              <div>
-                <Link href="/services/iot">
-                  <Button
-                    variant="ghost"
-                    className="text-phi-white border-b border-phi-white hover:opacity-70 transition-opacity bg-transparent"
-                  >
-                    Explore IoT Services <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <div className="floating-element">
-              <div className="glassmorphism p-10 rounded-xl">
-                <div className="bg-black/20 border border-white/10 rounded-xl h-80 w-96 flex items-center justify-center overflow-hidden mx-auto">
-                  <img 
-                    src="/assets/iothme.gif"
-                    alt="AI-Powered IoT Systems showing connected devices, smart automation, and intelligent monitoring capabilities"
-                    className="w-full h-full object-contain rounded-xl"
-                    style={{
-                      filter: 'grayscale(100%) brightness(1.2) contrast(1.3) saturate(0.8)',
-                      mixBlendMode: 'luminosity'
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Data Science Section */}
-      <section className="py-24 px-6 bg-phi-black">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="floating-element md:order-1 order-2">
-              <div className="h-64 flex items-center justify-center overflow-hidden">
-                <img 
-                                      src="/assets/original-76a5db36a0639511b2d78de8036ef45a.gif"
-                  alt="AI-Driven Data Intelligence Animation"
-                  className="w-full h-full object-cover rounded-lg"
-                  style={{
-                    filter: 'grayscale(100%) brightness(1.1) contrast(1.2)',
-                    mixBlendMode: 'luminosity'
-                  }}
-                />
-              </div>
-            </div>
-            <div className="md:order-2 order-1">
-              <h3 className="text-4xl md:text-5xl font-bold mb-6 glow-text">
-                AI-Driven Data Intelligence
-              </h3>
-              <p className="text-xl opacity-80 mb-8 text-justify">
-                Turn raw data into actionable insights with AI-powered analytics and business intelligence.
-              </p>
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">Business Intelligence with AI – Smarter decision-making powered by AI analytics</span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">Custom Analytics Solutions – Tailored models for unique business needs</span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">Predictive Insights & Forecasting – Anticipate trends with data-driven predictions</span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircle className="mr-3 h-5 w-5 text-phi-light mt-0.5 flex-shrink-0" />
-                  <span className="text-justify">Real-Time Dashboards & Reporting – Instant visibility with dynamic AI reporting tools</span>
-                </div>
-              </div>
-              <div>
-                <Link href="/services/data-science">
-                  <Button
-                    variant="ghost"
-                    className="text-phi-white border-b border-phi-white hover:opacity-70 transition-opacity bg-transparent"
-                  >
-                    Explore Data Science <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-6 bg-phi-black">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 glow-text">
-            Ready to Transform Your Business?
-          </h2>
-          <p className="text-xl opacity-80 mb-12">
-            Contact our team of AI experts to discuss how we can help you implement cutting-edge solutions 
-            that drive growth and efficiency.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link href="/company/contact">
-              <Button 
-                className="btn-primary px-8 py-4 rounded-lg font-semibold text-lg"
-                data-testid="button-start-project"
-              >
-                Start Your Project
-              </Button>
-            </Link>
-            <Link href="/products/voicebot-builder">
-              <Button
-                variant="outline" 
-                className="border-2 border-phi-white text-phi-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-phi-white hover:text-phi-black transition-all duration-300"
-                data-testid="button-view-products"
-              >
-                Build Voice Agent
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

@@ -1,126 +1,81 @@
 import { Link } from "wouter";
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import ContactForm from "@/components/ui/contact-form";
-import Robot3D from "@/components/three/robotvoice";
 
 export default function ContactPage() {
-
-
   return (
-    <div className="min-h-screen bg-phi-black text-phi-white pt-24">
-      {/* Hero Section */}
-      <section className="py-16 md:py-24 px-4 md:px-6" data-testid="contact-hero">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-            {/* Left Side - Text Content */}
-            <div className="text-center md:text-left">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 glow-text">
-                Contact Sales
-              </h1>
-              <p className="text-lg md:text-xl opacity-90 mb-8 leading-relaxed">
-                Ready to discuss your AI needs? Contact our team of experts to learn 
-                how we can help transform your business.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <Link href="#contact-form">
-                  <Button
-                    className="btn-primary px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg bg-white text-black hover:bg-opacity-90 transition-all duration-300"
-                    data-testid="button-get-started"
-                  >
-                    Send Message
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link href="/services">
-                  <Button
-                    variant="outline"
-                    className="border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-white hover:text-black transition-all duration-300"
-                  >
-                    Explore Services
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            
-            {/* Right Side - Robot Container */}
-            <div className="flex justify-center md:justify-end">
-              <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[28rem] xl:h-[28rem] bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-3 sm:p-4 flex items-center justify-center">
-                <div className="w-full h-full">
-                  <Robot3D />
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black pt-28 lg:pt-32 pb-20">
+      <div className="container mx-auto max-w-7xl px-6">
+        
+        {/* Contact Hero */}
+        <div className="mb-12 lg:mb-24 text-center lg:text-left">
+          <motion.h1 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter"
+          >
+            CONTACT<br />
+            <span className="opacity-20 uppercase">Sales.</span>
+          </motion.h1>
         </div>
-      </section>
 
-      {/* Contact Section */}
-      <section id="contact-form" className="py-16 md:py-24 px-4 md:px-6" data-testid="company-contact-section">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
-            {/* Contact Form */}
-            <div className="order-2 md:order-1">
-              <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 glow-text">
-                Send Us a Message
-              </h3>
-              <p className="text-lg md:text-xl opacity-80 mb-6 md:mb-8">
-                Tell us about your project and we'll get back to you within 2 hours.
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-start">
+          
+          {/* Form & Info Section */}
+          <div className="space-y-12 lg:space-y-16 order-2 lg:order-1">
+            <div className="space-y-4 text-center lg:text-left">
+              <h3 className="text-2xl sm:text-3xl font-bold tracking-tight uppercase">Let's Connect</h3>
+              <p className="text-lg sm:text-xl opacity-60 leading-relaxed font-light">
+                Our team of experts is ready to help transform your business.
               </p>
+            </div>
+
+            <div className="space-y-6 lg:space-y-8">
+              {[
+                { icon: Mail, label: "Email", val: "info@phiintelligence.com" },
+                { icon: Phone, label: "Phone", val: "07352745227" },
+                { icon: MapPin, label: "Address", val: "Nottingham, NG5 3AS, UK" }
+              ].map((item) => (
+                <div key={item.label} className="flex items-start gap-4 lg:gap-6 group">
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white group-hover:text-black transition-colors duration-300">
+                    <item.icon className="w-4 h-4 lg:w-5 lg:h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[10px] lg:text-xs tracking-widest uppercase opacity-40 mb-1">{item.label}</h4>
+                    <p className="text-lg lg:text-xl font-light">{item.val}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-8 p-6 lg:p-12 bg-white/[0.02] rounded-[2rem] lg:rounded-[4rem] border border-white/10">
               <ContactForm />
             </div>
-            
-            {/* Contact Information */}
-            <div className="space-y-6 md:space-y-8 order-1 md:order-2">
-              <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 glow-text">
-                Contact Information
-              </h3>
-              <div className="space-y-4 md:space-y-6">
-                <Card className="p-4 md:p-6 border border-white/20 bg-black/50">
-                  <div className="flex items-start">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-lg flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
-                      <MapPin className="h-5 w-5 md:h-6 md:w-6 text-white" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h4 className="font-semibold mb-1 text-sm md:text-base">Address</h4>
-                      <p className="font-medium mb-2 text-sm md:text-base break-words">66 Costock Avenue, Nottingham, NG5 3AS</p>
-                    </div>
-                  </div>
-                </Card>
+          </div>
 
-                <Card className="p-4 md:p-6 border border-white/20 bg-black/50">
-                  <div className="flex items-start">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-lg flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
-                      <Phone className="h-5 w-5 md:h-6 md:w-6 text-white" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h4 className="font-semibold mb-1 text-sm md:text-base">Phone</h4>
-                      <p className="font-medium mb-2 text-sm md:text-base">07352745227</p>
-                      <p className="text-xs md:text-sm opacity-70">Speak directly with our AI experts</p>
-                    </div>
-                  </div>
-                </Card>
-
-                <Card className="p-4 md:p-6 border border-white/20 bg-black/50">
-                  <div className="flex items-start">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-lg flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
-                      <Mail className="h-5 w-5 md:h-6 md:w-6 text-white" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h4 className="font-semibold mb-1 text-sm md:text-base">Email</h4>
-                      <p className="font-medium mb-2 text-sm md:text-base break-all">info@phiintelligence.com</p>
-                      <p className="text-xs md:text-sm opacity-70">Get detailed responses within 2 hours</p>
-                    </div>
-                  </div>
-                </Card>
-              </div>
+          {/* Contact Visual - Replaced Robot with Static Image */}
+          <div className="lg:sticky lg:top-40 flex flex-col items-center order-1 lg:order-2">
+            <div className="w-full max-w-md lg:max-w-2xl aspect-[4/5] bg-white/[0.02] rounded-[3rem] border border-white/10 flex items-center justify-center relative overflow-hidden shadow-2xl">
+               <img 
+                 src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1000" 
+                 className="w-full h-full object-cover grayscale opacity-60 transition-all duration-1000 hover:grayscale-0 hover:opacity-100"
+                 alt="Contact Support" 
+               />
+               <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+            </div>
+            <div className="mt-8 lg:mt-16 text-center space-y-4">
+               <p className="text-[10px] lg:text-xs tracking-[0.4em] opacity-40 uppercase font-bold">Global Support v2.0</p>
+               <div className="flex items-center gap-3 justify-center">
+                 <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                 <span className="text-[10px] lg:text-xs opacity-60 font-medium tracking-widest uppercase">Live Agents Active</span>
+               </div>
             </div>
           </div>
+
         </div>
-      </section>
-
-
+      </div>
     </div>
   );
 }
