@@ -52,6 +52,8 @@ export default function ANNAnimation({
     connectionDensity: number;
     isAnimating: boolean;
     isVisible: boolean;
+    _boundResize: () => void;
+    _boundClick: (e: MouseEvent) => void;
     
     constructor(canvas: HTMLCanvasElement) {
       this.canvas = canvas;
@@ -64,14 +66,18 @@ export default function ANNAnimation({
       this.isAnimating = true;
       this.isVisible = false;
       
+      // Store bound handlers for proper removal
+      this._boundResize = this.resize.bind(this);
+      this._boundClick = this.handleClick.bind(this);
+
       this.resize();
       this.initializeNetwork();
       this.animate();
-      
-      // Event listeners
-      window.addEventListener('resize', () => this.resize());
+
+      // Event listeners using stored references
+      window.addEventListener('resize', this._boundResize);
       if (enableInteraction) {
-        canvas.addEventListener('click', (e) => this.handleClick(e));
+        canvas.addEventListener('click', this._boundClick);
       }
     }
     
@@ -382,11 +388,11 @@ export default function ANNAnimation({
     // Cleanup method
     cleanup() {
       this.isAnimating = false;
-      
-      // Remove event listeners
-      window.removeEventListener('resize', () => this.resize());
+
+      // Remove event listeners using stored references
+      window.removeEventListener('resize', this._boundResize);
       if (enableInteraction) {
-        this.canvas.removeEventListener('click', (e) => this.handleClick(e));
+        this.canvas.removeEventListener('click', this._boundClick);
       }
     }
   }

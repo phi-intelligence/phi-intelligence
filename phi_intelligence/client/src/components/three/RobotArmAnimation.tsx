@@ -111,9 +111,17 @@ export default function RobotArmAnimation({
       (gltf) => {
         const model = gltf.scene;
         
-        // Apply materials to all meshes
+        // Apply materials to all meshes and track for cleanup
         model.traverse((child) => {
           if (child instanceof THREE.Mesh) {
+            if (child.geometry) trackGeometry(child.geometry);
+            if (child.material) {
+              if (Array.isArray(child.material)) {
+                child.material.forEach(m => trackMaterial(m));
+              } else {
+                trackMaterial(child.material);
+              }
+            }
             // Enable shadows
             child.castShadow = true;
             child.receiveShadow = true;
@@ -193,7 +201,14 @@ export default function RobotArmAnimation({
     // Cleanup function
     return () => {
       console.log('🧹 Cleaning up RobotArmAnimation...');
-      
+
+      // Stop animation mixer
+      if (mixerRef.current) {
+        mixerRef.current.stopAllAction();
+        mixerRef.current.uncacheRoot(mixerRef.current.getRoot());
+        mixerRef.current = null;
+      }
+
       // Use comprehensive cleanup system
       cleanup();
       

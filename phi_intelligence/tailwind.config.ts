@@ -22,7 +22,7 @@ export default {
           foreground: "var(--popover-foreground)",
         },
         primary: {
-          DEFAULT: "var(--primary)",
+          DEFAULT: "#00A3FF",
           foreground: "var(--primary-foreground)",
         },
         secondary: {
@@ -61,16 +61,19 @@ export default {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
-        "phi-black": "var(--phi-black)",
-        "phi-white": "var(--phi-white)",
-        "phi-gray": "var(--phi-gray)",
-        "phi-light": "var(--phi-light)",
+        "phi-black": "#050505",
+        "phi-white": "#FFFFFF",
+        "phi-gray": "#A1A1AA",
+        "phi-blue": "#00A3FF",
+        "phi-dark": "#050505",
+        "phi-glow": "rgba(0, 163, 255, 0.15)",
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
         inter: ["Inter", "sans-serif"],
+        rajdhani: ["Rajdhani", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {

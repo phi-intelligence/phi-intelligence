@@ -69,7 +69,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="p-8 rounded-xl border border-white/20 bg-black/50" data-testid="contact-form">
+    <div className="p-8 rounded-2xl border border-white/10 bg-white/[0.02]" data-testid="contact-form">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -82,7 +82,7 @@ export default function ContactForm() {
                   <Input
                     {...field}
                     placeholder="Your Full Name"
-                    className="bg-black/50 text-white border-white/30 focus:ring-2 focus:ring-white/50 focus:border-white/50 placeholder:text-white/50"
+                    className="bg-white/[0.03] text-white border-white/10 focus:ring-2 focus:ring-phi-blue/40 focus:border-phi-blue/40 placeholder:text-white/30 rounded-xl"
                     data-testid="input-name"
                   />
                 </FormControl>
@@ -102,7 +102,7 @@ export default function ContactForm() {
                     {...field}
                     type="email"
                     placeholder="your.email@company.com"
-                    className="bg-black/50 text-white border-white/30 focus:ring-2 focus:ring-white/50 focus:border-white/50 placeholder:text-white/50"
+                    className="bg-white/[0.03] text-white border-white/10 focus:ring-2 focus:ring-phi-blue/40 focus:border-phi-blue/40 placeholder:text-white/30 rounded-xl"
                     data-testid="input-email"
                   />
                 </FormControl>
@@ -121,7 +121,7 @@ export default function ContactForm() {
                   <Input
                     {...field}
                     placeholder="Your Company Name"
-                    className="bg-black/50 text-white border-white/30 focus:ring-2 focus:ring-white/50 focus:border-white/50 placeholder:text-white/50"
+                    className="bg-white/[0.03] text-white border-white/10 focus:ring-2 focus:ring-phi-blue/40 focus:border-phi-blue/40 placeholder:text-white/30 rounded-xl"
                     data-testid="input-company"
                     value={field.value || ''}
                   />
@@ -148,11 +148,15 @@ export default function ContactForm() {
                       <SelectValue placeholder="Select a Service" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent className="bg-black border-white/30">
-                    <SelectItem value="voice-agents">Custom Voice Agents</SelectItem>
-                    <SelectItem value="workforce-management">Workforce Management</SelectItem>
-                    <SelectItem value="custom-development">Custom Software Development</SelectItem>
-                    <SelectItem value="ai-consulting">AI Consulting</SelectItem>
+                  <SelectContent className="bg-black border-white/10 rounded-xl">
+                    <SelectItem value="ai-consulting">AI Consulting & Strategy</SelectItem>
+                    <SelectItem value="ai-development">AI Development & Integration</SelectItem>
+                    <SelectItem value="voice-automation">Voice Automation</SelectItem>
+                    <SelectItem value="web-development">Web & Mobile Development</SelectItem>
+                    <SelectItem value="computer-vision">Computer Vision</SelectItem>
+                    <SelectItem value="process-automation">Process Automation</SelectItem>
+                    <SelectItem value="saas">SaaS Development</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -171,7 +175,7 @@ export default function ContactForm() {
                     {...field}
                     rows={4}
                     placeholder="Tell us about your project requirements..."
-                    className="bg-black/50 text-white border-white/30 focus:ring-2 focus:ring-white/50 focus:border-white/50 placeholder:text-white/50"
+                    className="bg-white/[0.03] text-white border-white/10 focus:ring-2 focus:ring-phi-blue/40 focus:border-phi-blue/40 placeholder:text-white/30 rounded-xl"
                     data-testid="textarea-message"
                   />
                 </FormControl>
@@ -183,7 +187,7 @@ export default function ContactForm() {
           <Button
             type="submit"
             disabled={submitContactMutation.isPending}
-            className="bg-white hover:bg-white/90 text-black w-full py-4 rounded-lg font-semibold text-lg"
+            className="bg-phi-blue hover:bg-phi-blue/90 text-white w-full py-4 rounded-xl font-semibold text-lg shadow-[0_0_40px_rgba(0,163,255,0.15)]"
             data-testid="button-submit"
           >
             {submitContactMutation.isPending ? "Sending..." : "Send Message"}

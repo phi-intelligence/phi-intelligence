@@ -23,32 +23,12 @@ export interface ServiceStatus {
 }
 
 class ChatbotService {
-  private apiUrl: string;
-  private model: string;
-  private apiKey: string;
   private conversationHistory: ChatMessage[];
   private isProcessing: boolean;
 
   constructor() {
-    this.apiUrl = 'https://api.openai.com/v1/chat/completions';
-    this.model = 'gpt-4o-mini';
-    this.apiKey = ''; // Will be loaded from API
     this.conversationHistory = [];
     this.isProcessing = false;
-  }
-
-  // Initialize API key from backend
-  async initializeApiKey(): Promise<void> {
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL || '';
-      const response = await fetch(`${apiUrl}/api/openai/key`);
-      const data = await response.json();
-      this.apiKey = data.apiKey;
-      console.log('✅ OpenAI API key loaded from backend');
-    } catch (error) {
-      console.warn('Failed to load API key from backend, using environment variable');
-      this.apiKey = import.meta.env.VITE_OPENAI_API_KEY || '';
-    }
   }
 
   // Initialize conversation with welcome message
@@ -174,15 +154,10 @@ class ChatbotService {
     return this.conversationHistory;
   }
 
-  // Check if service is available
-  isAvailable(): boolean {
-    return !!this.apiKey && this.apiKey !== '' && this.apiKey !== 'your-api-key-here';
-  }
-
   // Get service status
   getStatus(): ServiceStatus {
     return {
-      available: this.isAvailable(),
+      available: true,
       processing: this.isProcessing,
       messageCount: this.conversationHistory.length,
       lastMessage: this.conversationHistory[this.conversationHistory.length - 1]
@@ -194,12 +169,6 @@ class ChatbotService {
     return Date.now().toString() + Math.random().toString(36).substr(2, 9);
   }
 
-  // Update API configuration (for development/testing)
-  updateConfig(config: { apiKey?: string; model?: string; apiUrl?: string }): void {
-    if (config.apiKey !== undefined) this.apiKey = config.apiKey;
-    if (config.model !== undefined) this.model = config.model;
-    if (config.apiUrl !== undefined) this.apiUrl = config.apiUrl;
-  }
 }
 
 // Export singleton instance

@@ -159,7 +159,7 @@ export default function NeuralNetworkAnimation({
 
     // Create particle material
     const pMaterial = new THREE.PointsMaterial({
-      color: 0xFFFFFF,
+      color: 0xffffff,
       size: 3,
       blending: THREE.AdditiveBlending,
       transparent: true,
@@ -276,13 +276,13 @@ export default function NeuralNetworkAnimation({
           positionsRef.current[vertexpos++] = particlePositionsRef.current[j * 3 + 1];
           positionsRef.current[vertexpos++] = particlePositionsRef.current[j * 3 + 2];
 
-          // Add line colors for connections
-          colorsRef.current[colorpos++] = alpha;
-          colorsRef.current[colorpos++] = alpha;
+          // Add line colors for connections — phi-blue (R=0, G=0.64, B=1.0)
+          colorsRef.current[colorpos++] = 0;
+          colorsRef.current[colorpos++] = alpha * 0.64;
           colorsRef.current[colorpos++] = alpha;
 
-          colorsRef.current[colorpos++] = alpha;
-          colorsRef.current[colorpos++] = alpha;
+          colorsRef.current[colorpos++] = 0;
+          colorsRef.current[colorpos++] = alpha * 0.64;
           colorsRef.current[colorpos++] = alpha;
 
           numConnected++;
@@ -309,13 +309,13 @@ export default function NeuralNetworkAnimation({
           positionsRef.current[vertexpos++] = particlePositionsRef.current[j * 3 + 1];
           positionsRef.current[vertexpos++] = particlePositionsRef.current[j * 3 + 2];
 
-          // Add line colors for secondary connections
-          colorsRef.current[colorpos++] = alpha;
-          colorsRef.current[colorpos++] = alpha;
+          // Add line colors for secondary connections — phi-blue dimmer
+          colorsRef.current[colorpos++] = 0;
+          colorsRef.current[colorpos++] = alpha * 0.64;
           colorsRef.current[colorpos++] = alpha;
 
-          colorsRef.current[colorpos++] = alpha;
-          colorsRef.current[colorpos++] = alpha;
+          colorsRef.current[colorpos++] = 0;
+          colorsRef.current[colorpos++] = alpha * 0.64;
           colorsRef.current[colorpos++] = alpha;
 
           numConnected++;
@@ -455,17 +455,21 @@ export default function NeuralNetworkAnimation({
     
     return () => {
       console.log('🧹 Cleaning up NeuralNetworkAnimation...');
-      
+
+      // Free large Float32Array buffers
+      particlePositionsRef.current = null;
+      positionsRef.current = null;
+      colorsRef.current = null;
+      particlesDataRef.current = [];
+
       // Use comprehensive cleanup system
       cleanup();
-      
+
       // Remove DOM element
-      if (mountRef.current && rendererRef.current?.domElement && 
+      if (mountRef.current && rendererRef.current?.domElement &&
           rendererRef.current.domElement.parentNode === mountRef.current) {
         mountRef.current.removeChild(rendererRef.current.domElement);
       }
-      
-
     };
   }, [initScene, handleResize, addSafeEventListener, cleanup]);
 

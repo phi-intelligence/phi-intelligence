@@ -1,10 +1,9 @@
-import express, { type Express } from "express";
+import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createServer as createViteServer, createLogger } from "vite";
 import { type Server } from "http";
-import viteConfig from "../vite.config";
 import { nanoid } from "nanoid";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -29,8 +28,7 @@ export async function setupVite(app: Express, server: Server) {
   };
 
   const vite = await createViteServer({
-    ...viteConfig,
-    configFile: false,
+    configFile: path.resolve(__dirname, "..", "vite.config.ts"),
     customLogger: {
       ...viteLogger,
       error: (msg, options) => {
@@ -42,26 +40,11 @@ export async function setupVite(app: Express, server: Server) {
     appType: "spa",
   });
 
-  app.use(vite.middlewares);
-  
-  // Only handle non-API routes with the catch-all
-  app.use("*", async (req, res, next) => {
-    // Skip API routes - let them be handled by the API middleware
-    if (req.path.startsWith('/api/')) {
-      return next();
-    }
-    
+  async function serveSpa(req: Request, res: Response, next: NextFunction) {
+    if (req.path.startsWith("/api/")) return next();
     const url = req.originalUrl;
-
     try {
-      const clientTemplate = path.resolve(
-        __dirname,
-        "..",
-        "client",
-        "index.html",
-      );
-
-      // always reload the index.html file from disk incase it changes
+      const clientTemplate = path.resolve(__dirname, "..", "client", "index.html");
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
         `src="/src/main.tsx"`,
@@ -73,7 +56,13 @@ export async function setupVite(app: Express, server: Server) {
       vite.ssrFixStacktrace(e as Error);
       next(e);
     }
-  });
+  }
+
+  // Serve SPA for GET / before Vite so root is never 404 (Vite middleware may not handle /)
+  app.get("/", serveSpa);
+  app.use(vite.middlewares);
+  // Catch-all for other SPA routes (e.g. /about, /contact)
+  app.get("*", serveSpa);
 }
 
 export function serveStatic(app: Express) {

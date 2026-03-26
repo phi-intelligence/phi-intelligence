@@ -36,6 +36,17 @@ from livekit.plugins import deepgram, openai, silero
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 from livekit.plugins import noise_cancellation
 
+# LLM provider selection: set LLM_PROVIDER=gemini to use Google Gemini, default is OpenAI
+_LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai").lower().strip()
+if _LLM_PROVIDER == "gemini":
+    from livekit.plugins import google as llm_plugin  # type: ignore
+    _LLM_MODEL = "gemini-2.0-flash"
+    _LLM_API_KEY_ENV = "GOOGLE_API_KEY"
+else:
+    llm_plugin = openai  # type: ignore
+    _LLM_MODEL = "gpt-4o-mini"
+    _LLM_API_KEY_ENV = "OPENAI_API_KEY"
+
 # Optional Redis hooks kept commented for a basic agent:
 # from shared.redis_service import redis_service
 
@@ -241,9 +252,9 @@ def prewarm(proc: JobProcess):
 
     # 2) External clients (constructed once per process)
     try:
-        proc.userdata["llm"] = openai.LLM(
-            model="gpt-4o-mini",
-            api_key=os.getenv("OPENAI_API_KEY"),
+        proc.userdata["llm"] = llm_plugin.LLM(
+            model=_LLM_MODEL,
+            api_key=os.getenv(_LLM_API_KEY_ENV),
         )
     except Exception as e:
         logger.warning(f"LLM client prewarm failed (will retry on session): {e}")
@@ -337,9 +348,9 @@ async def entrypoint(ctx: JobContext):
     session = AgentSession(
         vad=ctx.proc.userdata.get("vad") or silero.VAD.load(),
 
-        llm=ctx.proc.userdata.get("llm") or openai.LLM(
-            model="gpt-4o-mini",
-            api_key=os.getenv("OPENAI_API_KEY"),
+        llm=ctx.proc.userdata.get("llm") or llm_plugin.LLM(
+            model=_LLM_MODEL,
+            api_key=os.getenv(_LLM_API_KEY_ENV),
         ),
 
         stt=ctx.proc.userdata.get("stt_client") or deepgram.STT(

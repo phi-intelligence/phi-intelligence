@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile
     container_name: phi_intelligence
     ports:
-      - "5000:5000"
+      - "5001:5000"
     environment:
       # Application Configuration
       - NODE_ENV=production
@@ -34,7 +34,9 @@ services:
       # AI API Keys
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
-      
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - CHAT_LLM_PROVIDER=${CHAT_LLM_PROVIDER:-openai}
+
       # LiveKit Phi
       - LIVEKIT_PHI_URL=${LIVEKIT_PHI_URL}
       - LIVEKIT_PHI_API_KEY=${LIVEKIT_PHI_API_KEY}
@@ -94,7 +96,8 @@ services:
       
       # API Keys
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+
       # CORS Configuration
       - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
     volumes:
@@ -135,7 +138,10 @@ services:
       # AI API Keys
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
-      
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - RAG_EMBEDDING_PROVIDER=${RAG_EMBEDDING_PROVIDER:-openai}
+      - RAG_LLM_PROVIDER=${RAG_LLM_PROVIDER:-openai}
+
       # Pinecone
       - PINECONE_API_KEY=${PINECONE_API_KEY}
       - PINECONE_ENVIRONMENT=${PINECONE_ENVIRONMENT}

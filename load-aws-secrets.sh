@@ -34,6 +34,13 @@ echo "✓ OPENAI_API_KEY loaded"
 export DEEPGRAM_API_KEY=$(get_secret "deepgram-api-key")
 echo "✓ DEEPGRAM_API_KEY loaded"
 
+# Google Gemini (for chat when CHAT_LLM_PROVIDER=gemini)
+export GOOGLE_API_KEY=$(get_secret "google-api-key")
+[ -n "$GOOGLE_API_KEY" ] && echo "✓ GOOGLE_API_KEY loaded" || echo "⚠ GOOGLE_API_KEY not set (create phiai/google-api-key in AWS Secrets Manager for Gemini chat)"
+
+export CHAT_LLM_PROVIDER="${CHAT_LLM_PROVIDER:-gemini}"
+echo "✓ CHAT_LLM_PROVIDER=$CHAT_LLM_PROVIDER"
+
 # Pinecone
 export PINECONE_API_KEY=$(get_secret "pinecone-api-key")
 echo "✓ PINECONE_API_KEY loaded"
@@ -63,36 +70,6 @@ echo "✓ LIVEKIT_COMPANY_API_KEY loaded"
 
 export LIVEKIT_COMPANY_API_SECRET=$(get_secret "livekit-company-api-secret")
 echo "✓ LIVEKIT_COMPANY_API_SECRET loaded"
-
-# LiveKit - Hotel
-export LIVEKIT_HOTEL_URL=$(get_secret "livekit-hotel-url")
-echo "✓ LIVEKIT_HOTEL_URL loaded"
-
-export LIVEKIT_HOTEL_API_KEY=$(get_secret "livekit-hotel-api-key")
-echo "✓ LIVEKIT_HOTEL_API_KEY loaded"
-
-export LIVEKIT_HOTEL_API_SECRET=$(get_secret "livekit-hotel-api-secret")
-echo "✓ LIVEKIT_HOTEL_API_SECRET loaded"
-
-# LiveKit - Restaurant
-export LIVEKIT_RESTAURANT_URL=$(get_secret "livekit-restaurant-url")
-echo "✓ LIVEKIT_RESTAURANT_URL loaded"
-
-export LIVEKIT_RESTAURANT_API_KEY=$(get_secret "livekit-restaurant-api-key")
-echo "✓ LIVEKIT_RESTAURANT_API_KEY loaded"
-
-export LIVEKIT_RESTAURANT_API_SECRET=$(get_secret "livekit-restaurant-api-secret")
-echo "✓ LIVEKIT_RESTAURANT_API_SECRET loaded"
-
-# LiveKit - Hospital
-export LIVEKIT_HOSPITAL_URL=$(get_secret "livekit-hospital-url")
-echo "✓ LIVEKIT_HOSPITAL_URL loaded"
-
-export LIVEKIT_HOSPITAL_API_KEY=$(get_secret "livekit-hospital-api-key")
-echo "✓ LIVEKIT_HOSPITAL_API_KEY loaded"
-
-export LIVEKIT_HOSPITAL_API_SECRET=$(get_secret "livekit-hospital-api-secret")
-echo "✓ LIVEKIT_HOSPITAL_API_SECRET loaded"
 
 # JWT & Session Secrets
 export JWT_SECRET=$(get_secret "jwt-access-secret")
@@ -141,7 +118,7 @@ fi
 echo ""
 echo "✅ All secrets loaded successfully!"
 echo "   Region: $AWS_REGION"
-echo "   Secrets loaded: 29 (+ 1 override)"
+echo "   Secrets loaded: 20 (+ CORS overrides)"
 echo "   CORS Origins: $VITE_ALLOWED_ORIGINS"
 echo "   API URL: $VITE_API_URL"
 echo ""

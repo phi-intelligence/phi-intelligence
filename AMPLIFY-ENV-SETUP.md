@@ -36,6 +36,9 @@ VITE_LIVEKIT_COMPANY_URL = wss://phi-intelligence-company-tku4otnx.livekit.cloud
 ```
 **Purpose**: Real-time voice communication
 
+### Chat (no extra Amplify vars)
+Chat is fully server-side. The backend (Lightsail + AWS Secrets Manager) uses Gemini or OpenAI; the frontend only calls `VITE_API_URL/api/chat`. No Google/Gemini env vars are required in Amplify for chat to work.
+
 ## 🚀 After Adding Variables
 
 1. **Save** the environment variables

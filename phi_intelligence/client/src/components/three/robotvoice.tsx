@@ -14,6 +14,9 @@ const Robot3D: React.FC = () => {
   const [modelLoaded, setModelLoaded] = useState(false);
   
   const {
+    trackGeometry,
+    trackMaterial,
+    trackTexture,
     trackRenderer,
     trackScene,
     trackCamera,
@@ -69,27 +72,86 @@ const Robot3D: React.FC = () => {
     robotRef.current = robotGroup;
     trackObject(robotGroup);
 
+    const abortController = new AbortController();
     const loader = new GLTFLoader();
     loader.load(robotModelUrl, (gltf) => {
-      if (isDisposed) return;
+      if (isDisposed || abortController.signal.aborted) return;
       const model = gltf.scene;
       model.scale.set(0.2, 0.2, 0.2);
       model.position.y = 0.2;
-      
+
       model.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
+        if (child instanceof THREE.Mesh && child.material) {
+          child.material = child.material.clone();
+          trackMaterial(child.material);
+          if (child.geometry) trackGeometry(child.geometry);
           child.castShadow = true;
-          if (child.material) {
-            child.material.color = new THREE.Color(0x333333);
-            child.material.metalness = 0.8;
-            child.material.roughness = 0.2;
+
+          child.material.color = new THREE.Color(0x333333);
+          child.material.metalness = 0.8;
+          child.material.roughness = 0.2;
+
+          const n = child.name.toLowerCase();
+          if (n.includes('eye') || n.includes('lens') || n.includes('pupil') || n.includes('iris') || n.includes('light') || n.includes('glow') || n.includes('led') || n.includes('emit') || n.includes('screen') || n.includes('display')) {
+            child.material.emissive = new THREE.Color(0x00A3FF);
+            child.material.emissiveIntensity = 1.2;
+            child.material.color = new THREE.Color(0x00A3FF);
+          } else {
+            child.material.emissive = new THREE.Color(0x000000);
+            child.material.emissiveIntensity = 0;
           }
         }
       });
-      
+
       robotGroup.add(model);
       setModelLoaded(true);
     });
+
+    // Load phi logo sprite on the robot's chest
+    const logoImg = new Image();
+    logoImg.crossOrigin = 'anonymous';
+    logoImg.onload = () => {
+      if (isDisposed) return;
+      const size = 128;
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d')!;
+      ctx.drawImage(logoImg, 0, 0, size, size);
+
+      // Recolor all non-transparent pixels to phi-blue
+      const imageData = ctx.getImageData(0, 0, size, size);
+      const d = imageData.data;
+      for (let i = 0; i < d.length; i += 4) {
+        if (d[i + 3] > 30) {
+          d[i]     = 0;
+          d[i + 1] = 100;
+          d[i + 2] = 200;
+          d[i + 3] = 200;
+        }
+      }
+      ctx.putImageData(imageData, 0, 0);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      trackTexture(texture);
+
+      const spriteMaterial = new THREE.SpriteMaterial({
+        map: texture,
+        transparent: true,
+        depthWrite: false,
+        opacity: 0.85,
+      });
+      trackMaterial(spriteMaterial);
+
+      const sprite = new THREE.Sprite(spriteMaterial);
+      sprite.scale.set(0.35, 0.35, 1);
+      sprite.position.set(0, -0.15, 0.4); // Chest area, slightly forward
+      sprite.renderOrder = 5;
+      trackObject(sprite);
+      scene.add(sprite);
+    };
+    logoImg.src = '/assets/logophi.png';
 
     const animate = () => {
       if (isDisposed) return;
@@ -121,11 +183,11 @@ const Robot3D: React.FC = () => {
 
     return () => {
       isDisposed = true;
+      abortController.abort();
       cleanup();
       if (container && renderer.domElement && container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
-      // Nullify refs
       rendererRef.current = null;
       sceneRef.current = null;
       cameraRef.current = null;

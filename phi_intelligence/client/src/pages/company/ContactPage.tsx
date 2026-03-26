@@ -1,81 +1,126 @@
 import { Link } from "wouter";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import ContactForm from "@/components/ui/contact-form";
+import Robot3D from "@/components/three/robotvoice";
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black pt-28 lg:pt-32 pb-20">
-      <div className="container mx-auto max-w-7xl px-6">
-        
-        {/* Contact Hero */}
-        <div className="mb-12 lg:mb-24 text-center lg:text-left">
-          <motion.h1 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter"
-          >
-            CONTACT<br />
-            <span className="opacity-20 uppercase">Sales.</span>
-          </motion.h1>
-        </div>
+    <div className="min-h-screen bg-black text-white selection:bg-phi-blue selection:text-white">
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-start">
-          
-          {/* Form & Info Section */}
-          <div className="space-y-12 lg:space-y-16 order-2 lg:order-1">
-            <div className="space-y-4 text-center lg:text-left">
-              <h3 className="text-2xl sm:text-3xl font-bold tracking-tight uppercase">Let's Connect</h3>
-              <p className="text-lg sm:text-xl opacity-60 leading-relaxed font-light">
-                Our team of experts is ready to help transform your business.
+      {/* ── Hero ── */}
+      <section className="relative min-h-[60vh] flex items-center pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_65%)]" />
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="lg:col-span-7 space-y-6"
+            >
+              <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Contact Us</p>
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+                Let's Build<br />
+                <span className="text-phi-blue">Together.</span>
+              </h1>
+              <p className="text-lg text-white/50 font-light leading-relaxed max-w-2xl">
+                Ready to integrate AI into your business? Our engineering team reviews every enquiry
+                and responds within 24 hours with a tailored technical assessment.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="space-y-6 lg:space-y-8">
+            <div className="lg:col-span-5 relative">
+              <div className="relative aspect-[4/5] rounded-3xl border border-white/10 overflow-hidden bg-white/5 flex items-center justify-center">
+                <div className="w-full h-full relative z-10 scale-100 sm:scale-110 lg:scale-125">
+                  <Robot3D />
+                </div>
+                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center z-20">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-[9px] font-bold tracking-widest uppercase text-white/30">Online</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Contact Form + Info ── */}
+      <section className="py-24 border-t border-white/5">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-16 items-start">
+
+            {/* Left: Form */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="xl:col-span-7"
+            >
+              <div className="space-y-6 mb-10">
+                <h2 className="text-3xl lg:text-5xl font-bold tracking-tighter uppercase">
+                  Start a <span className="text-phi-blue">Conversation</span>
+                </h2>
+                <p className="text-white/40 font-light max-w-lg">
+                  Tell us about your project and we'll respond with a technical assessment and recommended approach.
+                </p>
+              </div>
+              <ContactForm />
+            </motion.div>
+
+            {/* Right: Contact Info */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="xl:col-span-5 space-y-8 xl:sticky xl:top-32"
+            >
+              {/* Contact cards */}
               {[
-                { icon: Mail, label: "Email", val: "info@phiintelligence.com" },
-                { icon: Phone, label: "Phone", val: "07352745227" },
-                { icon: MapPin, label: "Address", val: "Nottingham, NG5 3AS, UK" }
+                { icon: Mail, label: "Email", value: "info@phiintelligence.com", href: "mailto:info@phiintelligence.com" },
+                { icon: Phone, label: "Phone", value: "07352745227", href: "tel:07352745227" },
+                { icon: MapPin, label: "Location", value: "Nottingham, UK" },
+                { icon: Clock, label: "Response Time", value: "Within 24 hours" },
               ].map((item) => (
-                <div key={item.label} className="flex items-start gap-4 lg:gap-6 group">
-                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white group-hover:text-black transition-colors duration-300">
-                    <item.icon className="w-4 h-4 lg:w-5 lg:h-5" />
+                <div
+                  key={item.label}
+                  className="group flex items-start gap-5 p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-phi-blue/20 hover:bg-phi-blue/[0.03] transition-all duration-500"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-phi-blue/10 border border-phi-blue/15 flex items-center justify-center shrink-0 group-hover:bg-phi-blue group-hover:border-phi-blue transition-all duration-500">
+                    <item.icon className="w-5 h-5 text-phi-blue group-hover:text-white transition-colors duration-500" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-[10px] lg:text-xs tracking-widest uppercase opacity-40 mb-1">{item.label}</h4>
-                    <p className="text-lg lg:text-xl font-light">{item.val}</p>
+                    <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/30 mb-1">{item.label}</p>
+                    {item.href ? (
+                      <a href={item.href} className="text-lg font-semibold hover:text-phi-blue transition-colors">
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="text-lg font-semibold">{item.value}</p>
+                    )}
                   </div>
                 </div>
               ))}
-            </div>
 
-            <div className="pt-8 p-6 lg:p-12 bg-white/[0.02] rounded-[2rem] lg:rounded-[4rem] border border-white/10">
-              <ContactForm />
-            </div>
+              {/* CTA box */}
+              <div className="p-8 rounded-2xl border border-white/5 bg-white/[0.02] space-y-4 mt-4">
+                <h3 className="text-lg font-bold tracking-tight">Prefer a direct conversation?</h3>
+                <p className="text-sm text-white/40 font-light leading-relaxed">
+                  Book a 30-minute discovery call with our lead engineering team to discuss your requirements.
+                </p>
+                <Link href="/contact">
+                  <Button className="pill-button bg-phi-blue text-white hover:bg-phi-blue/90 px-6 py-3 text-sm shadow-[0_0_40px_rgba(0,163,255,0.15)] mt-2">
+                    Schedule a Call <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
           </div>
-
-          {/* Contact Visual - Replaced Robot with Static Image */}
-          <div className="lg:sticky lg:top-40 flex flex-col items-center order-1 lg:order-2">
-            <div className="w-full max-w-md lg:max-w-2xl aspect-[4/5] bg-white/[0.02] rounded-[3rem] border border-white/10 flex items-center justify-center relative overflow-hidden shadow-2xl">
-               <img 
-                 src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1000" 
-                 className="w-full h-full object-cover grayscale opacity-60 transition-all duration-1000 hover:grayscale-0 hover:opacity-100"
-                 alt="Contact Support" 
-               />
-               <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-            </div>
-            <div className="mt-8 lg:mt-16 text-center space-y-4">
-               <p className="text-[10px] lg:text-xs tracking-[0.4em] opacity-40 uppercase font-bold">Global Support v2.0</p>
-               <div className="flex items-center gap-3 justify-center">
-                 <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                 <span className="text-[10px] lg:text-xs opacity-60 font-medium tracking-widest uppercase">Live Agents Active</span>
-               </div>
-            </div>
-          </div>
-
         </div>
-      </div>
+      </section>
     </div>
   );
 }

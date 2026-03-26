@@ -127,8 +127,10 @@ export default function AdvancedNetworkAnimation({
       
       const starsVertices = [];
       
-      // Reduced star count for better performance
-      for (let i = 0; i < 8000; i++) {
+      // Reduce star count on mobile for better performance
+      const isMobileDevice = window.innerWidth < 768;
+      const starCount = isMobileDevice ? 2000 : 8000;
+      for (let i = 0; i < starCount; i++) {
         const x = (Math.random() - 0.5) * 2000;
         const y = (Math.random() - 0.5) * 2000;
         const z = (Math.random() - 0.5) * 2000;
@@ -136,8 +138,13 @@ export default function AdvancedNetworkAnimation({
       }
       
       starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
-      
+
+      // Track starfield resources for cleanup
+      trackGeometry(starsGeometry);
+      trackMaterial(starsMaterial);
+
       const starField = new THREE.Points(starsGeometry, starsMaterial);
+      trackObject(starField);
       scene.add(starField);
     };
 
@@ -154,21 +161,26 @@ export default function AdvancedNetworkAnimation({
           side: THREE.DoubleSide
         });
         
+        // Track wireframe resources for cleanup
+        trackGeometry(geometry);
+        trackMaterial(material);
+
         const wireframe = new THREE.Mesh(geometry, material);
-        wireframe.userData = { 
+        wireframe.userData = {
           originalOpacity: material.opacity,
           rotationSpeed: 0.001 + (index * 0.0005)
         };
-        
+        trackObject(wireframe);
+
         wireframeSpheres.push(wireframe);
         scene.add(wireframe);
       });
     };
 
     const createMultiLayerNodes = () => {
-      // Core sphere - dense inner network
+      // Core sphere - dense inner network (blue)
       createNodeLayer(2.5, 40, coreNodes, {
-        color: 0xffffff,
+        color: 0x00A3FF,
         size: 0.08,
         glowSize: 0.25,
         glowIntensity: 0.3
@@ -193,7 +205,8 @@ export default function AdvancedNetworkAnimation({
 
     const createNodeLayer = (radius: number, nodeCount: number, nodeArray: any[], config: any) => {
       const nodeGeometry = new THREE.SphereGeometry(config.size, 8, 8);
-      
+      trackGeometry(nodeGeometry);
+
       for (let i = 0; i < nodeCount; i++) {
         // Fibonacci sphere distribution
         const theta = Math.acos(-1 + (2 * i) / nodeCount);
@@ -209,19 +222,24 @@ export default function AdvancedNetworkAnimation({
           transparent: true,
           opacity: 0.9
         });
-        
+        trackMaterial(nodeMaterial);
+
         const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
         node.position.set(x, y, z);
-        
+        trackObject(node);
+
         // Glow effect
         const glowGeometry = new THREE.SphereGeometry(config.glowSize, 8, 8);
+        trackGeometry(glowGeometry);
         const glowMaterial = new THREE.MeshBasicMaterial({
           color: config.color,
           transparent: true,
           opacity: config.glowIntensity,
           side: THREE.BackSide
         });
+        trackMaterial(glowMaterial);
         const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+        trackObject(glow);
         glow.position.copy(node.position);
         
         // Store node data
@@ -248,12 +266,12 @@ export default function AdvancedNetworkAnimation({
       });
       connections.length = 0;
       
-      // Inter-layer connections
-      createLayerConnections(coreNodes, middleNodes, 0.4, 0xffffff);
+      // Inter-layer connections (core→middle = blue, middle→outer = white)
+      createLayerConnections(coreNodes, middleNodes, 0.4, 0x00A3FF);
       createLayerConnections(middleNodes, outerNodes, 0.3, 0xffffff);
-      
-      // Intra-layer connections
-      createIntraLayerConnections(coreNodes, 2.5, 0.5, 0xffffff);
+
+      // Intra-layer connections (core = blue, others = white)
+      createIntraLayerConnections(coreNodes, 2.5, 0.5, 0x00A3FF);
       createIntraLayerConnections(middleNodes, 3.0, 0.4, 0xffffff);
       createIntraLayerConnections(outerNodes, 4.0, 0.3, 0xffffff);
     };
@@ -295,15 +313,18 @@ export default function AdvancedNetworkAnimation({
       const geometry = new THREE.BufferGeometry();
       const positions = [pos1.x, pos1.y, pos1.z, pos2.x, pos2.y, pos2.z];
       geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-      
+      trackGeometry(geometry);
+
       const material = new THREE.LineBasicMaterial({
         color: color,
         transparent: true,
         opacity: opacity,
         linewidth: 1
       });
-      
+      trackMaterial(material);
+
       const line = new THREE.Line(geometry, material);
+      trackObject(line);
       line.userData = { 
         originalOpacity: opacity,
         pulseOffset: Math.random() * Math.PI * 2
@@ -416,26 +437,36 @@ export default function AdvancedNetworkAnimation({
       context.fillText(text, canvas.width / 2, canvas.height / 2);
       
       const texture = new THREE.CanvasTexture(canvas);
+      trackTexture(texture);
       const material = new THREE.SpriteMaterial({
         map: texture,
         transparent: true,
         opacity: 0.95
       });
-      
+      trackMaterial(material);
+
       const sprite = new THREE.Sprite(material);
       sprite.scale.set(3, 0.8, 1);
-      
+      trackObject(sprite);
+
       return sprite;
     };
 
     const createTextToMeshConnections = () => {
-      // Clear any existing text-mesh connections from scene and connections array
-      scene.children = scene.children.filter(child => 
-        !child.userData || child.userData.type !== 'text-mesh-connection'
+      // Dispose and remove existing text-mesh connections
+      const toRemove = connections.filter(conn =>
+        conn.userData && conn.userData.type === 'text-mesh-connection'
       );
-      
-      // Remove text-mesh connections from connections array
-      connections.splice(0, connections.length, ...connections.filter(conn => 
+      toRemove.forEach(conn => {
+        scene.remove(conn);
+        if (conn.userData?.segments) {
+          conn.userData.segments.forEach((seg: any) => {
+            seg.geometry?.dispose();
+            seg.material?.dispose();
+          });
+        }
+      });
+      connections.splice(0, connections.length, ...connections.filter(conn =>
         !conn.userData || conn.userData.type !== 'text-mesh-connection'
       ));
       
@@ -538,15 +569,19 @@ export default function AdvancedNetworkAnimation({
       const geometry = new THREE.BufferGeometry();
       const positions = [start.x, start.y, start.z, end.x, end.y, end.z];
       geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-      
+      trackGeometry(geometry);
+
       const material = new THREE.LineBasicMaterial({
-        color: 0xffffff,
+        color: 0x00A3FF,
         transparent: true,
         opacity: 0.15,
         linewidth: 1
       });
-      
-      return new THREE.Line(geometry, material);
+      trackMaterial(material);
+
+      const line = new THREE.Line(geometry, material);
+      trackObject(line);
+      return line;
     };
 
     const setupAdvancedLighting = () => {
@@ -575,10 +610,10 @@ export default function AdvancedNetworkAnimation({
 
     const setupEventListeners = () => {
       if (!renderer.domElement) return;
-      
-      renderer.domElement.addEventListener('click', (event) => {
-        onMouseClick(event);
-      });
+
+      addSafeEventListener(renderer.domElement, 'click', ((event: Event) => {
+        onMouseClick(event as MouseEvent);
+      }) as EventListener);
     };
 
     const onMouseClick = (event: MouseEvent) => {
@@ -739,9 +774,6 @@ export default function AdvancedNetworkAnimation({
 
     // Add resize listener with safe tracking
     addSafeEventListener(window, 'resize', handleResize);
-
-    // Initialize
-    init();
 
     // Cleanup function
     return () => {

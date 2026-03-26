@@ -1163,94 +1163,119 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // LiveKit configuration endpoint for frontend
-  app.get("/api/livekit/config", async (req, res) => {
-    try {
-      // Use environment variables directly (AWS Secrets Manager loads them)
-      const phiUrl = process.env.LIVEKIT_PHI_URL;
-      const phiApiKey = process.env.LIVEKIT_PHI_API_KEY;
-      const phiApiSecret = process.env.LIVEKIT_PHI_API_SECRET;
-      const companyUrl = process.env.LIVEKIT_COMPANY_URL;
-      const companyApiKey = process.env.LIVEKIT_COMPANY_API_KEY;
-      const companyApiSecret = process.env.LIVEKIT_COMPANY_API_SECRET;
 
-      if (!phiUrl || !phiApiKey || !phiApiSecret || !companyUrl || !companyApiKey || !companyApiSecret) {
-        throw new Error('LiveKit credentials not found in environment');
-      }
-
-      res.json({
-        phi: {
-          url: phiUrl,
-          apiKey: phiApiKey,
-          apiSecret: phiApiSecret
-        },
-        company: {
-          url: companyUrl,
-          apiKey: companyApiKey,
-          apiSecret: companyApiSecret
-        }
-      });
-    } catch (error) {
-      console.error('Failed to get LiveKit config:', error);
-      res.status(500).json({ error: 'Failed to load LiveKit configuration' });
-    }
-  });
-
-  // Chat endpoint - Proxy to OpenAI (SECURE - API key hidden from frontend)
+  // Chat endpoint - Proxy to LLM (SECURE - API key hidden from frontend)
   app.post("/api/chat", async (req, res) => {
     try {
       const { message, conversationHistory } = req.body;
-      
+
       if (!message || !message.trim()) {
         return res.status(400).json({ error: 'Message is required' });
       }
 
-      const apiKey = process.env.OPENAI_API_KEY;
-      if (!apiKey) {
-        throw new Error('OpenAI API key not configured');
-      }
+      const chatProvider = (process.env.CHAT_LLM_PROVIDER || 'openai').toLowerCase().trim();
 
-      // Prepare messages with system prompt
+      const systemPrompt = 'You are Phi Intelligence, a professional AI assistant specializing in AI solutions, business automation, workforce management, and industrial automation. You help businesses optimize operations, reduce costs, and implement AI solutions. Provide helpful, accurate, and concise responses. Use a friendly but professional tone. Keep responses under 150 words unless the user asks for detailed information. Focus on practical business applications and ROI.';
+
+      const history = conversationHistory || [];
+      const lastMsg = history[history.length - 1];
+      const currentAlreadyIncluded =
+        lastMsg && lastMsg.role === 'user' && lastMsg.content === message.trim();
+
       const messages = [
-        {
-          role: 'system',
-          content: 'You are Phi Intelligence, a professional AI assistant specializing in AI solutions, business automation, workforce management, and industrial automation. You help businesses optimize operations, reduce costs, and implement AI solutions. Provide helpful, accurate, and concise responses. Use a friendly but professional tone. Keep responses under 150 words unless the user asks for detailed information. Focus on practical business applications and ROI.'
-        },
-        ...(conversationHistory || [])
+        { role: 'system', content: systemPrompt },
+        ...history,
+        ...(currentAlreadyIncluded ? [] : [{ role: 'user', content: message.trim() }]),
       ];
 
-      // Call OpenAI from backend (secure)
-      const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o-mini',
-          messages: messages,
-          temperature: 0.7,
-          max_tokens: 500,
-          stream: false
-        }),
+      let assistantContent: string;
+
+      if (chatProvider === 'gemini') {
+        // --- Gemini path ---
+        const googleApiKey = process.env.GOOGLE_API_KEY;
+        if (!googleApiKey) {
+          throw new Error('GOOGLE_API_KEY not configured');
+        }
+
+        // Gemini uses "contents" with roles "user"/"model"; system prompt goes to systemInstruction
+        const geminiContents = messages
+          .filter((m: any) => m.role !== 'system')
+          .map((m: any) => ({
+            role: m.role === 'assistant' ? 'model' : 'user',
+            parts: [{ text: m.content }]
+          }));
+
+        const geminiResponse = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${googleApiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: systemPrompt }] },
+              contents: geminiContents,
+              generationConfig: { temperature: 0.7, maxOutputTokens: 500 }
+            }),
+          }
+        );
+
+        if (!geminiResponse.ok) {
+          const errorData = await geminiResponse.json().catch(() => ({}));
+          console.error('Gemini API Error:', errorData);
+          return res.status(geminiResponse.status).json({
+            error: (errorData as any).error?.message || 'Gemini API request failed'
+          });
+        }
+
+        const geminiData = await geminiResponse.json() as any;
+        assistantContent = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+        if (!assistantContent) {
+          const finishReason = geminiData.candidates?.[0]?.finishReason;
+          throw new Error(`Gemini returned no content (finishReason: ${finishReason || 'unknown'})`);
+        }
+
+      } else {
+        // --- OpenAI path (default) ---
+        const apiKey = process.env.OPENAI_API_KEY;
+        if (!apiKey) {
+          throw new Error('OpenAI API key not configured');
+        }
+
+        const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: 'gpt-4o-mini',
+            messages: messages,
+            temperature: 0.7,
+            max_tokens: 500,
+            stream: false
+          }),
+        });
+
+        if (!openaiResponse.ok) {
+          const errorData = await openaiResponse.json().catch(() => ({}));
+          console.error('OpenAI API Error:', errorData);
+          return res.status(openaiResponse.status).json({
+            error: (errorData as any).error?.message || 'OpenAI API request failed'
+          });
+        }
+
+        const data = await openaiResponse.json() as any;
+        assistantContent = data.choices[0].message.content;
+      }
+
+      res.json({
+        success: true,
+        message: {
+          role: 'assistant',
+          content: assistantContent
+        }
       });
 
-      if (openaiResponse.ok) {
-        const data = await openaiResponse.json();
-        res.json({
-          success: true,
-          message: {
-            role: 'assistant',
-            content: data.choices[0].message.content
-          }
-        });
-      } else {
-        const errorData = await openaiResponse.json().catch(() => ({}));
-        console.error('OpenAI API Error:', errorData);
-        res.status(openaiResponse.status).json({ 
-          error: errorData.error?.message || 'OpenAI API request failed' 
-        });
-      }
     } catch (error) {
       console.error('Chat endpoint error:', error);
       res.status(500).json({ error: 'Failed to process chat message' });

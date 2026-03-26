@@ -349,7 +349,7 @@ export default function JobApplicationForm() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-phi-black text-phi-white pt-24 flex items-center justify-center">
+      <div className="min-h-screen bg-black text-white pt-24 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-phi-white mx-auto mb-4"></div>
           <p>Loading application form...</p>
@@ -360,7 +360,7 @@ export default function JobApplicationForm() {
 
   if (!job) {
     return (
-      <div className="min-h-screen bg-phi-black text-phi-white pt-24 flex items-center justify-center">
+      <div className="min-h-screen bg-black text-white pt-24 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">Job Not Found</h2>
           <Link href="/careers">
@@ -372,12 +372,12 @@ export default function JobApplicationForm() {
   }
 
   return (
-    <div className="min-h-screen bg-phi-black text-phi-white pt-24">
+    <div className="min-h-screen bg-black text-white pt-24">
       <div className="container mx-auto max-w-4xl px-6 py-12">
         {/* Header */}
         <div className="mb-8">
           <Link href="/careers">
-            <Button variant="ghost" className="mb-4 text-phi-white hover:bg-phi-gray">
+            <Button variant="ghost" className="mb-4 text-white hover:bg-phi-gray">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Careers
             </Button>
@@ -401,7 +401,7 @@ export default function JobApplicationForm() {
               <h4 className="font-semibold mb-2">Requirements:</h4>
               <div className="flex flex-wrap gap-2">
                 {job.requirements.map((req, index) => (
-                  <Badge key={index} variant="secondary" className="bg-phi-gray text-phi-white">
+                  <Badge key={index} variant="secondary" className="bg-phi-gray text-white">
                     {req}
                   </Badge>
                 ))}
@@ -445,7 +445,7 @@ export default function JobApplicationForm() {
                   value={formData.personalInfo.firstName}
                   onChange={(e) => handlePersonalInfoChange('firstName', e.target.value)}
                   required
-                  className="bg-phi-gray border-phi-white text-phi-white"
+                  className="bg-phi-gray border-phi-white text-white"
                 />
               </div>
               <div>
@@ -455,7 +455,7 @@ export default function JobApplicationForm() {
                   value={formData.personalInfo.lastName}
                   onChange={(e) => handlePersonalInfoChange('lastName', e.target.value)}
                   required
-                  className="bg-phi-gray border-phi-white text-phi-white"
+                  className="bg-phi-gray border-phi-white text-white"
                 />
               </div>
               <div>
@@ -466,7 +466,7 @@ export default function JobApplicationForm() {
                   value={formData.personalInfo.email}
                   onChange={(e) => handlePersonalInfoChange('email', e.target.value)}
                   required
-                  className="bg-phi-gray border-phi-white text-phi-white"
+                  className="bg-phi-gray border-phi-white text-white"
                 />
               </div>
               <div>
@@ -477,7 +477,7 @@ export default function JobApplicationForm() {
                   value={formData.personalInfo.phone}
                   onChange={(e) => handlePersonalInfoChange('phone', e.target.value)}
                   required
-                  className="bg-phi-gray border-phi-white text-phi-white"
+                  className="bg-phi-gray border-phi-white text-white"
                 />
               </div>
               <div>
@@ -487,7 +487,7 @@ export default function JobApplicationForm() {
                   type="url"
                   value={formData.personalInfo.linkedin}
                   onChange={(e) => handlePersonalInfoChange('linkedin', e.target.value)}
-                  className="bg-phi-gray border-phi-white text-phi-white"
+                  className="bg-phi-gray border-phi-white text-white"
                 />
               </div>
               <div>
@@ -497,7 +497,7 @@ export default function JobApplicationForm() {
                   type="url"
                   value={formData.personalInfo.portfolio}
                   onChange={(e) => handlePersonalInfoChange('portfolio', e.target.value)}
-                  className="bg-phi-gray border-phi-white text-phi-white"
+                  className="bg-phi-gray border-phi-white text-white"
                 />
               </div>
               <div>
@@ -507,7 +507,7 @@ export default function JobApplicationForm() {
                   value={formData.personalInfo.location}
                   onChange={(e) => handlePersonalInfoChange('location', e.target.value)}
                   required
-                  className="bg-phi-gray border-phi-white text-phi-white"
+                  className="bg-phi-gray border-phi-white text-white"
                 />
               </div>
               <div>
@@ -516,10 +516,10 @@ export default function JobApplicationForm() {
                   value={formData.personalInfo.workAuthorization}
                   onValueChange={(value) => handlePersonalInfoChange('workAuthorization', value)}
                 >
-                  <SelectTrigger className="bg-phi-gray border-phi-white text-phi-white">
+                  <SelectTrigger className="bg-phi-gray border-phi-white text-white">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-phi-black border-phi-gray text-phi-white">
+                  <SelectContent className="bg-black border-phi-gray text-white">
                     <SelectItem value="authorized">Authorized to work</SelectItem>
                     <SelectItem value="sponsor">Need sponsorship</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
@@ -564,7 +564,7 @@ export default function JobApplicationForm() {
                         value={exp.company}
                         onChange={(e) => handleExperienceChange(index, 'company', e.target.value)}
                         required
-                        className="bg-phi-gray border-phi-white text-phi-white"
+                        className="bg-phi-gray border-phi-white text-white"
                       />
                     </div>
                     <div>
@@ -573,7 +573,7 @@ export default function JobApplicationForm() {
                         value={exp.title}
                         onChange={(e) => handleExperienceChange(index, 'title', e.target.value)}
                         required
-                        className="bg-phi-gray border-phi-white text-phi-white"
+                        className="bg-phi-gray border-phi-white text-white"
                       />
                     </div>
                     <div>
@@ -583,7 +583,7 @@ export default function JobApplicationForm() {
                         value={exp.startDate}
                         onChange={(e) => handleExperienceChange(index, 'startDate', e.target.value)}
                         required
-                        className="bg-phi-gray border-phi-white text-phi-white"
+                        className="bg-phi-gray border-phi-white text-white"
                       />
                     </div>
                     <div>
@@ -593,7 +593,7 @@ export default function JobApplicationForm() {
                         value={exp.endDate}
                         onChange={(e) => handleExperienceChange(index, 'endDate', e.target.value)}
                         disabled={exp.current}
-                        className="bg-phi-gray border-phi-white text-phi-white"
+                        className="bg-phi-gray border-phi-white text-white"
                       />
                     </div>
                   </div>
@@ -614,7 +614,7 @@ export default function JobApplicationForm() {
                       onChange={(e) => handleExperienceChange(index, 'description', e.target.value)}
                       required
                       placeholder="Describe your responsibilities and achievements..."
-                      className="bg-phi-gray border-phi-white text-phi-white"
+                      className="bg-phi-gray border-phi-white text-white"
                       rows={3}
                     />
                   </div>
@@ -658,7 +658,7 @@ export default function JobApplicationForm() {
                         value={edu.institution}
                         onChange={(e) => handleEducationChange(index, 'institution', e.target.value)}
                         required
-                        className="bg-phi-gray border-phi-white text-phi-white"
+                        className="bg-phi-gray border-phi-white text-white"
                       />
                     </div>
                     <div>
@@ -667,7 +667,7 @@ export default function JobApplicationForm() {
                         value={edu.degree}
                         onChange={(e) => handleEducationChange(index, 'degree', e.target.value)}
                         required
-                        className="bg-phi-gray border-phi-white text-phi-white"
+                        className="bg-phi-gray border-phi-white text-white"
                       />
                     </div>
                     <div>
@@ -676,7 +676,7 @@ export default function JobApplicationForm() {
                         value={edu.field}
                         onChange={(e) => handleEducationChange(index, 'field', e.target.value)}
                         required
-                        className="bg-phi-gray border-phi-white text-phi-white"
+                        className="bg-phi-gray border-phi-white text-white"
                       />
                     </div>
                     <div>
@@ -685,7 +685,7 @@ export default function JobApplicationForm() {
                         value={edu.graduationYear}
                         onChange={(e) => handleEducationChange(index, 'graduationYear', e.target.value)}
                         required
-                        className="bg-phi-gray border-phi-white text-phi-white"
+                        className="bg-phi-gray border-phi-white text-white"
                       />
                     </div>
                     <div>
@@ -694,7 +694,7 @@ export default function JobApplicationForm() {
                         value={edu.gpa}
                         onChange={(e) => handleEducationChange(index, 'gpa', e.target.value)}
                         placeholder="e.g., 3.8"
-                        className="bg-phi-gray border-phi-white text-phi-white"
+                        className="bg-phi-gray border-phi-white text-white"
                       />
                     </div>
                   </div>
@@ -721,7 +721,7 @@ export default function JobApplicationForm() {
                       (e.target as HTMLInputElement).value = '';
                     }
                   }}
-                  className="bg-phi-gray border-phi-white text-phi-white"
+                  className="bg-phi-gray border-phi-white text-white"
                 />
                 <Button
                   type="button"
@@ -743,7 +743,7 @@ export default function JobApplicationForm() {
                 <Badge
                   key={index}
                   variant="secondary"
-                  className="bg-phi-gray text-phi-white cursor-pointer hover:bg-red-600"
+                  className="bg-phi-gray text-white cursor-pointer hover:bg-red-600"
                   onClick={() => removeSkill(skill)}
                 >
                   {skill} ×
@@ -765,7 +765,7 @@ export default function JobApplicationForm() {
               onChange={(e) => setFormData(prev => ({ ...prev, coverLetter: e.target.value }))}
               required
               placeholder="Write a compelling cover letter explaining your interest in this position..."
-              className="bg-phi-gray border-phi-white text-phi-white mt-2"
+              className="bg-phi-gray border-phi-white text-white mt-2"
               rows={6}
             />
           </Card>

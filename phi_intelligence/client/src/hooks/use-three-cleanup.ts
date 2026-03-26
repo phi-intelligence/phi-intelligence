@@ -95,8 +95,9 @@ export function useThreeCleanup(options: CleanupOptions = {}) {
   const trackAnimationFrame = useCallback((animationId: number) => {
     if (animationId) {
       cleanupRefs.current.animationFrames.push(animationId);
-      if (cleanupRefs.current.animationFrames.length > 10) {
-        cleanupRefs.current.animationFrames.shift();
+      // Keep only last 20 — old ones have already executed, shift is safe
+      if (cleanupRefs.current.animationFrames.length > 20) {
+        cleanupRefs.current.animationFrames.splice(0, cleanupRefs.current.animationFrames.length - 5);
       }
     }
   }, []);
@@ -149,29 +150,65 @@ export function useThreeCleanup(options: CleanupOptions = {}) {
 
   const cleanup = useCallback((customOptions?: CleanupOptions) => {
     const finalOptions = { ...optionsRef.current, ...customOptions };
-    
+
+    // Cancel all pending animation frames
     cleanupRefs.current.animationFrames.forEach(id => cancelAnimationFrame(id));
     cleanupRefs.current.animationFrames = [];
 
+    // Clear intervals and timeouts
+    cleanupRefs.current.intervals.forEach(id => { try { clearInterval(id); } catch (e) {} });
+    cleanupRefs.current.intervals = [];
+    cleanupRefs.current.timeouts.forEach(id => { try { clearTimeout(id); } catch (e) {} });
+    cleanupRefs.current.timeouts = [];
+
+    // Remove event listeners first (before disposing objects that may reference DOM)
+    cleanupRefs.current.eventListeners.forEach(({ target, type, listener }) => {
+      try { target.removeEventListener(type, listener); } catch (e) {}
+    });
+    cleanupRefs.current.eventListeners = [];
+
+    // Dispose tracked objects (meshes, groups, sprites — also disposes their geometry/material)
+    if (finalOptions.disposeObjects !== false) {
+      cleanupRefs.current.objects.forEach(obj => disposeObject(obj));
+      cleanupRefs.current.objects = [];
+    }
+
+    // Dispose standalone tracked textures (canvas textures, loaded textures)
+    if (finalOptions.disposeTextures !== false) {
+      cleanupRefs.current.textures.forEach(t => { try { t.dispose(); } catch (e) {} });
+      cleanupRefs.current.textures = [];
+    }
+
+    // Dispose standalone tracked materials not already disposed via objects
+    if (finalOptions.disposeMaterials !== false) {
+      cleanupRefs.current.materials.forEach(m => { try { m.dispose(); } catch (e) {} });
+      cleanupRefs.current.materials = [];
+    }
+
+    // Dispose standalone tracked geometries not already disposed via objects
+    if (finalOptions.disposeGeometries !== false) {
+      cleanupRefs.current.geometries.forEach(g => { try { g.dispose(); } catch (e) {} });
+      cleanupRefs.current.geometries = [];
+    }
+
+    // Clear scenes (removes all children)
+    cleanupRefs.current.scenes.forEach(s => { try { s.clear(); } catch (e) {} });
+    cleanupRefs.current.scenes = [];
+
+    // Nullify cameras
+    cleanupRefs.current.cameras = [];
+
+    // Dispose controls
+    cleanupRefs.current.controls.forEach(c => { try { c.dispose?.(); } catch (e) {} });
+    cleanupRefs.current.controls = [];
+
+    // Dispose renderers last (releases WebGL context)
     if (finalOptions.disposeRenderers !== false) {
       cleanupRefs.current.renderers.forEach(r => {
         try { r.dispose(); r.forceContextLoss(); } catch (e) {}
       });
       cleanupRefs.current.renderers = [];
     }
-
-    if (finalOptions.disposeObjects !== false) {
-      cleanupRefs.current.objects.forEach(obj => disposeObject(obj));
-      cleanupRefs.current.objects = [];
-    }
-
-    cleanupRefs.current.eventListeners.forEach(({ target, type, listener }) => {
-      try { target.removeEventListener(type, listener); } catch (e) {}
-    });
-    cleanupRefs.current.eventListeners = [];
-
-    cleanupRefs.current.scenes.forEach(s => s.clear());
-    cleanupRefs.current.scenes = [];
   }, [disposeObject]);
 
   useEffect(() => {

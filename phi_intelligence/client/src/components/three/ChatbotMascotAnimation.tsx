@@ -88,13 +88,15 @@ export default function ChatbotMascotAnimation({
 
     // Utility: add back-face scaled mesh for a bold cartoon OUTLINE
     function addOutline(obj: THREE.Mesh, color = colors.navy, scale = 1.04) {
-      const outline = new THREE.Mesh(
-        obj.geometry.clone(),
-        new THREE.MeshBasicMaterial({ color, side: THREE.BackSide })
-      );
+      const clonedGeom = obj.geometry.clone();
+      const outlineMat = new THREE.MeshBasicMaterial({ color, side: THREE.BackSide });
+      trackGeometry(clonedGeom);
+      trackMaterial(outlineMat);
+      const outline = new THREE.Mesh(clonedGeom, outlineMat);
       outline.position.copy(obj.position);
       outline.quaternion.copy(obj.quaternion);
       outline.scale.copy(obj.scale).multiplyScalar(scale);
+      trackObject(outline);
       obj.add(outline);
       return outline;
     }
@@ -179,43 +181,51 @@ export default function ChatbotMascotAnimation({
     addOutline(head, colors.navy, 1.05);
 
     // Visor patch (navy circular plate intersecting head)
-    const visor = new THREE.Mesh(
-      new THREE.CircleGeometry(0.78, 64),
-      new THREE.MeshStandardMaterial({ color: colors.navy, roughness: 0.6, metalness: 0.0 })
-    );
+    const visorGeom = new THREE.CircleGeometry(0.78, 64);
+    const visorMat = new THREE.MeshStandardMaterial({ color: colors.navy, roughness: 0.6, metalness: 0.0 });
+    trackGeometry(visorGeom);
+    trackMaterial(visorMat);
+    const visor = new THREE.Mesh(visorGeom, visorMat);
     visor.position.set(0, 0.95, 0.95);
     visor.rotation.x = -0.12;
+    trackObject(visor);
     bot.add(visor);
     addOutline(visor, colors.navy, 1.08);
 
     // Small glossy highlight wedge (white cap)
-    const wedge = new THREE.Mesh(
-      new THREE.SphereGeometry(1.01, 64, 64, Math.PI * 1.1, Math.PI * 0.6, 0.0, Math.PI * 0.45),
-      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.18 })
-    );
+    const wedgeGeom = new THREE.SphereGeometry(1.01, 64, 64, Math.PI * 1.1, Math.PI * 0.6, 0.0, Math.PI * 0.45);
+    const wedgeMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.18 });
+    trackGeometry(wedgeGeom);
+    trackMaterial(wedgeMat);
+    const wedge = new THREE.Mesh(wedgeGeom, wedgeMat);
     wedge.position.copy(head.position);
     wedge.rotation.set(0.0, 0.2, 0.0);
+    trackObject(wedge);
     bot.add(wedge);
 
     // Antenna (stem + ball)
-    const stem = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.06, 0.06, 0.6, 24),
-      new THREE.MeshStandardMaterial({ color: colors.navy, roughness: 0.6 })
-    );
+    const stemGeom = new THREE.CylinderGeometry(0.06, 0.06, 0.6, 24);
+    const stemMat = new THREE.MeshStandardMaterial({ color: colors.navy, roughness: 0.6 });
+    trackGeometry(stemGeom);
+    trackMaterial(stemMat);
+    const stem = new THREE.Mesh(stemGeom, stemMat);
     stem.position.set(0, 1.65, 0);
+    trackObject(stem);
     bot.add(stem);
     addOutline(stem, colors.navy, 1.2);
 
-    const tip = new THREE.Mesh(
-      new THREE.SphereGeometry(0.12, 32, 16),
-      new THREE.MeshStandardMaterial({ 
-        color: colors.white, 
-        emissive: 0xffffff, 
-        emissiveIntensity: 0.8, 
-        roughness: 0.3 
-      })
-    );
+    const tipGeom = new THREE.SphereGeometry(0.12, 32, 16);
+    const tipMat = new THREE.MeshStandardMaterial({
+      color: colors.white,
+      emissive: 0xffffff,
+      emissiveIntensity: 0.8,
+      roughness: 0.3
+    });
+    trackGeometry(tipGeom);
+    trackMaterial(tipMat);
+    const tip = new THREE.Mesh(tipGeom, tipMat);
     tip.position.set(0, 1.96, 0);
+    trackObject(tip);
     bot.add(tip);
     addOutline(tip, colors.navy, 1.25);
 
@@ -229,9 +239,12 @@ export default function ChatbotMascotAnimation({
         roughness: 0.2,
         metalness: 0.0
       });
+      trackGeometry(g);
+      trackMaterial(m);
       const e = new THREE.Mesh(g, m);
       e.position.set(x, 0.95, 1.02);
       e.rotation.x = -0.14;
+      trackObject(e);
       addOutline(e, colors.navy, 1.25);
       return e;
     }
@@ -309,10 +322,14 @@ export default function ChatbotMascotAnimation({
 
     function makeBubble(radius = 1.7, phase = 0, withQ = true) {
       const tex = makeBubbleTexture({ showQ: withQ });
+      trackTexture(tex);
       const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide });
+      trackMaterial(mat);
       const aspect = tex.image.width / tex.image.height;
       const geo = new THREE.PlaneGeometry(1.6 * aspect * 0.35, 1.6 * 0.35);
+      trackGeometry(geo);
       const plane = new THREE.Mesh(geo, mat);
+      trackObject(plane);
       plane.userData = { radius, phase, bobAmp: 0.07, bobHz: 0.5 + Math.random() * 0.3 };
       return plane;
     }

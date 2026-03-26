@@ -57,6 +57,10 @@ class KeyVaultService {
     return this.getSecret('pinecone-api-key');
   }
 
+  async getGoogleApiKey(): Promise<string> {
+    return this.getSecret('google-api-key');
+  }
+
   // LiveKit credentials
   async getLiveKitCredentials(project: string): Promise<{ apiKey: string; apiSecret: string; url: string }> {
     const [apiKey, apiSecret, url] = await Promise.all([

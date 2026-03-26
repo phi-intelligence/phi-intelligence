@@ -139,32 +139,49 @@ export default function CubeGridAnimation({
     topLight.position.set(0, 20, 0);
     topLight.castShadow = true;
     scene.add(topLight);
-    
+    trackObject(topLight);
+
     // Left side lighting - covers entire left side
     const leftLight = new THREE.DirectionalLight(0xffffff, 2.0);
     leftLight.position.set(-20, 10, 0);
     leftLight.castShadow = true;
     scene.add(leftLight);
-    
+    trackObject(leftLight);
+
     // Right side lighting - covers entire right side
     const rightLight = new THREE.DirectionalLight(0xffffff, 2.0);
     rightLight.position.set(20, 10, 0);
     rightLight.castShadow = true;
     scene.add(rightLight);
-    
+    trackObject(rightLight);
+
     // Front lighting - additional coverage from front
     const frontLight = new THREE.DirectionalLight(0xffffff, 1.5);
     frontLight.position.set(0, 8, 20);
     scene.add(frontLight);
-    
+    trackObject(frontLight);
+
     // Back lighting - additional coverage from back
     const backLight = new THREE.DirectionalLight(0xffffff, 1.5);
     backLight.position.set(0, 8, -20);
     scene.add(backLight);
+    trackObject(backLight);
     
     // Ambient fill light for overall illumination
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+    const ambientLight = new THREE.AmbientLight(0x001a40, 0.5);
     scene.add(ambientLight);
+
+    // Blue accent light — phi-blue glow from above-front
+    const blueLight = new THREE.PointLight(0x00A3FF, 4.0, 80);
+    blueLight.position.set(0, 15, 10);
+    scene.add(blueLight);
+    trackObject(blueLight);
+
+    // Secondary blue rim light from left
+    const blueRimLight = new THREE.PointLight(0x0066cc, 2.5, 60);
+    blueRimLight.position.set(-15, 5, 0);
+    scene.add(blueRimLight);
+    trackObject(blueRimLight);
 
     // Create instanced mesh with rounded edges for light catching
     const geometry = new RoundedBoxGeometry(0.9, 0.9, 0.9, 6, 0.04); // Rounded cubes with smaller bevel
@@ -173,14 +190,14 @@ export default function CubeGridAnimation({
     trackGeometry(geometry);
     
     const material = new THREE.MeshPhysicalMaterial({
-      color: 0x000000,         // pure black base
-      metalness: 0.01,     // NOT metal — lets clearcoat make white rims
-      roughness: 0.18,         // glossy but not mirror
+      color: 0x001a33,         // deep blue-black base
+      metalness: 0.3,
+      roughness: 0.18,
       clearcoat: 1.0,
       clearcoatRoughness: 0.06,
       specularIntensity: 1.0,
-      specularColor: new THREE.Color(0xffffff),
-      envMapIntensity: 1,    // keep low since no environment
+      specularColor: new THREE.Color(0x00A3FF),
+      envMapIntensity: 1,
     });
     
     // Track material for cleanup
@@ -220,6 +237,7 @@ export default function CubeGridAnimation({
     }
 
     // Add to DOM
+    renderer.domElement.style.pointerEvents = enableInteraction ? 'auto' : 'none';
     mountRef.current.appendChild(renderer.domElement);
 
     // Animation loop
@@ -360,7 +378,7 @@ export default function CubeGridAnimation({
         width: '100%',
         height: '100%',
         zIndex: 0,
-        pointerEvents: 'auto' // Always allow mouse interaction
+        pointerEvents: enableInteraction ? 'auto' : 'none'
       }}
     >
       {!isInitialized && (

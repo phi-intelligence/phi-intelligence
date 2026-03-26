@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useThreeCleanup } from '@/hooks/use-three-cleanup';
 
-import { TextureLoader } from 'three';
 
 interface GlobeProps {
   className?: string;
@@ -13,7 +12,7 @@ const Globe = React.memo(function Globe({ className = '', isMobile = false }: Gl
   const mountRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>();
   const particlesRef = useRef<THREE.Points>();
-  const logoRef = useRef<{ particles: THREE.Points; lines: THREE.LineSegments }>();
+  const logoSpriteRef = useRef<THREE.Sprite>();
   
 
   const {
@@ -72,10 +71,12 @@ const Globe = React.memo(function Globe({ className = '', isMobile = false }: Gl
     // Lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
-    
+    trackObject(ambientLight);
+
     const pointLight = new THREE.PointLight(0xffffff, 1, 50);
     pointLight.position.set(5, 5, 5);
     scene.add(pointLight);
+    trackObject(pointLight);
 
     // Create points for the globe
     const points: number[] = [];
@@ -106,7 +107,7 @@ const Globe = React.memo(function Globe({ className = '', isMobile = false }: Gl
       color: 0xffffff,
       size: 0.03,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.6,
       sizeAttenuation: true
     });
     
@@ -126,7 +127,7 @@ const Globe = React.memo(function Globe({ className = '', isMobile = false }: Gl
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0xffffff,
       transparent: true,
-      opacity: 0.5
+      opacity: 0.25
     });
     
     // Create lines between nearby points
@@ -159,149 +160,61 @@ const Globe = React.memo(function Globe({ className = '', isMobile = false }: Gl
     }
     
     const lineGeometry = new THREE.BufferGeometry().setFromPoints(lineSegments);
+    trackGeometry(lineGeometry);
+    trackMaterial(lineMaterial);
     const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    trackObject(lines);
     scene.add(lines);
 
-    // Create a network-formed logo based on the actual logophi.png image
-    const createNetworkLogo = () => {
-      return new Promise<void>((resolve) => {
-        const textureLoader = new TextureLoader();
-        textureLoader.load('/assets/logophi.png', (texture) => {
-          // Create a canvas to analyze the logo image
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          if (!ctx) return;
-          
-          canvas.width = texture.image.width;
-          canvas.height = texture.image.height;
-          
-          // Draw the logo image
-          ctx.drawImage(texture.image, 0, 0);
-          
-          // Get image data to analyze pixel density
-          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          const data = imageData.data;
-          
-          const logoLineSegments: THREE.Vector3[] = [];
-          const logoParticles: number[] = [];
-          
-          // Generate particles specifically for the logo based on actual image
-          const logoTotalParticles = 3000; // Dense particles for logo
-          // Responsive logo size - larger on mobile for better visibility
-          const logoSize = isMobile ? 2.2 : 2;
-          const halfSize = logoSize / 2;
-          
-          for (let i = 0; i < logoTotalParticles; i++) {
-            // Generate particles in logo area
-            const x = (Math.random() - 0.5) * logoSize;
-            const y = (Math.random() - 0.5) * logoSize;
-            
-            // Check if particle should be inside logo shape based on actual image
-            const isInLogo = isInsideActualLogo(x, y, data, canvas.width, canvas.height, logoSize);
-            
-            if (isInLogo) {
-              const z = (Math.random() - 0.8) * 0.5; // Thin layer for logo
-              logoParticles.push(x, y, z);
-            }
+    // Create a solid blue logo sprite in the centre of the globe
+    const createLogoSprite = () => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const size = 256;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(img, 0, 0, size, size);
+
+        // Replace every non-transparent pixel with phi-blue (#00A3FF)
+        // Use darker sRGB-compensated values so Three.js renders the correct hue
+        const imageData = ctx.getImageData(0, 0, size, size);
+        const d = imageData.data;
+        for (let i = 0; i < d.length; i += 4) {
+          if (d[i + 3] > 30) {
+            d[i]     = 0;
+            d[i + 1] = 100;
+            d[i + 2] = 200;
+            d[i + 3] = 240;
           }
-          
-          // Create connections between logo particles
-          const logoMaxDistance = 0.12; // Tighter connections for logo
-          
-          for (let i = 0; i < logoParticles.length; i += 3) {
-            const x1 = logoParticles[i];
-            const y1 = logoParticles[i + 1];
-            const z1 = logoParticles[i + 2];
-            
-            for (let j = i + 3; j < logoParticles.length; j += 3) {
-              const x2 = logoParticles[j];
-              const y2 = logoParticles[j + 1];
-              const z2 = logoParticles[j + 2];
-              
-              const distance = Math.sqrt(
-                Math.pow(x2 - x1, 2) + 
-                Math.pow(y2 - y1, 2) + 
-                Math.pow(z2 - z1, 2)
-              );
-              
-              if (distance < logoMaxDistance) {
-                logoLineSegments.push(
-                  new THREE.Vector3(x1, y1, z1),
-                  new THREE.Vector3(x2, y2, z2)
-                );
-              }
-            }
-          }
-          
-          // Create logo particles geometry
-          const logoParticleGeometry = new THREE.BufferGeometry();
-          logoParticleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(logoParticles, 3));
-          
-          const logoParticleMaterial = new THREE.PointsMaterial({
-            color: 0xffffff,
-            size: 0.02, // Slightly larger particles for logo
-            transparent: true,
-            opacity: 1, // Full opacity for logo
-            sizeAttenuation: true
-          });
-          
-          const logoParticlesMesh = new THREE.Points(logoParticleGeometry, logoParticleMaterial);
-          logoParticlesMesh.position.set(0, 0, 0);
-          logoParticlesMesh.rotation.set(0, 0, Math.PI); // Rotate 180 degrees to match navbar orientation
-          logoParticlesMesh.renderOrder = 10; // Ensure it renders on top
-          scene.add(logoParticlesMesh);
-          
-          // Create logo connections geometry
-          const logoLineGeometry = new THREE.BufferGeometry().setFromPoints(logoLineSegments);
-          const logoLineMaterial = new THREE.LineBasicMaterial({
-            color: 0xffffff,
-            transparent: true,
-            opacity: 0.9 // Higher opacity for logo connections
-          });
-          
-          const logoLines = new THREE.LineSegments(logoLineGeometry, logoLineMaterial);
-          logoLines.position.set(0, 0, 0);
-          logoLines.rotation.set(0, 0, Math.PI); // Rotate 180 degrees to match navbar orientation
-          logoLines.renderOrder = 9; // Render below particles but above globe
-          scene.add(logoLines);
-          
-          // Store references for animation
-          logoRef.current = { particles: logoParticlesMesh, lines: logoLines };
-          
-          resolve();
+        }
+        ctx.putImageData(imageData, 0, 0);
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        trackTexture(texture);
+
+        const logoSize = isMobile ? 2.2 : 2.0;
+        const spriteMaterial = new THREE.SpriteMaterial({
+          map: texture,
+          transparent: true,
+          depthWrite: false,
+          opacity: 0.95,
         });
-      });
-    };
-    
-    // Function to check if a point is inside the actual logo based on image data
-    const isInsideActualLogo = (x: number, y: number, imageData: Uint8ClampedArray, imageWidth: number, imageHeight: number, logoSize: number): boolean => {
-      // Convert 3D coordinates to 2D image coordinates
-      const halfSize = logoSize / 2;
-      
-      // Map 3D coordinates to image coordinates with correct orientation
-      const imageX = Math.floor(((x + halfSize) / logoSize) * imageWidth);
-      // Flip Y coordinate to match navbar orientation
-      const imageY = Math.floor(((halfSize - y) / logoSize) * imageHeight);
-      
-      // Check bounds
-      if (imageX < 0 || imageX >= imageWidth || 
-          imageY < 0 || imageY >= imageHeight) {
-        return false;
-      }
-      
-      // Get pixel data at this position
-      const index = (imageY * imageWidth + imageX) * 4;
-      const alpha = imageData[index + 3]; // Alpha channel
-      
-      // Return true if pixel has significant alpha (is part of logo)
-      return alpha > 50; // Threshold for logo pixels
+        trackMaterial(spriteMaterial);
+
+        const sprite = new THREE.Sprite(spriteMaterial);
+        sprite.scale.set(logoSize, logoSize, 1);
+        sprite.renderOrder = 10;
+        scene.add(sprite);
+        logoSpriteRef.current = sprite;
+      };
+      img.src = '/assets/logophi.png';
     };
 
-    // Add the logo to the scene
-    createNetworkLogo().then(() => {
-      // Logo has been created, now start animation
-      console.log('Network logo created successfully');
-    });
+    createLogoSprite();
 
     // Animation loop
     const animate = () => {
@@ -313,11 +226,7 @@ const Globe = React.memo(function Globe({ className = '', isMobile = false }: Gl
         particlesRef.current.rotation.y += 0.001;
       }
       
-      // Logo stays completely static - explicitly reset rotation to correct orientation
-      if (logoRef.current && logoRef.current.particles) {
-        logoRef.current.particles.rotation.set(0, 0, Math.PI); // Keep correct orientation
-        logoRef.current.lines.rotation.set(0, 0, Math.PI); // Keep correct orientation
-      }
+      // Logo sprite always faces the camera automatically (no rotation needed)
       
       renderer.render(scene, camera);
     };

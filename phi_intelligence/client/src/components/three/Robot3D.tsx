@@ -155,6 +155,7 @@ const Robot3D: React.FC<Robot3DProps> = ({
         // Set up materials and shadows
         robotModel.traverse((child: any) => {
           if (child instanceof THREE.Mesh) {
+            if (child.geometry) trackGeometry(child.geometry);
             child.castShadow = true;
             child.receiveShadow = true;
             
@@ -163,6 +164,7 @@ const Robot3D: React.FC<Robot3DProps> = ({
               if (Array.isArray(child.material)) {
                 child.material.forEach(material => {
                   if (material instanceof THREE.Material) {
+                    trackMaterial(material);
                     // Main body: dark matte gray
                     (material as any).color = new THREE.Color(0x1a1a1a);
                     (material as any).metalness = 0.1;
@@ -185,6 +187,7 @@ const Robot3D: React.FC<Robot3DProps> = ({
                   }
                 });
               } else {
+                trackMaterial(child.material);
                 // Main body: dark matte gray
                 (child.material as any).color = new THREE.Color(0x1a1a1a);
                 (child.material as any).metalness = 0.1;
@@ -242,7 +245,10 @@ const Robot3D: React.FC<Robot3DProps> = ({
           color: 0x00ff00,
           wireframe: true
         });
+        trackGeometry(geometry);
+        trackMaterial(material);
         const cube = new THREE.Mesh(geometry, material);
+        trackObject(cube);
         robotGroup.add(cube);
         setModelLoaded(true);
       }

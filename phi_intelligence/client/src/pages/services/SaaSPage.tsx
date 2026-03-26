@@ -2,60 +2,55 @@ import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
-  ArrowRight, Globe, Search, BarChart3, MessageSquare,
-  ShieldCheck, Zap, Users, RefreshCw, Code2, Database, Layers
+  ArrowRight, Users, BarChart3, Package, DollarSign, ShoppingBag
 } from "lucide-react";
-import { BrowserMockupMini } from "@/components/ServiceAnimations";
+import { SaaSDashboardMini } from "@/components/ServiceAnimations";
 
-
-const features = [
-  {
-    icon: MessageSquare,
-    title: "LLM-Powered Interfaces",
-    desc: "Chat interfaces, AI assistants, and copilot sidebars built directly into your web platform — connected to your data, not generic public models.",
-  },
-  {
-    icon: Search,
-    title: "Intelligent Search & RAG",
-    desc: "Semantic search across your content, documents, and databases. Users ask in plain English — your platform delivers exact answers, not keyword matches.",
-  },
+const capabilities = [
   {
     icon: BarChart3,
-    title: "AI Dashboards & Analytics",
-    desc: "Interactive dashboards with AI-generated insights, anomaly detection, and natural-language report generation replacing static chart views.",
+    title: "CRM & Sales Platforms",
+    desc: "Not another off-the-shelf CRM. We build sales platforms that understand your pipeline — AI lead scoring, deal prioritisation, automated follow-ups, and revenue forecasting tuned to how your team actually sells.",
   },
   {
-    icon: RefreshCw,
-    title: "Automated Workflows",
-    desc: "Web-based AI agents that process forms, route data, trigger actions, and complete multi-step tasks without human intervention.",
+    icon: Package,
+    title: "Inventory & Supply Chain",
+    desc: "Static spreadsheets and reactive reordering are costing you margin. We build platforms with live demand forecasting, automated procurement triggers, and supplier intelligence — so your stock stays ahead of the business.",
+  },
+  {
+    icon: DollarSign,
+    title: "Finance & Accounting",
+    desc: "We replace manual finance workflows with platforms that extract, categorise, reconcile, and flag anomalies automatically — giving your finance team accurate numbers without the grunt work.",
+  },
+  {
+    icon: ShoppingBag,
+    title: "E-Commerce Platforms",
+    desc: "Beyond a storefront. We build commerce platforms with AI-driven product recommendations, dynamic pricing logic, personalised buyer journeys, and integrated operations — engineered to convert and retain.",
   },
   {
     icon: Users,
-    title: "AI CRM & Sales Platforms",
-    desc: "Custom CRM web apps with AI lead scoring, deal prioritisation, automated follow-ups, and customer sentiment analysis built in.",
-  },
-  {
-    icon: Globe,
-    title: "AI Content Platforms",
-    desc: "Content management, recommendation, and publishing platforms powered by AI generation, SEO analysis, and audience behaviour modelling.",
-  },
-  {
-    icon: Database,
-    title: "Data & Admin Portals",
-    desc: "Internal tools and admin portals with AI-enhanced data entry, validation, classification, and reporting across your operations.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Compliance & RegTech Apps",
-    desc: "Regulated-industry web applications with document processing, audit trails, PII handling, and AI-powered compliance checking baked in.",
+    title: "Employee Management",
+    desc: "HR systems that do more than store records. We build platforms with AI-assisted recruitment, automated onboarding, performance tracking, and workforce analytics — designed to reduce overhead and improve retention.",
   },
 ];
 
-const stack = [
-  { label: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind CSS"] },
-  { label: "Backend", items: ["Node.js", "Python", "FastAPI", "PostgreSQL"] },
-  { label: "AI Layer", items: ["OpenAI API", "Anthropic Claude", "Vercel AI SDK", "LangChain", "Hugging Face"] },
-  { label: "Infrastructure", items: ["AWS / Azure", "Docker", "CI/CD", "Monitoring"] },
+const differentiators = [
+  {
+    title: "Your Data, Your Models",
+    desc: "No shared infrastructure. Your AI models train on your data alone — giving you a genuine competitive advantage, not a generic tool.",
+  },
+  {
+    title: "Built to Scale",
+    desc: "Cloud-native architecture from day one. Your platform scales with your business — from 10 users to 10,000 without re-engineering.",
+  },
+  {
+    title: "AI That Learns",
+    desc: "Every interaction makes your system smarter. Recommendation engines, prediction models, and workflows improve continuously.",
+  },
+  {
+    title: "Security by Default",
+    desc: "SOC2-ready infrastructure, end-to-end encryption, role-based access, and audit logging built into every layer.",
+  },
 ];
 
 const process = [
@@ -65,22 +60,22 @@ const process = [
   { n: "04", title: "Build & Deploy", desc: "Full production build with security, monitoring, auto-scaling, and CI/CD pipelines — shipped to your infrastructure." },
 ];
 
-export default function WebDevelopmentPage() {
+export default function SaaSPage() {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-phi-blue selection:text-white">
 
       {/* Hero */}
-      <section className="relative min-h-[60vh] flex items-center pt-32 pb-20">
-        <div className="container mx-auto px-6">
+      <section className="relative min-h-[60vh] flex items-center pt-32 pb-20 overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-              <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Service 03</p>
+              <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Service 01</p>
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
-                Web<br />
+                SaaS<br />
                 <span className="text-phi-blue/60 italic">Applications.</span>
               </h1>
               <p className="text-lg md:text-xl text-white/50 font-light leading-relaxed max-w-lg">
-                Full-stack web applications powered by AI — platforms, portals, and tools with intelligence built into their core, not bolted on after.
+                Custom AI-powered business software built for your operations — from employee management and CRM to inventory tracking and financial reporting. Your tools, your data, your competitive advantage.
               </p>
               <div className="flex flex-wrap gap-4 pt-2">
                 <Link href="/contact">
@@ -102,29 +97,29 @@ export default function WebDevelopmentPage() {
               transition={{ duration: 1, delay: 0.3 }}
               className="relative h-[420px] overflow-hidden"
             >
-              <BrowserMockupMini />
+              <SaaSDashboardMini />
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* What We Build */}
+      {/* Capabilities */}
       <section className="section-padding border-t border-white/5">
         <div className="container mx-auto px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">What We Build</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
-              Web Applications<br />
+              SaaS Platforms<br />
               <span className="text-phi-blue/60 italic">Powered by AI.</span>
             </h2>
             <p className="text-base text-white/40 font-light mt-4 max-w-2xl leading-relaxed">
-              Every application type below has AI as the primary differentiator — not as a bolt-on chatbot, but as the engine driving the core user experience.
+              Platform types we design and build for clients — each with AI capabilities driving automation, search, and decision-making as core product features.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {features.map((f, i) => (
+            {capabilities.map((cap, i) => (
               <motion.div
-                key={f.title}
+                key={cap.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -132,11 +127,11 @@ export default function WebDevelopmentPage() {
                 className="flex gap-5 p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-phi-blue group-hover:text-white transition-all duration-300 mt-0.5">
-                  <f.icon className="w-5 h-5" />
+                  <cap.icon className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white/90 mb-1.5">{f.title}</h3>
-                  <p className="text-sm text-white/40 font-light leading-relaxed">{f.desc}</p>
+                  <h3 className="font-bold text-white/90 mb-1.5">{cap.title}</h3>
+                  <p className="text-sm text-white/40 font-light leading-relaxed">{cap.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -144,35 +139,25 @@ export default function WebDevelopmentPage() {
         </div>
       </section>
 
-      {/* Tech Stack */}
+      {/* Why Custom SaaS */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
         <div className="container mx-auto px-6">
           <div className="mb-12">
-            <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Technology</p>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Our Stack</h2>
+            <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">The Advantage</p>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Why Custom SaaS</h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {stack.map((layer, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {differentiators.map((d, i) => (
               <motion.div
-                key={layer.label}
-                initial={{ opacity: 0, y: 16 }}
+                key={d.title}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="p-6 rounded-2xl border border-white/8 space-y-4"
+                transition={{ delay: i * 0.06 }}
+                className="p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
               >
-                <div className="flex items-center gap-3">
-                  <Layers className="w-4 h-4 text-white/30" />
-                  <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-white/30">{layer.label}</p>
-                </div>
-                <div className="space-y-2">
-                  {layer.items.map((item) => (
-                    <div key={item} className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-white/20 flex-shrink-0" />
-                      <span className="text-sm text-white/50 font-light">{item}</span>
-                    </div>
-                  ))}
-                </div>
+                <h3 className="font-bold text-white/90 mb-2 text-lg">{d.title}</h3>
+                <p className="text-sm text-white/40 font-light leading-relaxed">{d.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -205,21 +190,26 @@ export default function WebDevelopmentPage() {
         </div>
       </section>
 
-      {/* Mobile CTA Callout */}
+      {/* Cross-sell Callout */}
       <section className="section-padding border-t border-white/5">
         <div className="container mx-auto px-6">
           <div className="rounded-2xl border border-white/8 p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-8 hover:border-white/15 transition-colors">
             <div className="flex-grow space-y-2">
-              <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-white/30">Also Building Mobile?</p>
-              <h3 className="text-2xl sm:text-3xl font-bold tracking-tighter uppercase">We Build Mobile Apps Too.</h3>
+              <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-white/30">Need Mobile or Web Access?</p>
+              <h3 className="text-2xl sm:text-3xl font-bold tracking-tighter uppercase">We Build Those Too.</h3>
               <p className="text-white/40 font-light text-sm leading-relaxed max-w-xl">
-                React Native and Flutter applications with the same AI-first approach — voice recognition, on-device inference, and seamless backend integration.
+                Extend your SaaS platform with native mobile apps and responsive web portals — same AI backbone, seamless integration.
               </p>
             </div>
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 flex flex-wrap gap-3">
               <Link href="/services/mobile-development">
                 <Button className="pill-button bg-phi-blue text-white hover:bg-phi-blue/90 px-8 py-4 text-sm font-bold">
-                  See Mobile Services <ArrowRight className="w-4 h-4 ml-2" />
+                  Mobile Apps <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+              <Link href="/services/web-development">
+                <Button variant="outline" className="pill-button border-white/10 hover:border-phi-blue/50 hover:bg-phi-blue/5 hover:text-white px-8 py-4 text-sm font-bold">
+                  Web Apps <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
             </div>
@@ -232,10 +222,10 @@ export default function WebDevelopmentPage() {
         <div className="container mx-auto px-6 max-w-3xl space-y-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Ready to Build<br />
-            <span className="text-phi-blue/60 italic">Your Web Application?</span>
+            <span className="text-phi-blue/60 italic">Your Platform?</span>
           </h2>
           <p className="text-lg text-white/40 font-light">
-            Tell us what you need. We'll scope it, propose a PoC, and ship a working prototype in 4–8 weeks before full commitment.
+            Your business, your software. We'll scope it, propose a PoC, and ship a working prototype in 4–8 weeks before full commitment.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">

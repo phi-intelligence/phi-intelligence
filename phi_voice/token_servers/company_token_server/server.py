@@ -77,6 +77,28 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     logger.warning("OPENAI_API_KEY not set - RAG functionality will be limited")
 
+# Provider configuration
+RAG_LLM_PROVIDER = os.getenv("RAG_LLM_PROVIDER", "openai").lower().strip()
+RAG_EMBEDDING_PROVIDER = os.getenv("RAG_EMBEDDING_PROVIDER", "openai").lower().strip()
+
+# Google Gemini configuration (optional)
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+if RAG_LLM_PROVIDER == "gemini" or RAG_EMBEDDING_PROVIDER == "gemini":
+    if GOOGLE_API_KEY:
+        try:
+            import google.generativeai as genai
+            genai.configure(api_key=GOOGLE_API_KEY)
+            logger.info("✅ Google Gemini configured (RAG_LLM_PROVIDER=%s, RAG_EMBEDDING_PROVIDER=%s)",
+                        RAG_LLM_PROVIDER, RAG_EMBEDDING_PROVIDER)
+        except ImportError:
+            logger.warning("⚠️ google-generativeai not installed - falling back to OpenAI")
+            RAG_LLM_PROVIDER = "openai"
+            RAG_EMBEDDING_PROVIDER = "openai"
+    else:
+        logger.warning("⚠️ GOOGLE_API_KEY not set - falling back to OpenAI")
+        RAG_LLM_PROVIDER = "openai"
+        RAG_EMBEDDING_PROVIDER = "openai"
+
 # Storage Configuration (for original files/text chunks on disk)
 STORAGE_DIR = os.getenv("STORAGE_DIR", "./storage")
 MAX_UPLOAD_MB = int(os.getenv("MAX_UPLOAD_MB", "100"))
@@ -287,6 +309,85 @@ class PineconeRAGService:
             logger.warning("⚠️ Pinecone service not available - RAG functionality will be limited")
 
         logger.info("Pinecone RAG Service initialized with R2 + Pinecone integration")
+
+    def _chat_completion(self, system_prompt: str, user_prompt: str,
+                         max_tokens: int = 300, temperature: float = 0.3) -> str:
+        """Run a chat completion using the configured RAG LLM provider."""
+        if RAG_LLM_PROVIDER == "gemini":
+            import google.generativeai as genai
+            model = genai.GenerativeModel(
+                model_name="gemini-2.0-flash",
+                system_instruction=system_prompt,
+                generation_config=genai.types.GenerationConfig(
+                    max_output_tokens=max_tokens,
+                    temperature=temperature,
+                ),
+            )
+            response = model.generate_content(user_prompt)
+            return response.text.strip()
+        else:
+            response = self.openai_client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
+                ],
+                max_tokens=max_tokens,
+                temperature=temperature
+            )
+            return response.choices[0].message.content.strip()
+
+    def _create_embeddings(self, texts: List[str]) -> List[List[float]]:
+        """Create embeddings for a list of texts using the configured provider. Returns 1536-dim vectors."""
+        if RAG_EMBEDDING_PROVIDER == "gemini":
+            import google.generativeai as genai
+            # Call embed_content once per text: batch API uses a different response
+            # shape (result.embeddings plural) that varies by SDK version.
+            return [
+                genai.embed_content(
+                    model="models/text-embedding-004",
+                    content=text,
+                    task_type="RETRIEVAL_DOCUMENT",
+                    output_dimensionality=1536,
+                )["embedding"]
+                for text in texts
+            ]
+        else:
+            emb = self.openai_client.embeddings.create(
+                model="text-embedding-3-small",
+                input=texts
+            )
+            return [d.embedding for d in emb.data]
+
+    def _create_query_embedding(self, query: str) -> List[float]:
+        """Create a single query embedding using the configured provider. Returns 1536-dim vector."""
+        if RAG_EMBEDDING_PROVIDER == "gemini":
+            import google.generativeai as genai
+            result = genai.embed_content(
+                model="models/text-embedding-004",
+                content=query,
+                task_type="RETRIEVAL_QUERY",
+                output_dimensionality=1536,
+            )
+            return result["embedding"]
+        else:
+            emb = self.openai_client.embeddings.create(
+                model="text-embedding-3-small",
+                input=[query]
+            )
+            return emb.data[0].embedding
+
+    def _ai_available(self) -> bool:
+        """Check if any AI provider is available for LLM calls."""
+        if RAG_LLM_PROVIDER == "gemini":
+            return bool(GOOGLE_API_KEY)
+        return self.openai_client is not None
+
+    def _embedding_available(self) -> bool:
+        """Check if any AI provider is available for embedding calls."""
+        if RAG_EMBEDDING_PROVIDER == "gemini":
+            return bool(GOOGLE_API_KEY)
+        return self.openai_client is not None
 
     def _get_voicebot_dir(self, voicebot_id: str) -> Path:
         return self.files_dir / voicebot_id
@@ -524,7 +625,7 @@ class PineconeRAGService:
                 return {"error": "No text content available"}
             
             # Use AI to extract company information
-            if self.openai_client:
+            if self._ai_available():
                 company_info = await self._ai_extract_company_info(all_content)
             else:
                 company_info = await self._fallback_extract_company_info(all_content)
@@ -556,17 +657,12 @@ class PineconeRAGService:
             Return ONLY valid JSON, no other text.
             """
             
-            response = self.openai_client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "You are a business analyst. Extract company information and return only valid JSON."},
-                    {"role": "user", "content": prompt}
-                ],
+            result_text = self._chat_completion(
+                system_prompt="You are a business analyst. Extract company information and return only valid JSON.",
+                user_prompt=prompt,
                 max_tokens=300,
-                temperature=0.3
+                temperature=0.3,
             )
-            
-            result_text = response.choices[0].message.content.strip()
             result = json.loads(result_text)
             
             # Validate and clean the result
@@ -713,7 +809,7 @@ class PineconeRAGService:
 
     async def create_ai_description(self, company_name: str, content_analysis: Dict[str, Any]) -> str:
         try:
-            if not self.openai_client:
+            if not self._ai_available():
                 return self._generate_fallback_description(company_name, content_analysis)
             summary = content_analysis.get("content_preview", "")
             detected_industries = content_analysis.get("detected_industries", [])
@@ -739,16 +835,12 @@ Requirements:
 
 Generate a professional company description:
 """
-            response = self.openai_client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "You are a professional business writer specializing in company descriptions."},
-                    {"role": "user", "content": prompt},
-                ],
+            desc = self._chat_completion(
+                system_prompt="You are a professional business writer specializing in company descriptions.",
+                user_prompt=prompt,
                 max_tokens=150,
                 temperature=0.7,
             )
-            desc = response.choices[0].message.content.strip()
             desc = desc.replace('"', '')
             if desc.startswith("Company Description:"):
                 desc = desc.replace("Company Description:", "").strip()
@@ -806,8 +898,8 @@ Generate a professional company description:
         return result
 
     async def index_voicebot(self, voicebot_id: str, company_name: str, bot_name: str, description: Optional[str]) -> Dict[str, Any]:
-        if not self.openai_client:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="OpenAI API key not configured for text processing")
+        if not self._embedding_available() or not self._ai_available():
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="AI API key not configured for text processing")
 
         # Prepare description (intelligent generation when missing)
         final_description = description
@@ -856,8 +948,7 @@ Generate a professional company description:
 
         # Create embeddings
         try:
-            emb = self.openai_client.embeddings.create(model="text-embedding-3-small", input=all_chunks)
-            vectors = [d.embedding for d in emb.data]
+            vectors = self._create_embeddings(all_chunks)
         except Exception as e:
             logger.error(f"Embedding generation failed: {e}")
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to generate embeddings")
@@ -926,8 +1017,7 @@ Generate a professional company description:
         
         try:
             # Generate query embedding
-            emb = self.openai_client.embeddings.create(model="text-embedding-3-small", input=[query])
-            query_vec = emb.data[0].embedding
+            query_vec = self._create_query_embedding(query)
             
             # Search Pinecone
             results = await self.pinecone_service.search_vectors(

@@ -172,10 +172,12 @@ export default function AudioBarsAnimation({
     for (let i = 0; i < barCount; i++) {
       // Increased cylinder dimensions
       const barGeometry = new THREE.CylinderGeometry(0.25, 0.25, 1, 16); // Increased radius from 0.15 to 0.25
+      // Alternate: centre bars blue, outer bars white for white+blue look
+      const isCentre = Math.abs(i - Math.floor(barCount / 2)) <= Math.floor(barCount / 4);
       const barMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffffff, // Pure white bars
+        color: isCentre ? 0x00A3FF : 0xffffff,
         transparent: true,
-        opacity: 0.95
+        opacity: isCentre ? 0.9 : 0.55
       });
       
       // Track geometry and material for cleanup
@@ -212,14 +214,14 @@ export default function AudioBarsAnimation({
   };
 
   const setupLighting = (scene: THREE.Scene) => {
-    // Simple, bright lighting to ensure pure white bars
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
     scene.add(ambientLight);
-    
-    // Additional directional light for clarity
+    trackObject(ambientLight);
+
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
     directionalLight.position.set(0, 10, 5);
     scene.add(directionalLight);
+    trackObject(directionalLight);
   };
 
   const updateAudioData = (audioData: number[], barCount: number, time: number, animSpeed: number, sensitivity: number) => {

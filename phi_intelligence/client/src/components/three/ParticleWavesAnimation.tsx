@@ -61,19 +61,21 @@ export default function ParticleWavesAnimation() {
     trackScene(scene);
 
     // Camera setup
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    const containerWidth = mountRef.current.clientWidth || window.innerWidth;
+    const containerHeight = mountRef.current.clientHeight || window.innerHeight;
+    const camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 1, 10000);
     camera.position.z = 1000;
-    
+
     // Track camera for cleanup
     trackCamera(camera);
 
     // Renderer setup
-    const renderer = new THREE.WebGLRenderer({ 
+    const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true // Enable transparency
     });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(containerWidth, containerHeight);
     renderer.setClearColor(0x000000, 0); // Transparent background
     rendererRef.current = renderer;
     
@@ -107,7 +109,7 @@ export default function ParticleWavesAnimation() {
 
     const material = new THREE.ShaderMaterial({
       uniforms: {
-        color: { value: new THREE.Color(0xffffff) }, // White particles
+        color: { value: new THREE.Color(0x80D4FF) }, // Light blue-white particles
       },
       vertexShader,
       fragmentShader,
@@ -128,8 +130,8 @@ export default function ParticleWavesAnimation() {
 
     // Mouse interaction
     let mouseX = 0, mouseY = 0;
-    const windowHalfX = window.innerWidth / 2;
-    const windowHalfY = window.innerHeight / 2;
+    const windowHalfX = containerWidth / 2;
+    const windowHalfY = containerHeight / 2;
 
     const onPointerMove = (event: PointerEvent) => {
       if (event.isPrimary === false) return;
@@ -183,9 +185,13 @@ export default function ParticleWavesAnimation() {
 
     // Handle resize
     const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      if (!mountRef.current) return;
+      const w = mountRef.current.clientWidth;
+      const h = mountRef.current.clientHeight;
+      if (!w || !h) return;
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(w, h);
     };
 
     addSafeEventListener(window, 'resize', handleResize);

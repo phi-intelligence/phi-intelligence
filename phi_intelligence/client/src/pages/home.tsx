@@ -1,19 +1,53 @@
 import { Link, useLocation } from "wouter";
-import { ArrowRight, Users, Zap, Factory, Shield, Cpu, FileText, BarChart, Presentation, Target, Eye, Fingerprint, MessageCircle, Database, Share2, TrendingUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, ChevronRight, Send } from "lucide-react";
 import { motion } from "framer-motion";
 import Globe from "@/components/three/Globe";
-import RobotArmAnimation from "@/components/three/RobotArmAnimation";
-import Robot3D from "@/components/three/robotvoice";
-import VoiceBubble from "@/components/voice/VoiceBubble";
-import { FrameworkWrapper } from "@/components/voice/FrameworkWrapper";
-import { useState } from "react";
-import phiDocsImage from "@/assets/phi.jpeg";
+import NeuralNetworkAnimation from "@/components/three/NeuralNetworkAnimation";
+import { useState, useEffect } from "react";
+import {
+  SaaSDashboardMini, PhoneMockupMini, BrowserMockupMini,
+  AutomationFlowMini, VoiceWaveformMini, MarketingAnalyticsMini,
+  VisionDetectionMini, DocExtractionMini,
+} from "@/components/ServiceAnimations";
+
+const bentoServices = [
+  // Row 1 — both 570px (driven by phone height)
+  { title: "AI SaaS Platforms", desc: "Purpose-built AI software replacing legacy tools — HRMS, CRM, inventory, finance, and operations platforms tailored precisely to your workflows.", tags: ["HRMS", "CRM", "Inventory", "Finance"], href: "/services/saas", Animation: SaaSDashboardMini, cardH: 570, animH: 420 },
+  { title: "Mobile Applications", desc: "iOS and Android apps on React Native and Flutter — with LLM chat, image recognition, voice input, and AI-driven personalisation integrated into the product.", tags: ["React Native", "Flutter", "iOS & Android"], href: "/services/mobile-development", Animation: PhoneMockupMini, cardH: 570, animH: 430 },
+  // Row 2 — both 450px (browser drives it)
+  { title: "Intelligent Web Platforms", desc: "LLM-powered interfaces, semantic search, real-time AI dashboards, and automated workflows built to scale.", tags: ["LLM Search", "Dashboards", "Real-Time"], href: "/services/web-development", Animation: BrowserMockupMini, cardH: 450, animH: 310 },
+  { title: "AI Workflow Automation", desc: "Multi-step AI agents across CRM, ERP, and email — eliminating manual overhead and cutting operational costs by up to 80%.", tags: ["CRM", "ERP", "Email", "Scheduling"], href: "/services/process-automation", Animation: AutomationFlowMini, cardH: 450, animH: 305 },
+  // Row 3 — both 510px (marketing drives it)
+  { title: "Conversational Voice AI", desc: "Autonomous inbound and outbound voice agents with sub-200ms response — live-assist fallback and full telephony integration.", tags: ["Inbound", "Outbound", "Multilingual"], href: "/services/voice-automation", Animation: VoiceWaveformMini, cardH: 510, animH: 365 },
+  { title: "AI-Driven Marketing", desc: "AI content generation, Answer Engine Optimisation, programmatic ad management, and audience segmentation — with performance tracked against real business KPIs.", tags: ["AEO", "Content AI", "Ad Ops", "Analytics"], href: "/services/digital-marketing", Animation: MarketingAnalyticsMini, cardH: 510, animH: 365 },
+  // Row 4 — both 460px (DocExtraction content ~290px needs room)
+  { title: "Visual Intelligence Systems", desc: "Real-time object detection, OCR, segmentation, and video analytics — fine-tuned YOLO and SAM models trained on your data.", tags: ["Detection", "OCR", "Video AI"], href: "/services/computer-vision", Animation: VisionDetectionMini, cardH: 460, animH: 315 },
+  { title: "Intelligent Document AI", desc: "LLM-powered extraction from PDFs, DOCX, and XLSX — structured output, intelligent validation, and compliance-ready pipelines.", tags: ["PDF", "DOCX", "RAG", "Extraction"], href: "/services/document-processing", Animation: DocExtractionMini, cardH: 460, animH: 315 },
+];
+
+
+const processSteps = [
+  { num: "01", title: "Discovery", desc: "Map your business, data, and processes to find where AI delivers the highest impact." },
+  { num: "02", title: "Strategy", desc: "Phased roadmap with ROI projections, KPIs, and milestones — no guesswork." },
+  { num: "03", title: "Prototype", desc: "Working proof-of-concept in 4–8 weeks. Evidence before commitment." },
+  { num: "04", title: "Development", desc: "Full solution built around your tech stack, security, and compliance requirements." },
+  { num: "05", title: "Deployment", desc: "Production launch with monitoring, alerting, and reliability engineering." },
+  { num: "06", title: "Support", desc: "Ongoing optimisation. We stay your AI partner as your business scales." },
+];
+
 
 export default function Home() {
   const [inputValue, setInputValue] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [, setLocation] = useLocation();
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const handleChatSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,412 +59,283 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
-      
-      {/* 1. Hero Section */}
+    <div className="min-h-screen bg-black text-white">
+
+      {/* ── HERO ── */}
       <section className="relative min-h-[90vh] lg:min-h-screen flex items-center pt-24 lg:pt-20">
         <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          <motion.div 
+
+          {/* Left: Text */}
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="space-y-6 lg:space-y-8 z-10 text-center lg:text-left"
           >
             <div className="space-y-4">
-              <h1 className="text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-bold tracking-tighter leading-none uppercase">
+              <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none uppercase">
                 PHI<br />
-                <span className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl opacity-40 block mt-2">INTELLIGENCE</span>
+                <span className="text-phi-blue block mt-2 text-3xl sm:text-5xl md:text-7xl lg:text-8xl">INTELLIGENCE</span>
               </h1>
               <p className="text-lg md:text-2xl opacity-60 max-w-lg mx-auto lg:mx-0 leading-relaxed font-light">
-                Industrial-grade AI solutions engineered for the next generation of business efficiency.
+                We Build Intelligence Into Your Business.
+              </p>
+              <p className="text-sm md:text-base text-white/35 max-w-lg mx-auto lg:mx-0 leading-relaxed font-light">
+                AI consulting, custom development, and open-source model integration —
+                from first strategy to production at scale.
               </p>
             </div>
             <div className="flex flex-wrap justify-center lg:justify-start gap-4">
               <Link href="/services">
-                <Button className="pill-button bg-white text-black hover:bg-opacity-90">
-                  Our Services
-                </Button>
+                <button className="inline-flex items-center gap-2 bg-phi-blue text-white font-semibold text-sm px-7 py-3.5 rounded-full hover:bg-phi-blue/90 transition-all duration-300">
+                  Explore Services <ArrowRight className="w-4 h-4" />
+                </button>
               </Link>
-              <Link href="/company/contact">
-                <Button variant="outline" className="pill-button border-white/20 hover:bg-white hover:text-black">
-                  Contact Us
-                </Button>
+              <Link href="/contact">
+                <button className="inline-flex items-center gap-2 border border-white/20 text-white font-medium text-sm px-7 py-3.5 rounded-full hover:bg-white hover:text-black transition-all duration-300">
+                  Free Consultation
+                </button>
               </Link>
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="pt-8 w-full max-w-lg mx-auto lg:mx-0"
+              className="pt-4 w-full max-w-md mx-auto lg:mx-0"
             >
               <form onSubmit={handleChatSubmit} className="relative group">
+                <div className="absolute left-5 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-phi-blue" />
                 <input
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="Ask Phi AI anything..."
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-full px-8 py-5 pr-16 text-white placeholder:text-white/20 outline-none focus:border-white/30 transition-all duration-500 font-light tracking-wide"
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-full pl-10 pr-14 py-4 text-white placeholder:text-white/20 outline-none focus:border-white/30 transition-all duration-500 font-light tracking-wide text-sm"
                 />
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-300 disabled:opacity-50"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/10 text-white/50 flex items-center justify-center hover:bg-white/20 active:scale-95 transition-all duration-300 disabled:opacity-50"
                 >
-                  <ArrowRight className="w-5 h-5" />
+                  <Send className="w-3.5 h-3.5" />
                 </button>
               </form>
             </motion.div>
           </motion.div>
-          
+
+          {/* Right: Globe */}
           <div className="relative h-[350px] sm:h-[500px] lg:h-[800px] w-full">
-            <Globe />
+            <Globe isMobile={isMobile} />
           </div>
         </div>
       </section>
 
-      {/* 2. Manifesto Section */}
-      <section className="py-32 lg:py-48 overflow-hidden border-y border-white/5">
+      {/* ── SERVICES BENTO ── */}
+      <section className="py-24 border-t border-white/[0.06]">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            <div className="lg:col-span-7 space-y-12">
-               <motion.div
-                 initial={{ opacity: 0, y: 20 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 className="space-y-4"
-               >
-                  <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
-                     <Fingerprint className="w-3 h-3" /> The Core Manifesto
-                  </div>
-                  <h2 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
-                    Strategy Meets<br />
-                    <span className="opacity-20 italic">Precision.</span>
-                  </h2>
-               </motion.div>
 
-               <motion.div
-                 initial={{ opacity: 0, x: -20 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.2 }}
-                 className="max-w-2xl"
-               >
-                  <p className="text-2xl sm:text-3xl lg:text-4xl font-light leading-snug tracking-tight text-white/80">
-                    We bridge the gap between human ingenuity and machine reliability. Our mission is to transform operational chaos into high-throughput intelligence.
-                  </p>
-               </motion.div>
-
-               <motion.div 
-                 initial={{ opacity: 0 }}
-                 whileInView={{ opacity: 1 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.4 }}
-                 className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-white/5"
-               >
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold tracking-widest uppercase opacity-30">Our Purpose</h4>
-                    <p className="opacity-50 font-light leading-relaxed">Streamlining global industries through agentic software architectures.</p>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold tracking-widest uppercase opacity-30">Our Future</h4>
-                    <p className="opacity-50 font-light leading-relaxed">Defining the next frontier of human-AI collaboration.</p>
-                  </div>
-               </motion.div>
+          {/* Header */}
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue mb-3">Our Services</p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase leading-[0.9]">
+                What We Build —<br />
+                <span className="text-phi-blue">AI-Powered Applications.</span>
+              </h2>
             </div>
-
-            <div className="lg:col-span-5 relative group">
-               <div className="absolute -inset-1 bg-gradient-to-tr from-white/20 to-transparent rounded-[3rem] blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-1000" />
-               <div className="relative aspect-[4/5] rounded-[3rem] border border-white/10 overflow-hidden bg-white/5 flex items-center justify-center">
-                  <div className="w-full h-full relative z-10 scale-125">
-                    <Robot3D />
-                  </div>
-               </div>
-            </div>
+            <Link href="/services" className="hidden sm:flex items-center gap-1.5 text-sm text-phi-blue hover:text-white transition-colors mb-1">
+              View all services <ChevronRight className="w-4 h-4" />
+            </Link>
           </div>
-        </div>
-      </section>
 
-      {/* 3. Phi Voice Section */}
-      <section className="py-32 lg:py-48 border-b border-white/5 relative overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
-            
-            <div className="lg:col-span-5 order-2 lg:order-1 flex justify-center">
-              <div className="relative flex items-center justify-center w-[300px] h-[300px] sm:w-[450px] sm:h-[450px]">
-                <div className="absolute inset-0 rounded-full border border-white/10 animate-[spin_20s_linear_infinite]" />
-                <div className="absolute inset-8 rounded-full border border-dashed border-white/5 animate-[spin_30s_linear_infinite_reverse]" />
-                <div className="absolute -inset-4 rounded-full border border-white/5 animate-pulse" />
-                <div className="relative z-10">
-                  <FrameworkWrapper>
-                    <div className="scale-90 sm:scale-110">
-                      <VoiceBubble />
+          {/* 2-column grid — row heights matched per pair */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {bentoServices.map((s, i) => (
+              <Link key={s.title} href={s.href}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: (i % 2) * 0.08 }}
+                  style={{ height: s.cardH }}
+                  className="group relative rounded-2xl border border-white/[0.07] bg-black hover:border-phi-blue/25 transition-all duration-400 overflow-hidden cursor-pointer"
+                >
+                  {/* Animation — anchored to bottom, sized exactly for each animation */}
+                  <div className="absolute left-0 right-0 bottom-0 pointer-events-none" style={{ height: s.animH }}>
+                    <s.Animation />
+                  </div>
+
+                  {/* Fixed-pixel text shield — always 175px from top regardless of card height */}
+                  <div className="absolute top-0 left-0 right-0 h-[175px] bg-gradient-to-b from-black via-black/90 to-transparent pointer-events-none" />
+
+                  {/* Subtle blue glow at bottom */}
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_110%,rgba(0,163,255,0.05),transparent_55%)] pointer-events-none" />
+
+                  {/* Status dot — top right */}
+                  <div className="absolute top-5 right-5 w-2 h-2 rounded-full bg-white/20 group-hover:bg-phi-blue/60 transition-colors duration-500 z-20" />
+
+                  {/* Text content — top left, above everything */}
+                  <div className="absolute top-0 left-0 right-0 p-6 z-10">
+                    <h3 className="text-2xl font-bold tracking-tight uppercase text-phi-blue mb-2 leading-snug">{s.title}</h3>
+                    <p className="text-[13px] text-white/40 leading-relaxed mb-3 font-light line-clamp-2 max-w-xs">{s.desc}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {s.tags.map(t => (
+                        <span key={t} className="text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full border border-white/10 text-white/30 group-hover:text-white/50 group-hover:border-white/20 transition-colors duration-300">
+                          {t}
+                        </span>
+                      ))}
                     </div>
-                  </FrameworkWrapper>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 order-1 lg:order-2 space-y-12">
-               <motion.div
-                 initial={{ opacity: 0, y: 20 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 className="space-y-4"
-               >
-                  <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
-                     <MessageCircle className="w-3 h-3" /> Voice Intelligence Interface
                   </div>
-                  <h2 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
-                    Conversational.<br />
-                    <span className="opacity-20 italic">Agentic.</span>
-                  </h2>
-               </motion.div>
-
-               <motion.div
-                 initial={{ opacity: 0, x: 20 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.2 }}
-                 className="max-w-2xl"
-               >
-                  <p className="text-2xl sm:text-3xl lg:text-4xl font-light leading-snug tracking-tight text-white/80">
-                    Your intelligent voice agent that handles calls, takes bookings, and provides support 24/7. Experience seamless communication.
-                  </p>
-               </motion.div>
-
-               <motion.div 
-                 initial={{ opacity: 0 }}
-                 whileInView={{ opacity: 1 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.4 }}
-                 className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-white/5"
-               >
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold tracking-widest uppercase opacity-30">Lead Capture</h4>
-                    <p className="opacity-50 font-light leading-relaxed">Secure and qualify potential inquiries around the clock without manual overhead.</p>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold tracking-widest uppercase opacity-30">Multilingual Support</h4>
-                    <p className="opacity-50 font-light leading-relaxed">Engage a global audience with fluent agentic speech in multiple dialects.</p>
-                  </div>
-               </motion.div>
-            </div>
+                </motion.div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 4. Phi Docs Section */}
-      <section className="py-32 lg:py-48 bg-black overflow-hidden border-b border-white/5">
+      {/* ── MISSION & VISION ── */}
+      <section className="py-24 border-t border-white/[0.06]">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
-            
-            <div className="lg:col-span-7 space-y-12">
-               <motion.div
-                 initial={{ opacity: 0, y: 20 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 className="space-y-4"
-               >
-                  <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
-                     <FileText className="w-3 h-3" /> Document Synthesis Engine
-                  </div>
-                  <h2 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
-                    Knowledge<br />
-                    <span className="opacity-20 italic">Extracted.</span>
-                  </h2>
-               </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-14"
+          >
+            <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue mb-3">Who We Are</p>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase leading-[0.9]">
+              Mission &<br />
+              <span className="text-phi-blue">Vision.</span>
+            </h2>
+          </motion.div>
 
-               <motion.div
-                 initial={{ opacity: 0, x: -20 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.2 }}
-                 className="max-w-2xl"
-               >
-                  <p className="text-2xl sm:text-3xl lg:text-4xl font-light leading-snug tracking-tight text-white/80">
-                    Intelligent processing for Word, Excel, and PowerPoint. We transform static data into dynamic organizational assets.
-                  </p>
-               </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-               <motion.div 
-                 initial={{ opacity: 0 }}
-                 whileInView={{ opacity: 1 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.4 }}
-                 className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-white/5"
-               >
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold tracking-widest uppercase opacity-30">Autonomous Summaries</h4>
-                    <p className="opacity-50 font-light leading-relaxed">Instantly distill thousands of pages into actionable high-level reports.</p>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold tracking-widest uppercase opacity-30">Cross-Platform Logic</h4>
-                    <p className="opacity-50 font-light leading-relaxed">Unified AI analysis across the entire Microsoft Office ecosystem.</p>
-                  </div>
-               </motion.div>
-            </div>
+            {/* Mission */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="relative p-8 rounded-2xl border border-white/[0.1] bg-white/[0.03] overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-1 h-full bg-phi-blue rounded-l-2xl" />
+              <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-phi-blue mb-4">Our Mission</p>
+              <h3 className="text-2xl font-bold tracking-tight uppercase mb-4 leading-snug">
+                Make AI Accessible<br />to Every Business.
+              </h3>
+              <p className="text-base text-white/50 font-light leading-relaxed">
+                We exist to close the gap between cutting-edge AI and real business outcomes. By combining deep engineering expertise with a security-first mindset, we build AI systems that are practical, scalable, and genuinely transformative — not just impressive on a slide deck.
+              </p>
+            </motion.div>
 
-            <div className="lg:col-span-5 relative group">
-               <div className="absolute -inset-1 bg-gradient-to-tr from-white/10 to-transparent rounded-[3rem] blur-2xl opacity-10 group-hover:opacity-30 transition-opacity duration-1000" />
-               <div className="relative aspect-square rounded-[3rem] border border-white/10 overflow-hidden bg-white/[0.01] flex items-center justify-center p-8 sm:p-12">
-                  <img 
-                    src={phiDocsImage}
-                    className="w-full h-full object-contain grayscale opacity-50 transition-all duration-1000 hover:grayscale-0 hover:opacity-100"
-                    alt="Document Synthesis Engine"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-1000 pointer-events-none" />
-               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Digital Marketing Section - NEW */}
-      <section className="py-32 lg:py-48 overflow-hidden border-b border-white/5">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
-            
-            {/* Visual: Grayscale Network Image - Fixed Visibility */}
-            <div className="lg:col-span-5 relative group">
-               <div className="absolute -inset-1 bg-gradient-to-tr from-white/10 to-transparent rounded-[3rem] blur-2xl opacity-10 group-hover:opacity-30 transition-opacity duration-1000" />
-               <div className="relative aspect-square rounded-[3rem] border border-white/10 overflow-hidden bg-white/[0.01] flex items-center justify-center p-8">
-                  <img 
-                    src="https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&q=80&w=1000" 
-                    className="w-full h-full object-contain grayscale opacity-50 transition-all duration-1000 hover:grayscale-0 hover:opacity-100"
-                    alt="Digital Marketing Intelligence"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-1000 pointer-events-none" />
-               </div>
-            </div>
-
-            {/* Content: Manifesto Style */}
-            <div className="lg:col-span-7 space-y-12">
-               <motion.div
-                 initial={{ opacity: 0, y: 20 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 className="space-y-4"
-               >
-                  <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
-                     <Share2 className="w-3 h-3" /> Growth & Presence Engine
-                  </div>
-                  <h2 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
-                    Visibility.<br />
-                    <span className="opacity-20 italic">Amplified.</span>
-                  </h2>
-               </motion.div>
-
-               <motion.div
-                 initial={{ opacity: 0, x: 20 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.2 }}
-                 className="max-w-2xl"
-               >
-                  <p className="text-2xl sm:text-3xl lg:text-4xl font-light leading-snug tracking-tight text-white/80">
-                    Effortlessly manage your content ecosystem. We optimize your digital reach and ensure your brand runs flawlessly across all frontiers.
-                  </p>
-               </motion.div>
-
-               <motion.div 
-                 initial={{ opacity: 0 }}
-                 whileInView={{ opacity: 1 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.4 }}
-                 className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-white/5"
-               >
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold tracking-widest uppercase opacity-30">Smart Scheduling</h4>
-                    <p className="opacity-50 font-light leading-relaxed">Automated deployment across LinkedIn, Facebook, and Twitter for maximum impact.</p>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold tracking-widest uppercase opacity-30">Reach Optimization</h4>
-                    <p className="opacity-50 font-light leading-relaxed">AI-driven timing and content analytics to save time and optimize engagement.</p>
-                  </div>
-               </motion.div>
-            </div>
+            {/* Vision */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="relative p-8 rounded-2xl border border-white/[0.1] bg-white/[0.03] overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-1 h-full bg-white/20 rounded-l-2xl" />
+              <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/40 mb-4">Our Vision</p>
+              <h3 className="text-2xl font-bold tracking-tight uppercase mb-4 leading-snug">
+                A World Where Intelligence<br />Is Built Into Everything.
+              </h3>
+              <p className="text-base text-white/50 font-light leading-relaxed">
+                We envision a future where AI is not a luxury reserved for large enterprises — but a fundamental layer of every product, workflow, and decision. Phi Intelligence is building the infrastructure, tools, and partnerships to make that future a reality.
+              </p>
+            </motion.div>
 
           </div>
         </div>
       </section>
 
-      {/* 6. Industrial Intelligence Section - Text Left, Animation Right */}
-      <section className="py-32 lg:py-48 border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
-            
-            {/* Content: Text on the LEFT */}
-            <div className="lg:col-span-7 space-y-12 order-2 lg:order-1">
-               <motion.div
-                 initial={{ opacity: 0, y: 20 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 className="space-y-4"
-               >
-                  <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/10 text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
-                     <Database className="w-3 h-3" /> Operational Excellence
-                  </div>
-                  <h2 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
-                    Autonomous<br />
-                    <span className="opacity-20 italic">Logistics.</span>
-                  </h2>
-               </motion.div>
+      {/* ── HOW WE WORK — Alternating Timeline ── */}
+      <section className="relative py-24 border-t border-white/[0.06] overflow-hidden">
+        <div className="absolute inset-0 opacity-35 pointer-events-none">
+          <NeuralNetworkAnimation />
+        </div>
 
-               <motion.div
-                 initial={{ opacity: 0, x: -20 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.2 }}
-                 className="max-w-2xl"
-               >
-                  <p className="text-2xl sm:text-3xl lg:text-4xl font-light leading-snug tracking-tight text-white/80">
-                    We automate warehouses and production lines with AI that prevents downtime and optimizes fulfillment in real-time.
-                  </p>
-               </motion.div>
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue mb-4">Our Process</p>
+            <h2 className="text-5xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">
+              HOW WE<br />
+              <span className="text-phi-blue">WORK.</span>
+            </h2>
+          </div>
 
-               <motion.div 
-                 initial={{ opacity: 0 }}
-                 whileInView={{ opacity: 1 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: 0.4 }}
-                 className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-white/5"
-               >
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold tracking-widest uppercase opacity-30">Warehouse Automation</h4>
-                    <p className="opacity-50 font-light leading-relaxed">Full-stack autonomous stock tracking and fulfillment routing.</p>
+          <div className="relative max-w-4xl mx-auto">
+            {/* Center vertical line — desktop only */}
+            <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-white/25" />
+
+            <div className="space-y-8 md:space-y-0">
+              {processSteps.map((step, i) => {
+                const isLeft = i % 2 === 0;
+                return (
+                  <div key={step.num} className="relative md:h-36 flex items-center">
+                    {/* Center dot */}
+                    <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border border-phi-blue/40 bg-black items-center justify-center z-10">
+                      <div className="w-1.5 h-1.5 rounded-full bg-phi-blue/60" />
+                    </div>
+
+                    {/* Card */}
+                    <motion.div
+                      initial={{ opacity: 0, x: isMobile ? 0 : (isLeft ? -80 : 80) }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.4 }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
+                      className={`w-full md:w-[45%] ${isLeft ? 'md:mr-auto' : 'md:ml-auto'}`}
+                    >
+                      <div className="p-5 rounded-2xl border border-white/[0.12] bg-white/[0.06] hover:border-phi-blue/30 hover:bg-white/[0.09] transition-all duration-300">
+                        <div className="flex items-baseline gap-3 mb-1.5">
+                          <span className="text-2xl font-bold text-phi-blue/35 tracking-tighter">{step.num}</span>
+                          <h3 className="text-sm font-bold tracking-[0.12em] uppercase">{step.title}</h3>
+                        </div>
+                        <p className="text-sm text-white/40 leading-relaxed font-light">{step.desc}</p>
+                      </div>
+                    </motion.div>
                   </div>
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold tracking-widest uppercase opacity-30">Precision Control</h4>
-                    <p className="opacity-50 font-light leading-relaxed">Real-time production line monitoring with predictive maintenance.</p>
-                  </div>
-               </motion.div>
+                );
+              })}
             </div>
-
-            {/* Visual: Animation on the RIGHT */}
-            <div className="lg:col-span-5 relative h-[400px] lg:h-[600px] w-full overflow-hidden rounded-[3rem] border border-white/10 bg-black group order-1 lg:order-2">
-               <RobotArmAnimation scale={2.8} />
-               <div className="absolute inset-0 bg-black/20 pointer-events-none group-hover:opacity-0 transition-opacity duration-700" />
-            </div>
-
           </div>
         </div>
       </section>
 
-      {/* 6. Final CTA */}
-      <section className="py-48 lg:py-64 text-center text-white border-t border-white/10">
-        <div className="max-w-5xl mx-auto px-6 space-y-12">
-          <h3 className="text-6xl sm:text-8xl md:text-9xl font-bold tracking-tighter uppercase">START YOUR JOURNEY</h3>
-          <p className="text-2xl md:text-3xl opacity-60 font-light leading-relaxed max-w-3xl mx-auto">
-            Experience the future of industrial intelligence today. Our team is ready to scale your vision.
-          </p>
-          <div className="pt-8">
-             <Link href="/company/contact">
-               <Button className="pill-button bg-white text-black px-16 py-10 text-2xl font-bold hover:scale-105 transition-all duration-500 shadow-2xl">
-                 Book Consultation
-               </Button>
-             </Link>
-          </div>
+
+      {/* ── CTA ── */}
+      <section className="py-32 border-t border-white/[0.06] relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(0,163,255,0.05),transparent_70%)] pointer-events-none" />
+        <div className="container mx-auto px-6 relative z-10 text-center max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-7"
+          >
+            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter uppercase leading-[0.9]">
+              Ready to Integrate<br />
+              <span className="text-phi-blue">AI Into Your Business?</span>
+            </h2>
+            <p className="text-base text-white/40 font-light max-w-xl mx-auto leading-relaxed">
+              Book a free consultation. We'll identify where AI fits your business and what it can realistically achieve — before you commit to anything.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3 pt-2">
+              <Link href="/contact">
+                <button className="inline-flex items-center gap-2 bg-phi-blue text-white font-semibold text-sm px-8 py-4 rounded-full hover:bg-phi-blue/90 transition-all duration-200 hover:scale-[1.02] shadow-[0_0_40px_rgba(0,163,255,0.18)]">
+                  Get In Touch <ArrowRight className="w-4 h-4" />
+                </button>
+              </Link>
+              <Link href="/services">
+                <button className="inline-flex items-center gap-2 border border-white/20 text-white font-medium text-sm px-8 py-4 rounded-full hover:bg-white/5 transition-all duration-200">
+                  Explore Our Services
+                </button>
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
 

@@ -30,6 +30,17 @@ from livekit.agents.voice.transcription.filters import filter_markdown
 from livekit.plugins import openai, silero, deepgram, turn_detector
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 from livekit.plugins import noise_cancellation
+
+# LLM provider selection: set LLM_PROVIDER=gemini to use Google Gemini, default is OpenAI
+_LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai").lower().strip()
+if _LLM_PROVIDER == "gemini":
+    from livekit.plugins import google as llm_plugin  # type: ignore
+    _LLM_MODEL = "gemini-2.0-flash"
+    _LLM_API_KEY_ENV = "GOOGLE_API_KEY"
+else:
+    llm_plugin = openai  # type: ignore
+    _LLM_MODEL = "gpt-4o-mini"
+    _LLM_API_KEY_ENV = "OPENAI_API_KEY"
 from livekit import rtc
 
 # Environment and configuration
@@ -77,8 +88,10 @@ if __name__ == "__main__" and "download-files" not in sys.argv:
     # if not COMPANY_RAG_SERVER_URL:
     #     raise ValueError("❌ CRITICAL: Missing COMPANY_RAG_SERVER_URL environment variable. This is required for company voicebot functionality")
 
-    if not OPENAI_API_KEY:
-        raise ValueError("❌ CRITICAL: Missing OPENAI_API_KEY environment variable. This is required for AI functionality")
+    if _LLM_PROVIDER != "gemini" and not OPENAI_API_KEY:
+        raise ValueError("❌ CRITICAL: Missing OPENAI_API_KEY environment variable. This is required when LLM_PROVIDER is openai")
+    if _LLM_PROVIDER == "gemini" and not os.getenv("GOOGLE_API_KEY"):
+        raise ValueError("❌ CRITICAL: Missing GOOGLE_API_KEY environment variable. This is required when LLM_PROVIDER is gemini")
 
 # logger.info(f"🏢 Company Voice Agent (Pinecone) using LiveKit instance: {os.environ['LIVEKIT_URL']}")
 # logger.info(f"�� Company API Key: {os.environ['LIVEKIT_API_KEY'][:10]}...")
@@ -266,8 +279,8 @@ async def _pinecone_search(voicebot_id: str, query: str, company_name: str, top_
     
     # PRIMARY: Always perform fresh search (reliable fallback)
     try:
-        if not OPENAI_API_KEY:
-            return "OpenAI API key not configured for embeddings"
+        if _LLM_PROVIDER != "gemini" and not OPENAI_API_KEY:
+            return "LLM API key not configured for embeddings"
             
         # Use the enhanced Pinecone service through the RAG server
         async with aiohttp.ClientSession() as session:
@@ -749,8 +762,8 @@ async def entrypoint(ctx: JobContext):
         instructions=instructions,
         vad=silero.VAD.load(),
         stt=deepgram.STT(),
-        llm=openai.LLM(),
-        tts=openai.TTS(),
+        llm=llm_plugin.LLM(model=_LLM_MODEL),
+        tts=deepgram.TTS(model="aura-2-andromeda-en", sample_rate=24000),
         tools=[
             search_company_knowledge,
             enhanced_rag_search,
@@ -819,7 +832,7 @@ async def entrypoint(ctx: JobContext):
     session = AgentSession(
         vad=ctx.proc.userdata["vad"],  # ✅ CRITICAL: Use prewarmed VAD
         # ✅ Essential: LLM configuration for proper responses
-        llm=openai.LLM(model="gpt-4o-mini"),
+        llm=llm_plugin.LLM(model=_LLM_MODEL, api_key=os.getenv(_LLM_API_KEY_ENV)),
         # ✅ Essential: STT configuration for speech recognition
         stt=deepgram.STT(
             model="nova-3",
