@@ -1,0 +1,101 @@
+"""Employees API routes"""
+from fastapi import APIRouter, Depends, HTTPException, status, Query
+from sqlalchemy.ext.asyncio import AsyncSession
+from typing import Dict, Any, List, Optional
+from datetime import datetime, date
+from dateutil.relativedelta import relativedelta
+
+from app.core.database import get_db
+from app.core.dependencies import get_current_user
+from app.models.user import User
+from app.models.employee_profile import EmployeeProfile
+from app.models.attendance import Attendance
+from app.models.enums import AttendanceStatus
+from app.services.employee_service import get_employee_service
+from app.utils.response import success_response
+
+router = APIRouter()
+
+
+@router.get("/me")
+async def get_my_profile(
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Get current user's employee profile"""
+    service = get_employee_service()
+    profile = await service.get_profile(db, current_user.id)
+    return success_response("Profile retrieved", profile)
+
+
+@router.patch("/me")
+async def update_my_profile(
+    data: Dict[str, Any],
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Update current user's employee profile (limited fields)"""
+    allowed_fields = ["phone", "timezone", "job_roles"]
+    update_data = {k: v for k, v in data.items() if k in allowed_fields}
+    if not update_data:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Allowed fields: {allowed_fields}")
+    
+    result = await db.execute(
+        EmployeeProfile.__table__.select().where(EmployeeProfile.user_id == current_user.id)
+    )
+    profile = result.fetchone()
+    if profile:
+        await db.execute(
+            EmployeeProfile.__table__.update().where(EmployeeProfile.id == profile.id).values(**update_data)
+        )
+    else:
+        update_data["user_id"] = current_user.id
+        new_profile = EmployeeProfile(**update_data)
+        db.add(new_profile)
+    await db.commit()
+    return success_response("Profile updated", update_data)
+
+
+@router.get("/{employee_id}/attendance-summary")
+async def get_attendance_summary(
+    employee_id: str,
+    month: int = Query(None),
+    year: int = Query(None),
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Get attendance summary for an employee"""
+    if current_user.role not in ["ADMIN", "PROJECT_LEAD"] and current_user.id != employee_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient permissions")
+    
+    today = date.today()
+    month = month or today.month
+    year = year or today.year
+    
+    start_date = date(year, month, 1)
+    end_date = start_date + relativedelta(months=1)
+    
+    result = await db.execute(
+        Attendance.__table__.select().where(
+            Attendance.user_id == employee_id,
+            Attendance.date >= start_date,
+            Attendance.date < end_date,
+        )
+    )
+    records = result.fetchall()
+    
+    days_present = sum(1 for r in records if r.status in [AttendanceStatus.PRESENT.value, AttendanceStatus.LATE.value])
+    days_late = sum(1 for r in records if r.is_late == True)
+    total_hours = sum((r.total_hours or 0) for r in records)
+    total_minutes = sum((r.total_work_minutes or 0) for r in records)
+    
+    return success_response("Attendance summary", {
+        "employee_id": employee_id,
+        "month": month,
+        "year": year,
+        "days_present": days_present,
+        "days_late": days_late,
+        "total_hours": round(total_hours, 2),
+        "total_work_minutes": total_minutes,
+        "working_days": (end_date - start_date).days,
+    })

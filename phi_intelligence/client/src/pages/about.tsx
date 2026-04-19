@@ -44,15 +44,15 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_65%)]" />
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="lg:col-span-7 space-y-6"
             >
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">About Us</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 About Phi<br />
                 <span className="text-phi-blue">Intelligence.</span>
               </h1>
@@ -79,7 +79,7 @@ export default function AboutPage() {
 
       {/* Values */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Our Principles</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
@@ -109,7 +109,7 @@ export default function AboutPage() {
 
       {/* How We Work */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Our Process</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
@@ -137,7 +137,7 @@ export default function AboutPage() {
 
       {/* Research */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Research & Innovation</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
@@ -167,7 +167,7 @@ export default function AboutPage() {
           </div>
 
           {/* Partnerships */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 pt-8 border-t border-white/5">
             {partnerships.map((p, i) => (
               <motion.div
                 key={p.title}
@@ -192,7 +192,7 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Work With<br /><span className="text-phi-blue">Our Team.</span>
           </h2>

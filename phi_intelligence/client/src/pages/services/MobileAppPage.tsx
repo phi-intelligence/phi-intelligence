@@ -80,11 +80,11 @@ export default function MobileAppPage() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center pt-32 pb-20 overflow-hidden">
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Service 02</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 Mobile<br />
                 <span className="text-phi-blue/60 italic">Applications.</span>
               </h1>
@@ -119,7 +119,7 @@ export default function MobileAppPage() {
 
       {/* AI Features */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Capabilities</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
@@ -155,7 +155,7 @@ export default function MobileAppPage() {
 
       {/* Platforms */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Technology</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Platforms We Build On</h2>
@@ -190,7 +190,7 @@ export default function MobileAppPage() {
 
       {/* Use Cases */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Use Cases</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">What We Build For</h2>
@@ -218,8 +218,8 @@ export default function MobileAppPage() {
 
       {/* Web CTA Callout */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
-          <div className="rounded-2xl border border-white/8 p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-8 hover:border-white/15 transition-colors">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="rounded-2xl border border-white/8 p-5 sm:p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-4 md:gap-8 hover:border-white/15 transition-colors">
             <div className="flex-grow space-y-2">
               <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-white/30">Also Need a Web Platform?</p>
               <h3 className="text-2xl sm:text-3xl font-bold tracking-tighter uppercase">We Build the Web App Too.</h3>
@@ -240,7 +240,7 @@ export default function MobileAppPage() {
 
       {/* CTA */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Have an App<br />
             <span className="text-phi-blue/60 italic">Idea in Mind?</span>

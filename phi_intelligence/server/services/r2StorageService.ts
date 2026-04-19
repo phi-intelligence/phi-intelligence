@@ -28,8 +28,8 @@ export interface FileMetadata {
 }
 
 export class R2StorageService {
-  private client: S3Client;
-  private config: R2Config;
+  private client!: S3Client;
+  private config!: R2Config;
 
   constructor() {
     this.initializeConfig();

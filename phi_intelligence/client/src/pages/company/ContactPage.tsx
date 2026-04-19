@@ -12,15 +12,15 @@ export default function ContactPage() {
       {/* ── Hero ── */}
       <section className="relative min-h-[60vh] flex items-center pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_65%)]" />
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="lg:col-span-7 space-y-6"
             >
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Contact Us</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 Let's Build<br />
                 <span className="text-phi-blue">Together.</span>
               </h1>
@@ -48,8 +48,8 @@ export default function ContactPage() {
       </section>
 
       {/* ── Contact Form + Info ── */}
-      <section className="py-24 border-t border-white/5">
-        <div className="container mx-auto px-6">
+      <section className="py-12 md:py-24 border-t border-white/5">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-16 items-start">
 
             {/* Left: Form */}

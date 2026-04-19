@@ -26,11 +26,11 @@ export default function ProcessAutomationPage() {
 
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center pt-32 pb-20 overflow-hidden">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Service 04</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 Business<br />Process<br />
                 <span className="text-phi-blue/60 italic">Automation.</span>
               </h1>
@@ -60,7 +60,7 @@ export default function ProcessAutomationPage() {
 
       {/* Capabilities */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Capabilities</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">What We Automate</h2>
@@ -73,7 +73,7 @@ export default function ProcessAutomationPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
+                className="p-4 sm:p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-5 group-hover:bg-phi-blue group-hover:text-white transition-all duration-300">
                   <cap.icon className="w-5 h-5" />
@@ -88,13 +88,13 @@ export default function ProcessAutomationPage() {
 
       {/* How It Works */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6 max-w-4xl">
+        <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
           <div className="mb-12 text-center">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Architecture</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">How It Works</h2>
           </div>
 
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-8">
             {workflow.map((step, i) => (
               <div key={step.label} className="flex flex-col items-center text-center gap-4 flex-1">
                 <motion.div
@@ -129,7 +129,7 @@ export default function ProcessAutomationPage() {
 
       {/* CTA */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Stop Manual Workflows.<br />
             <span className="text-phi-blue/60 italic">Start Automating.</span>

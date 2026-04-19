@@ -28,30 +28,36 @@ console.log("Welcome to Phi Intelligence");
 console.log("Transforming businesses with AI");`
   ];
 
+  const isMountedRef = useRef(true);
+
   useEffect(() => {
-    if (!isTyping) {
-      startTyping();
-    }
+    isMountedRef.current = true;
+    startTyping();
+    return () => { isMountedRef.current = false; };
   }, []);
 
   const startTyping = async () => {
+    if (!isMountedRef.current) return;
     setIsTyping(true);
-    
+
     for (let snippetIndex = 0; snippetIndex < codeSnippets.length; snippetIndex++) {
       const snippet = codeSnippets[snippetIndex];
-      
+
       for (let i = 0; i < snippet.length; i++) {
+        if (!isMountedRef.current) return;
         const char = snippet[i];
         await typeCharacter(char);
         await sleep(getTypingDelay());
       }
-      
+
       if (snippetIndex < codeSnippets.length - 1) {
         await sleep(1000);
       }
     }
-    
+
+    if (!isMountedRef.current) return;
     await sleep(3000);
+    if (!isMountedRef.current) return;
     setIsTyping(false);
     setCurrentCode('');
     setCurrentLine(1);

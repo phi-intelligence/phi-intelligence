@@ -16,6 +16,7 @@ const services = [
 ];
 
 const flatLinks = [
+  { href: "/products",    label: "Products"    },
   { href: "/portfolio",   label: "Portfolio"   },
   { href: "/about",       label: "About"       },
   { href: "/careers",     label: "Careers"     },
@@ -104,7 +105,7 @@ export default function Navigation() {
                 <ChevronDown className="h-3 w-3 transition-transform duration-300 group-hover:rotate-180" />
               </Link>
 
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[520px] bg-[#0A0A0F]/95 backdrop-blur-xl border border-white/5 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[min(520px,90vw)] bg-[#0A0A0F]/95 backdrop-blur-xl border border-white/5 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
                 <div className="p-6">
                   <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-white/30 mb-4">Our Services</p>
                   <div className="grid grid-cols-2 gap-1">

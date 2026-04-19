@@ -45,7 +45,7 @@ export default function Blog() {
         <div className="mb-20">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4 max-w-2xl">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">News & Research</p>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter uppercase leading-[0.9]">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter uppercase leading-[0.9]">
               Insights<br />
               <span className="text-phi-blue">Network.</span>
             </h1>
@@ -76,7 +76,7 @@ export default function Blog() {
 
         {/* Content */}
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {[1, 2, 3].map(i => <div key={i} className="aspect-[4/5] rounded-2xl bg-white/5 animate-pulse" />)}
           </div>
         ) : error ? (
@@ -91,7 +91,7 @@ export default function Blog() {
             <p className="text-white/40 font-light text-lg">No articles found for this category.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {newsArticles.map((article) => (
               <motion.div
                 key={article.id}

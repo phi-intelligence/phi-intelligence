@@ -138,6 +138,7 @@ export default function AdvancedNetworkAnimation({
       }
       
       starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+      starsVertices.length = 0; // free temp array
 
       // Track starfield resources for cleanup
       trackGeometry(starsGeometry);
@@ -258,11 +259,11 @@ export default function AdvancedNetworkAnimation({
     };
 
     const createAdvancedConnections = () => {
-      // Clear existing connections first
+      // Clear existing connections first — dispose geometry/material before removing
       connections.forEach(connection => {
-        if (connection.parent) {
-          connection.parent.remove(connection);
-        }
+        if (connection.geometry) connection.geometry.dispose();
+        if (connection.material) connection.material.dispose();
+        if (connection.parent) connection.parent.remove(connection);
       });
       connections.length = 0;
       

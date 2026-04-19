@@ -50,8 +50,8 @@ export default function NeuralNetworkAnimation({
   const spatialGridRef = useRef<SpatialGridImpl | null>(null);
 
   // Animation constants
-  const maxParticleCount = 800; // Reduced for better performance
-  const r = 1200; // Reduced boundary for better performance
+  const maxParticleCount = 800;
+  const r = 1200;
   const rHalf = r / 2;
   
   // Network dynamics
@@ -116,10 +116,12 @@ export default function NeuralNetworkAnimation({
     groupRef.current.clear();
 
     // Initialize particle data
+    // positionsRef/colorsRef store line segment endpoints: at most maxConnections pairs per particle
+    const maxLineVerts = maxParticleCount * maxConnections * 2;
     particlesDataRef.current = [];
     particlePositionsRef.current = new Float32Array(maxParticleCount * 3);
-    positionsRef.current = new Float32Array(maxParticleCount * maxParticleCount * 3);
-    colorsRef.current = new Float32Array(maxParticleCount * maxParticleCount * 3);
+    positionsRef.current = new Float32Array(maxLineVerts * 3);
+    colorsRef.current = new Float32Array(maxLineVerts * 3);
 
     // Removed bounding box helper for more expansive animation spread
     // Particles will now move freely across the hero section
@@ -364,12 +366,12 @@ export default function NeuralNetworkAnimation({
     if (!mountRef.current) return;
 
     const container = mountRef.current;
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    // Always use window dimensions — this animation is a full-width viewport background
+    const width = window.innerWidth;
+    const height = container.clientHeight || window.innerHeight;
 
-    // Scene setup
+    // Scene setup — no background so the page background is visible
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
     sceneRef.current = scene;
     
     // Track scene for cleanup
@@ -383,10 +385,11 @@ export default function NeuralNetworkAnimation({
     // Track camera for cleanup
     trackCamera(camera);
 
-    // Renderer setup
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    // Renderer setup — alpha:true so page background shows through
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height);
+    renderer.setClearColor(0x000000, 0); // fully transparent clear
     rendererRef.current = renderer;
     
     // Track renderer for cleanup
@@ -422,10 +425,10 @@ export default function NeuralNetworkAnimation({
   // Handle resize
   const handleResize = useCallback(() => {
     if (!cameraRef.current || !rendererRef.current || !mountRef.current) return;
-    
+
     const container = mountRef.current;
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    const width = window.innerWidth;
+    const height = container.clientHeight || window.innerHeight;
     
     cameraRef.current.aspect = width / height;
     cameraRef.current.updateProjectionMatrix();
@@ -449,18 +452,22 @@ export default function NeuralNetworkAnimation({
   // Initialize on mount
   useEffect(() => {
     initScene();
-    
+
+    // Correct canvas size after first layout paint
+    const rafId = requestAnimationFrame(handleResize);
+
     // Add resize listener with safe tracking
     addSafeEventListener(window, 'resize', handleResize);
     
     return () => {
+      cancelAnimationFrame(rafId);
       console.log('🧹 Cleaning up NeuralNetworkAnimation...');
 
       // Free large Float32Array buffers
       particlePositionsRef.current = null;
       positionsRef.current = null;
       colorsRef.current = null;
-      particlesDataRef.current = [];
+      particlesDataRef.current = null as any;
 
       // Use comprehensive cleanup system
       cleanup();

@@ -79,8 +79,8 @@ export class NewsSchedulerService {
     // Use a single cron job for all priorities to avoid conflicts
     this.schedulePriorityFetch('ALL', '0 */3 * * *');
 
-    // Initial fetch immediately
-    this.fetchAllNews();
+    // Initial fetch immediately (fire-and-forget is intentional — cron handles retries)
+    this.fetchAllNews().catch(err => console.error('❌ Initial news fetch failed:', err));
 
     this.isRunning = true;
     console.log('⏰ News Scheduler started - fetching every 3 hours');

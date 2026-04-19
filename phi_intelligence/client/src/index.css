@@ -12,6 +12,11 @@
   --primary-foreground: 0 0% 100%;
   --radius: 2rem;
   --border: 240 10% 15%;
+  /* Employee portal (TMS) — warm canvas + brand accent; use via hsl(var(--tms-*)) */
+  --tms-canvas: 40 20% 96%;
+  --tms-surface: 0 0% 100%;
+  --tms-accent: 201 100% 50%;
+  --tms-accent-soft: 201 100% 96%;
 }
 
 @layer base {
@@ -36,6 +41,11 @@
   /* Glassmorphism 2.0 */
   .glass-panel {
     @apply bg-black/40 backdrop-blur-xl border border-white/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.8)];
+  }
+
+  /* Inside employee TMS portal: same utility name reads as a light card */
+  [data-tms-portal] .glass-panel {
+    @apply bg-white border-stone-200 shadow-sm text-stone-900 backdrop-blur-none;
   }
 
   .glass-card {

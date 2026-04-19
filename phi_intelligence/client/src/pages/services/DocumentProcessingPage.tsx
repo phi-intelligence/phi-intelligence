@@ -186,11 +186,11 @@ export default function DocumentProcessingPage() {
       {/* Hero */}
       <section className="relative min-h-[70vh] flex items-center pt-32 pb-20 overflow-hidden">
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 lg:gap-16 items-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Service 06</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 Intelligent<br />Document<br />
                 <span className="text-phi-blue/60 italic">Processing.</span>
               </h1>
@@ -225,7 +225,7 @@ export default function DocumentProcessingPage() {
 
       {/* Capabilities */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Capabilities</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">What We Build</h2>
@@ -238,7 +238,7 @@ export default function DocumentProcessingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
+                className="p-4 sm:p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-5 group-hover:bg-phi-blue group-hover:text-white transition-all duration-300">
                   <cap.icon className="w-5 h-5" />
@@ -253,7 +253,7 @@ export default function DocumentProcessingPage() {
 
       {/* How It Works Pipeline */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-16 text-center">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Pipeline</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">How It Works</h2>
@@ -264,7 +264,7 @@ export default function DocumentProcessingPage() {
             {/* Connecting line - desktop */}
             <div className="hidden lg:block absolute top-12 left-[10%] right-[10%] h-px bg-gradient-to-r from-white/0 via-white/15 to-white/0" />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-8 lg:gap-4">
               {pipelineSteps.map((step, i) => (
                 <motion.div
                   key={step.label}
@@ -301,7 +301,7 @@ export default function DocumentProcessingPage() {
 
       {/* Supported Formats */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12 text-center">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Compatibility</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
@@ -309,7 +309,7 @@ export default function DocumentProcessingPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {supportedFormats.map((format, i) => (
               <motion.div
                 key={format.label}
@@ -332,7 +332,7 @@ export default function DocumentProcessingPage() {
 
       {/* Industries */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-4 space-y-6">
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Industries</p>
@@ -352,7 +352,7 @@ export default function DocumentProcessingPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="relative p-6 md:p-8 rounded-2xl border border-white/8 hover:border-white/20 transition-all duration-300 overflow-hidden group"
+                  className="relative p-4 sm:p-6 md:p-8 rounded-2xl border border-white/8 hover:border-white/20 transition-all duration-300 overflow-hidden group"
                 >
                   {/* Accent gradient */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${ind.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -369,17 +369,17 @@ export default function DocumentProcessingPage() {
 
       {/* Cross-sell: Computer Vision */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative p-8 md:p-12 rounded-2xl border border-white/8 overflow-hidden"
+            className="relative p-5 sm:p-8 md:p-12 rounded-2xl border border-white/8 overflow-hidden"
           >
             {/* Subtle gradient background */}
             <div className="absolute inset-0 bg-gradient-to-r from-white/[0.02] to-transparent" />
 
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-8">
               <div className="space-y-3 max-w-xl">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
@@ -406,7 +406,7 @@ export default function DocumentProcessingPage() {
 
       {/* CTA */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

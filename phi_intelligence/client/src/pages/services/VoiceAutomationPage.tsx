@@ -33,11 +33,11 @@ export default function VoiceAutomationPage() {
 
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center pt-32 pb-20 overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Service 05</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 AI Voice<br />
                 <span className="text-phi-blue/60 italic">Automation.</span>
               </h1>
@@ -72,7 +72,7 @@ export default function VoiceAutomationPage() {
 
       {/* Two Modes */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">How It Works</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Two Deployment Modes</h2>
@@ -86,7 +86,7 @@ export default function VoiceAutomationPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-8 md:p-10 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 group space-y-6"
+                className="p-5 sm:p-8 md:p-10 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 group space-y-6"
               >
                 <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-phi-blue group-hover:text-white transition-all duration-300">
                   <mode.icon className="w-6 h-6" />
@@ -111,7 +111,7 @@ export default function VoiceAutomationPage() {
 
       {/* Technical Capabilities */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Technical Stack</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Capabilities</h2>
@@ -125,7 +125,7 @@ export default function VoiceAutomationPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
+                className="p-4 sm:p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-5 group-hover:bg-phi-blue group-hover:text-white transition-all duration-300">
                   <cap.icon className="w-5 h-5" />
@@ -140,7 +140,7 @@ export default function VoiceAutomationPage() {
 
       {/* CTA */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Ready to Automate<br />
             <span className="text-phi-blue/60 italic">Your Voice Operations?</span>

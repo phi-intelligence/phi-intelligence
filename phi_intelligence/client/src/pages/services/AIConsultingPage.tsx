@@ -31,11 +31,11 @@ export default function AIConsultingPage() {
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/40 to-black" />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-3xl space-y-6">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Service 01</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 AI Consulting<br />
                 <span className="text-phi-blue/60 italic">& Strategy.</span>
               </h1>
@@ -61,7 +61,7 @@ export default function AIConsultingPage() {
 
       {/* Capabilities */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">What's Included</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Core Capabilities</h2>
@@ -75,7 +75,7 @@ export default function AIConsultingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
+                className="p-4 sm:p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-5 group-hover:bg-phi-blue group-hover:text-white transition-all duration-300">
                   <cap.icon className="w-5 h-5" />
@@ -90,7 +90,7 @@ export default function AIConsultingPage() {
 
       {/* Who It's For + Engagement */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
             {/* Who It's For */}
             <div className="space-y-8">
@@ -122,7 +122,7 @@ export default function AIConsultingPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="p-8 md:p-10 rounded-2xl border border-white/10 bg-white/[0.02] space-y-8"
+              className="p-5 sm:p-8 md:p-10 rounded-2xl border border-white/10 bg-white/[0.02] space-y-8"
             >
               <h3 className="text-2xl font-bold uppercase tracking-tight">Typical Engagement</h3>
 
@@ -153,7 +153,7 @@ export default function AIConsultingPage() {
 
       {/* CTA */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Ready to Build Your<br />
             <span className="text-phi-blue/60 italic">AI Strategy?</span>

@@ -105,10 +105,12 @@ export default function RobotArmAnimation({
     container.appendChild(renderer.domElement);
 
     // Load the GLB model
+    let isMounted = true;
     const loader = new GLTFLoader();
     loader.load(
-      '/assets/robot2.glb', // Updated path for public folder
+      '/assets/robot2.glb',
       (gltf) => {
+        if (!isMounted) return; // Component unmounted before load completed
         const model = gltf.scene;
         
         // Apply materials to all meshes and track for cleanup
@@ -130,22 +132,37 @@ export default function RobotArmAnimation({
 
         // Scale the model
         model.scale.setScalar(scale);
+
+        // Center model using bounding box
+        const box = new THREE.Box3().setFromObject(model);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        model.position.sub(center); // move model so its center is at origin
+
+        // Fit camera to model
+        const maxDim = Math.max(size.x, size.y, size.z) * scale;
+        const fov = camera.fov * (Math.PI / 180);
+        const dist = (maxDim / 2) / Math.tan(fov / 2) * 1.6;
+        camera.position.set(dist * 0.4, dist * 0.2, dist);
+        camera.lookAt(0, 0, 0);
+        camera.updateProjectionMatrix();
+
         model.updateMatrix();
 
         // Track model for cleanup
         trackObject(model);
-        
+
         // Store references
         modelRef.current = model;
-        
+
         // Setup animation mixer if animations exist
         if (gltf.animations && gltf.animations.length > 0) {
           const mixer = new THREE.AnimationMixer(model);
           mixerRef.current = mixer;
-          
+
           // Track mixer for cleanup
           trackObject(mixer as any);
-          
+
           // Play the first animation
           const action = mixer.clipAction(gltf.animations[0]);
           action.setLoop(THREE.LoopRepeat, Infinity);
@@ -187,9 +204,8 @@ export default function RobotArmAnimation({
       // camera.position.z = Math.sin(timer) * 20;
       // camera.lookAt(0, 5, 0);
       
-      // Static camera position - better framing for full robot view
-      camera.position.set(3, 3, 5);
-      camera.lookAt(0, 2, 0);
+      // Camera position is set after model load — no override here
+      camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
       // Use safe animation frame
@@ -200,6 +216,7 @@ export default function RobotArmAnimation({
 
     // Cleanup function
     return () => {
+      isMounted = false;
       console.log('🧹 Cleaning up RobotArmAnimation...');
 
       // Stop animation mixer

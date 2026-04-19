@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, lazy, Suspense } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+const RobotArmAnimation = lazy(() => import("@/components/three/RobotArmAnimation"));
 import {
   ArrowRight,
   Ship,
@@ -23,8 +24,20 @@ import {
   House,
   FolderOpen,
   MapPin,
+  Phone,
+  HeartPulse,
+  UserRound,
+  BriefcaseBusiness,
+  BedDouble,
+  BookOpen,
+  Radio,
+  Video,
+  Bell,
+  Mic,
+  FileEdit,
+  LayoutDashboard,
+  CalendarDays,
 } from "lucide-react";
-import CubeGridAnimation from "@/components/three/CubeGridAnimation";
 
 /* ─── Agilent page definitions ──────────────────────────────────────────── */
 const agilentPages = [
@@ -79,7 +92,7 @@ function AgilentShowcase() {
       <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_0%_0%,rgba(0,163,255,0.08),transparent_60%)] pointer-events-none" />
 
-      <div className="relative z-10 p-8 md:p-10">
+      <div className="relative z-10 p-5 sm:p-8 md:p-10">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
           <div className="space-y-3">
@@ -129,7 +142,7 @@ function AgilentShowcase() {
             </div>
 
             {/* Metrics */}
-            <div className="grid grid-cols-3 lg:grid-cols-1 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
               {[
                 { value: "Production", label: "Live site" },
                 { value: "10+", label: "Locales" },
@@ -232,28 +245,36 @@ const smideesPages = [
 function SitePlayer({
   pages,
   domain,
+  playbackRate = 1,
 }: {
   pages: typeof smideesPages;
   domain: string;
+  playbackRate?: number;
 }) {
   const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const inViewRef = useRef(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const page = pages[active];
 
-  // Play/pause based on viewport visibility
+  // Play/pause based on viewport visibility — store observer in ref so it survives pages changes
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+    // Disconnect any previous observer before creating a new one
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
     const observer = new IntersectionObserver(
       ([entry]) => {
         inViewRef.current = entry.isIntersecting;
         const v = videoRef.current;
         if (!v) return;
         if (entry.isIntersecting) {
+          v.playbackRate = playbackRate;
           v.play().catch(() => setPlaying(false));
           setPlaying(true);
         } else {
@@ -263,9 +284,15 @@ function SitePlayer({
       },
       { threshold: 0.4 }
     );
+    observerRef.current = observer;
     observer.observe(container);
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      observerRef.current = null;
+      const v = videoRef.current;
+      if (v) { v.pause(); v.src = ''; }
+    };
+  }, [pages]);
 
   // On tab change: reload and play only if already in view
   useEffect(() => {
@@ -273,10 +300,11 @@ function SitePlayer({
     if (!v) return;
     v.load();
     if (inViewRef.current) {
+      v.playbackRate = playbackRate;
       v.play().catch(() => setPlaying(false));
       setPlaying(true);
     }
-  }, [active]);
+  }, [active, playbackRate]);
 
   const togglePlay = () => {
     const v = videoRef.current;
@@ -318,7 +346,7 @@ function SitePlayer({
           >
             <video
               ref={videoRef}
-              className="w-full aspect-video object-cover"
+              className="w-full aspect-video object-contain bg-black"
               playsInline
               muted
               autoPlay
@@ -326,7 +354,7 @@ function SitePlayer({
               onPlay={() => setPlaying(true)}
               onPause={() => setPlaying(false)}
             >
-              <source src={page.video} type="video/mp4" />
+              <source src={page.video} type={page.video.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
             </video>
           </motion.div>
         </AnimatePresence>
@@ -369,23 +397,24 @@ function SitePlayer({
         </div>
       </div>
 
-      {/* Tab strip */}
-      <div className="grid rounded-b-2xl overflow-hidden border border-white/10 border-t-0" style={{ gridTemplateColumns: `repeat(${pages.length}, 1fr)` }}>
+      {/* Tab strip — scrollable on mobile */}
+      <div className="flex overflow-x-auto rounded-b-2xl border border-white/10 border-t-0 scrollbar-none">
         {pages.map((p, i) => {
           const Icon = p.icon;
           return (
             <button
               key={p.id}
               onClick={() => setActive(i)}
-              className={`group/tab relative flex flex-col items-center gap-1.5 py-3.5 px-2 transition-all duration-250 border-r border-white/5 last:border-r-0 ${
+              style={{ minWidth: `${Math.max(64, Math.floor(100 / Math.min(pages.length, 6)))}px` }}
+              className={`group/tab relative flex flex-col items-center gap-1.5 py-3 px-2 flex-1 transition-all duration-250 border-r border-white/5 last:border-r-0 shrink-0 ${
                 i === active ? "bg-phi-blue/10 text-phi-blue" : "bg-white/[0.02] text-white/30 hover:bg-white/[0.04] hover:text-white/60"
               }`}
             >
               {i === active && (
                 <motion.div layoutId={`tab-${domain}`} className="absolute top-0 inset-x-0 h-[2px] bg-phi-blue" />
               )}
-              <Icon className="w-3.5 h-3.5 shrink-0" />
-              <span className="text-[9px] font-bold tracking-widest uppercase leading-none">{p.label}</span>
+              <Icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+              <span className="text-[8px] sm:text-[9px] font-bold tracking-widest uppercase leading-none">{p.label}</span>
             </button>
           );
         })}
@@ -424,7 +453,7 @@ function SmideesShowcase() {
       <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_100%_0%,rgba(0,163,255,0.08),transparent_60%)] pointer-events-none" />
 
-      <div className="relative z-10 p-8 md:p-10">
+      <div className="relative z-10 p-5 sm:p-8 md:p-10">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
           <div className="space-y-3">
@@ -463,7 +492,7 @@ function SmideesShowcase() {
             </div>
 
             {/* Metrics */}
-            <div className="grid grid-cols-3 lg:grid-cols-1 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
               {[
                 { value: "R3F + Yuka", label: "3D engine" },
                 { value: "Gemini · GPT", label: "AI chat" },
@@ -574,7 +603,7 @@ function DpsShowcase() {
       <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
 
-      <div className="relative z-10 p-8 md:p-10">
+      <div className="relative z-10 p-5 sm:p-8 md:p-10">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
           <div className="space-y-3">
@@ -612,7 +641,7 @@ function DpsShowcase() {
             </div>
 
             {/* Metrics */}
-            <div className="grid grid-cols-3 lg:grid-cols-1 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
               {[
                 { value: "17", label: "Web hubs" },
                 { value: "32", label: "API modules" },
@@ -727,7 +756,7 @@ function UniqFloorsShowcase() {
       <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_100%_100%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
 
-      <div className="relative z-10 p-8 md:p-10">
+      <div className="relative z-10 p-5 sm:p-8 md:p-10">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
           <div className="space-y-3">
@@ -768,7 +797,7 @@ function UniqFloorsShowcase() {
             </div>
 
             {/* Metrics */}
-            <div className="grid grid-cols-3 lg:grid-cols-1 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
               {[
                 { value: "SegFormer", label: "CV pipeline" },
                 { value: "R3F + Rapier", label: "3D engine" },
@@ -894,38 +923,339 @@ function ProjectCard({ project, index }: { project: typeof otherProjects[number]
   );
 }
 
+/* ─── Phi Voice Showcase ─────────────────────────────────────────────────── */
+const phiVoicePages = [
+  { id: "hotel",      label: "Hotel Reception",   description: "Handles room availability, rates, and bookings — extracts reservation data in real time.", video: "/assets/portfolio/phi-voice/demo1.webm", icon: BedDouble },
+  { id: "sales",      label: "Sales Rep",          description: "Outbound lead generation and cold calling with live CRM lead extraction.",                 video: "/assets/portfolio/phi-voice/demo2.webm", icon: BriefcaseBusiness },
+  { id: "support",    label: "Customer Support",   description: "Technical troubleshooting and account issue resolution with live support ticket creation.", video: "/assets/portfolio/phi-voice/demo3.webm", icon: Phone },
+  { id: "healthcare", label: "Healthcare Agent",   description: "Appointment scheduling and patient intake with real-time EMR data extraction.",            video: "/assets/portfolio/phi-voice/demo4.webm", icon: HeartPulse },
+  { id: "personal",   label: "Personal Assistant", description: "Your e-concierge for dining, travel, and organisation with calendar action extraction.",   video: "/assets/portfolio/phi-voice/demo5.webm", icon: UserRound },
+];
+
+function PhiVoiceShowcase() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="relative rounded-2xl border border-white/10 overflow-hidden hover:border-phi-blue/25 transition-all duration-500 group"
+    >
+      {/* Background glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_0%_0%,rgba(0,163,255,0.08),transparent_60%)] pointer-events-none" />
+
+      <div className="relative z-10 p-5 sm:p-8 md:p-10">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[9px] font-black tracking-[0.3em] uppercase px-3 py-1.5 rounded-full border border-white/12 text-white/50 bg-white/[0.03]">
+                Internal Platform
+              </span>
+              <span className="text-[9px] font-bold tracking-widest uppercase text-phi-blue/60 border border-phi-blue/20 px-3 py-1.5 rounded-full bg-phi-blue/[0.04]">
+                Voice AI · Multi-Industry
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Phi Voice Suite</h2>
+            <p className="text-sm text-white/40 font-light max-w-lg leading-relaxed">
+              Autonomous AI voice agents for any industry. Live transcription, multi-turn intent recognition,
+              dynamic escalation, and real-time structured data extraction. Telephony via Telnyx and Plivo
+              across UK, US, and India. Five specialised agents — hotel, sales, support, healthcare, and personal assistant.
+            </p>
+          </div>
+        </div>
+
+        {/* Main content: player + sidebar */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
+          <SitePlayer pages={phiVoicePages} domain="phi-voice.phi-intelligence.com" />
+
+          {/* Right sidebar */}
+          <div className="flex flex-col gap-6">
+            {/* Outcome */}
+            <div className="rounded-xl border border-white/8 bg-white/[0.02] p-5 group-hover:border-white/15 transition-colors duration-300">
+              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2">Platform</p>
+              <p className="text-sm font-semibold text-white/65 leading-snug italic group-hover:text-white/80 transition-colors">
+                "Production-ready voice agents deployed across 5 industries with sub-200ms response latency"
+              </p>
+            </div>
+
+            {/* Metrics */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
+              {[
+                { value: "5 Agents",    label: "Specialisations" },
+                { value: "<200ms",      label: "Response time" },
+                { value: "3 Regions",   label: "UK · US · India" },
+                { value: "Telnyx",      label: "Telephony" },
+                { value: "LiveKit",     label: "Voice infra" },
+              ].map((m) => (
+                <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-3 group-hover:border-white/15 transition-colors duration-300">
+                  <p className="text-base font-bold tracking-tight text-white/80 leading-tight">{m.value}</p>
+                  <p className="text-[9px] font-bold tracking-widest uppercase text-white/25 mt-0.5">{m.label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Tech stack */}
+            <div>
+              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2.5">Tech Stack</p>
+              <div className="flex flex-wrap gap-1.5">
+                {["React", "TypeScript", "LiveKit", "Telnyx", "Plivo", "OpenAI", "Whisper", "Node.js", "PostgreSQL", "Tailwind CSS"].map((tech) => (
+                  <span key={tech} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30 group-hover:text-white/55 group-hover:border-white/18 transition-all duration-200">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Compliance */}
+            <div>
+              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2.5">Compliance</p>
+              <div className="flex flex-wrap gap-1.5">
+                {["TCPA (US)", "GDPR/PECR (UK)", "TRAI (India)"].map((f) => (
+                  <span key={f} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-phi-blue/15 rounded-full text-phi-blue/40 group-hover:border-phi-blue/30 group-hover:text-phi-blue/60 transition-all duration-200">
+                    {f}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ─── CNT page definitions ──────────────────────────────────────────────── */
+const cntPages = [
+  {
+    id: "landing",
+    label: "Landing",
+    description: "Platform landing page — ministry branding, mission statement and entry CTA",
+    video: "/assets/portfolio/cnt/landing.mp4",
+    icon: Monitor,
+  },
+  {
+    id: "home",
+    label: "Home",
+    description: "Personalised home feed — featured content, live stream banner and quick access",
+    video: "/assets/portfolio/cnt/home.mp4",
+    icon: Home,
+  },
+  {
+    id: "voice_agent",
+    label: "AI Voice",
+    description: "AI voice agent — real-time conversation powered by OpenAI GPT-4o and Deepgram STT/TTS",
+    video: "/assets/portfolio/cnt/voice_agent.mp4",
+    icon: Mic,
+  },
+  {
+    id: "live_streams",
+    label: "Live",
+    description: "Live streaming hub — active streams, viewer count and real-time chat",
+    video: "/assets/portfolio/cnt/live_streams.mp4",
+    icon: Radio,
+  },
+  {
+    id: "movies",
+    label: "Movies",
+    description: "On-demand video library — sermon films, documentaries and ministry content",
+    video: "/assets/portfolio/cnt/movies.mp4",
+    icon: Video,
+  },
+  {
+    id: "bible_reader",
+    label: "Bible",
+    description: "Integrated Bible reader — chapter navigation, highlighting and note-taking",
+    video: "/assets/portfolio/cnt/bible_reader.mp4",
+    icon: BookOpen,
+  },
+  {
+    id: "community",
+    label: "Community",
+    description: "Community hub — groups, discussions, member profiles and activity feed",
+    video: "/assets/portfolio/cnt/community.mp4",
+    icon: Users,
+  },
+  {
+    id: "events",
+    label: "Events",
+    description: "Church events calendar — RSVPs, reminders and event detail pages",
+    video: "/assets/portfolio/cnt/events.mp4",
+    icon: CalendarDays,
+  },
+  {
+    id: "admin_dashboard",
+    label: "Admin",
+    description: "Admin dashboard — content management, user analytics and platform settings",
+    video: "/assets/portfolio/cnt/admin_dashboard.mp4",
+    icon: LayoutDashboard,
+  },
+];
+
+/* ─── CNT showcase ───────────────────────────────────────────────────────── */
+function CntShowcase() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="relative rounded-2xl border border-white/10 overflow-hidden hover:border-phi-blue/25 transition-all duration-500 group"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_0%_100%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
+
+      <div className="relative z-10 p-5 sm:p-8 md:p-10">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[9px] font-black tracking-[0.3em] uppercase px-3 py-1.5 rounded-full border border-white/12 text-white/50 bg-white/[0.03]">
+                Full-Stack Media Platform
+              </span>
+              <span className="text-[9px] font-bold tracking-widest uppercase text-phi-blue/60 border border-phi-blue/20 px-3 py-1.5 rounded-full bg-phi-blue/[0.04]">
+                Religious · Community · Streaming
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              Christ New Tabernacle
+            </h2>
+            <p className="text-sm text-white/40 font-light max-w-lg leading-relaxed">
+              Full-stack Christian media platform built with Flutter Web and Flutter mobile (iOS/Android).
+              Features live streaming, on-demand video, podcasts, Bible reader, community hub, AI voice agent,
+              events and an admin dashboard. FastAPI backend with PostgreSQL, Redis, LiveKit and AWS S3/CloudFront.
+            </p>
+          </div>
+          <div className="shrink-0 flex items-center gap-3">
+            <img src="/assets/portfolio/cnt-logo.png" alt="Christ New Tabernacle" className="w-12 h-12 object-contain rounded-xl border border-white/10 bg-white/[0.03] p-1.5" />
+          </div>
+        </div>
+
+        {/* Player + sidebar */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
+          <SitePlayer pages={cntPages} domain="christnewtabernacle.com" playbackRate={0.75} />
+
+          <div className="flex flex-col gap-6">
+            {/* Outcome */}
+            <div className="rounded-xl border border-white/8 bg-white/[0.02] p-5 group-hover:border-white/15 transition-colors duration-300">
+              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2">Outcome</p>
+              <p className="text-sm font-semibold text-white/65 leading-snug italic group-hover:text-white/80 transition-colors">
+                "A complete digital ministry platform connecting congregations through live worship, media and AI"
+              </p>
+            </div>
+
+            {/* Metrics */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
+              {[
+                { value: "Flutter", label: "Web & Mobile" },
+                { value: "LiveKit", label: "Live streaming" },
+                { value: "GPT-4o", label: "AI voice" },
+                { value: "AWS S3", label: "Media storage" },
+                { value: "CloudFront", label: "CDN" },
+              ].map((m) => (
+                <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-3 group-hover:border-white/15 transition-colors duration-300">
+                  <p className="text-base font-bold tracking-tight text-white/80 leading-tight">{m.value}</p>
+                  <p className="text-[9px] font-bold tracking-widest uppercase text-white/25 mt-0.5">{m.label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Tech stack */}
+            <div>
+              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2.5">Tech Stack</p>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  "Flutter Web", "Flutter Mobile", "FastAPI", "PostgreSQL",
+                  "Redis", "LiveKit", "Socket.IO", "AWS S3",
+                  "CloudFront", "AWS Amplify", "OpenAI", "Deepgram",
+                  "Stripe", "Firebase", "Docker",
+                ].map((tech) => (
+                  <span key={tech} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30 group-hover:text-white/55 group-hover:border-white/18 transition-all duration-200">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 /* ─── Page ───────────────────────────────────────────────────────────────── */
 export default function PortfolioPage() {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-phi-blue selection:text-white">
 
       {/* Hero */}
-      <section className="relative min-h-[55vh] flex items-center pt-32 pb-20 overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-center pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_65%)]" />
-        <div className="absolute inset-0 opacity-50 pointer-events-none">
-          <CubeGridAnimation />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black pointer-events-none" />
         <div className="container mx-auto px-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/70">
-              Portfolio
-            </p>
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter uppercase leading-[0.88]">
-              Our<br />
-              <span className="text-phi-blue">Work.</span>
-            </h1>
-            <p className="text-lg text-white/45 font-light leading-relaxed max-w-xl">
-              Live production systems built for real businesses — maritime platforms, AI-powered
-              e-commerce, field operations apps, and more. Every project below is deployed and
-              serving real users.
-            </p>
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="lg:col-span-7 space-y-6"
+            >
+              <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/70">
+                Portfolio
+              </p>
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+                Our<br />
+                <span className="text-phi-blue">Work.</span>
+              </h1>
+              <p className="text-lg text-white/45 font-light leading-relaxed max-w-xl">
+                Live production systems built for real businesses — maritime platforms, AI-powered
+                e-commerce, field operations apps, and more. Every project below is deployed and
+                serving real users.
+              </p>
+            </motion.div>
+
+            <div className="lg:col-span-5 relative hidden lg:block">
+              <div className="relative aspect-[4/5] rounded-3xl border border-white/10 overflow-hidden bg-white/5">
+                <div className="w-full h-full relative">
+                  <Suspense fallback={null}>
+                    <RobotArmAnimation enableInteraction={false} scale={1.0} />
+                  </Suspense>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Products */}
+      <section className="section-padding border-t border-white/5">
+        <div className="container mx-auto px-6">
+          <div className="mb-12">
+            <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Internal Platforms</p>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Our Products</h2>
+          </div>
+          <div className="space-y-6">
+            {/* Phi Voice Suite — full-width with video demos */}
+            <PhiVoiceShowcase />
+
+            {/* Phi Docs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300"
+            >
+              <h3 className="text-xl font-bold uppercase tracking-tight mb-1">Phi Docs</h3>
+              <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-phi-blue/50 mb-4">Intelligent Document Processing Platform</p>
+              <p className="text-sm text-white/40 font-light leading-relaxed mb-5">
+                Our proprietary document processing engine. Skills-based extraction pipeline with LLM routing across models, self-correction, visual validation (LibreOffice-to-PDF-to-pixel analysis), and RAG search on Qdrant with hybrid dense/sparse retrieval.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {["PDF", "DOCX", "XLSX", "Images", "Scanned", "Handwritten"].map((f) => (
+                  <span key={f} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30">{f}</span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -946,6 +1276,24 @@ export default function PortfolioPage() {
           </motion.div>
 
           <AgilentShowcase />
+        </div>
+      </section>
+
+      {/* CNT */}
+      <section className="border-t border-white/5 section-padding">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3 mb-8"
+          >
+            <div className="w-6 h-[2px] bg-phi-blue" />
+            <span className="text-[10px] font-black tracking-[0.35em] uppercase text-phi-blue/70">
+              Featured Project
+            </span>
+          </motion.div>
+          <CntShowcase />
         </div>
       </section>
 
@@ -1024,55 +1372,6 @@ export default function PortfolioPage() {
             {otherProjects.map((project, i) => (
               <ProjectCard key={project.title} project={project} index={i} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Our Products */}
-      <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
-          <div className="mb-12">
-            <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Internal Platforms</p>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Our Products</h2>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Phi Docs */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300"
-            >
-              <h3 className="text-xl font-bold uppercase tracking-tight mb-1">Phi Docs</h3>
-              <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-phi-blue/50 mb-4">Intelligent Document Processing Platform</p>
-              <p className="text-sm text-white/40 font-light leading-relaxed mb-5">
-                Our proprietary document processing engine. Skills-based extraction pipeline with LLM routing across models, self-correction, visual validation (LibreOffice-to-PDF-to-pixel analysis), and RAG search on Qdrant with hybrid dense/sparse retrieval.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["PDF", "DOCX", "XLSX", "Images", "Scanned", "Handwritten"].map((f) => (
-                  <span key={f} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30">{f}</span>
-                ))}
-              </div>
-            </motion.div>
-            {/* Phi Voice Suite */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300"
-            >
-              <h3 className="text-xl font-bold uppercase tracking-tight mb-1">Phi Voice Suite</h3>
-              <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-phi-blue/50 mb-4">AI Call Centre Platform</p>
-              <p className="text-sm text-white/40 font-light leading-relaxed mb-5">
-                Dual-mode voice automation platform. Assist Mode provides live transcription and AI-suggested responses to human agents. Agent Mode handles calls autonomously with multi-turn conversation, intent recognition, and dynamic escalation. Telephony via Telnyx and Plivo across UK, US, and India.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["TCPA (US)", "GDPR/PECR (UK)", "TRAI (India)"].map((f) => (
-                  <span key={f} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30">{f}</span>
-                ))}
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>

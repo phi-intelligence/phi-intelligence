@@ -14,20 +14,22 @@ const services = [
 
 const company = [
   { href: "/about", label: "About" },
+  { href: "/products", label: "Products" },
   { href: "/technology", label: "Technology" },
   { href: "/industries", label: "Industries" },
   { href: "/careers", label: "Careers" },
   { href: "/insights", label: "Insights" },
+  { href: "/employee/login", label: "Employee Login" },
 ];
 
 export default function Footer() {
   return (
     <footer className="bg-black text-white border-t border-white/5 py-24 px-6 md:px-0">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-8 md:gap-12">
 
           {/* Brand Column */}
-          <div className="md:col-span-4 space-y-8">
+          <div className="col-span-2 md:col-span-4 space-y-6 sm:space-y-8">
             <div className="flex items-center gap-3">
               <img src="/assets/logophi.png" alt="Phi" className="w-8 h-8 filter invert brightness-0" />
               <span className="text-2xl font-bold tracking-tighter uppercase">Phi <span className="text-phi-blue">Intelligence</span></span>
@@ -43,7 +45,7 @@ export default function Footer() {
           </div>
 
           {/* Services Column */}
-          <div className="md:col-span-3 space-y-6">
+          <div className="col-span-1 md:col-span-3 space-y-6">
             <h4 className="text-xs font-bold tracking-[0.2em] uppercase opacity-20">Services</h4>
             <ul className="space-y-3 font-light opacity-60">
               {services.map((s) => (
@@ -57,7 +59,7 @@ export default function Footer() {
           </div>
 
           {/* Company Column */}
-          <div className="md:col-span-2 space-y-6">
+          <div className="col-span-1 md:col-span-2 space-y-6">
             <h4 className="text-xs font-bold tracking-[0.2em] uppercase opacity-20">Company</h4>
             <ul className="space-y-3 font-light opacity-60">
               {company.map((c) => (
@@ -71,7 +73,7 @@ export default function Footer() {
           </div>
 
           {/* Contact Column */}
-          <div className="md:col-span-3 space-y-8">
+          <div className="col-span-2 md:col-span-3 space-y-6 sm:space-y-8">
             <h4 className="text-xs font-bold tracking-[0.2em] uppercase opacity-20">Connect</h4>
             <div className="space-y-6">
               <div className="flex items-start gap-4 group">
@@ -91,7 +93,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <p className="text-xs opacity-20 uppercase font-bold tracking-widest mb-1">Phone</p>
-                  <p className="text-sm opacity-60">07352745227</p>
+                  <a href="tel:07352745227" className="text-sm opacity-60 hover:text-phi-blue transition-colors">07352745227</a>
                 </div>
               </div>
             </div>

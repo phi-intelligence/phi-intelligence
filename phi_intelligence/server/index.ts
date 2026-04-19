@@ -18,7 +18,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://replit.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "https:"],
@@ -27,8 +27,7 @@ app.use(helmet({
       formAction: ["'self'"],
       frameAncestors: ["'self'"],
       objectSrc: ["'none'"],
-      scriptSrcAttr: ["'none'"],
-      upgradeInsecureRequests: []
+      scriptSrcAttr: ["'none'"]
     }
   }
 }));
@@ -39,16 +38,36 @@ app.use(CORSService.createCORS());
 // Add CORS error handling after CORS middleware
 app.use(CORSService.handleCORSError);
 
-// Rate limiting
+// Rate limiting (JSON body so the client can parse it; skip the TMS proxy and
+// health checks which are internal/trusted).
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  message: 'Too many requests from this IP, please try again later.'
+  max: 600, // generous ceiling for an authenticated employee portal
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => req.path.startsWith('/tms') || req.path === '/health',
+  handler: (_req, res) => {
+    res.status(429).json({
+      success: false,
+      message: 'Too many requests from this IP, please try again later.',
+    });
+  },
 });
 app.use('/api/', limiter);
 
 // Add cookie parser middleware
 app.use(cookieParser());
+
+import { createProxyMiddleware } from 'http-proxy-middleware';
+
+// TMS Proxy MUST be before body parser
+app.use('/api/tms', createProxyMiddleware({
+  target: process.env.TMS_API_URL || 'http://localhost:6000',
+  changeOrigin: true,
+  pathRewrite: {
+    '^/': '/api/',
+  },
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -103,7 +122,10 @@ app.use((req, res, next) => {
     await initializeDatabase();
   } catch (error) {
     console.error('❌ Database initialization failed:', error);
-    // Continue with in-memory storage if database fails
+    if (process.env.NODE_ENV === 'production') {
+      console.error('❌ Cannot start production server without database. Exiting.');
+      process.exit(1);
+    }
   }
 
   // Conditional imports for development vs production

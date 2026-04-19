@@ -140,15 +140,15 @@ export default function IndustriesPage() {
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/60 to-black" />
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Sectors</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 Industries<br />
                 <span className="text-phi-blue">We Serve.</span>
               </h1>
@@ -162,7 +162,7 @@ export default function IndustriesPage() {
 
       {/* Industries Grid */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -193,12 +193,12 @@ export default function IndustriesPage() {
                       src={industry.logo}
                       alt=""
                       aria-hidden="true"
-                      className="absolute -bottom-10 -right-10 w-56 h-56 object-contain grayscale opacity-[0.05] group-hover:opacity-[0.13] group-hover:grayscale-0 transition-all duration-500 pointer-events-none select-none"
+                      className="absolute -bottom-4 -right-4 w-32 sm:w-40 md:w-56 h-32 sm:h-40 md:h-56 object-contain grayscale opacity-[0.05] group-hover:opacity-[0.13] group-hover:grayscale-0 transition-all duration-500 pointer-events-none select-none"
                     />
                   )}
 
                   {/* Card content */}
-                  <div className="relative z-10 p-6 md:p-8 space-y-5">
+                  <div className="relative z-10 p-4 sm:p-6 md:p-8 space-y-5">
                     {/* Icon + Name row */}
                     <div className="flex items-center gap-4">
                       <div className={`w-12 h-12 rounded-xl border flex items-center justify-center transition-all duration-300 ${
@@ -249,7 +249,7 @@ export default function IndustriesPage() {
 
       {/* CTA */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Not Sure Where to Start?<br />
             <span className="text-phi-blue">We'll Help.</span>

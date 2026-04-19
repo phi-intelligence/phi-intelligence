@@ -222,11 +222,11 @@ export default function TechnologyPage() {
 
       {/* ── Hero ── */}
       <section className="relative min-h-[50vh] flex items-center pt-32 pb-16 overflow-hidden">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Built For You</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 Technology<br />
                 <span className="text-phi-blue">That Ships.</span>
               </h1>
@@ -248,7 +248,7 @@ export default function TechnologyPage() {
 
       {/* ── What This Means For You ── */}
       <section className="section-padding border-t border-white/5 bg-phi-blue/[0.01]">
-        <div className="container mx-auto px-6 max-w-5xl">
+        <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="space-y-10">
             <div>
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-4">What This Means For You</p>
@@ -275,7 +275,7 @@ export default function TechnologyPage() {
 
       {/* ── Languages & Frameworks ── */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">What We Build With</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Languages & Frameworks</h2>
@@ -318,7 +318,7 @@ export default function TechnologyPage() {
 
       {/* ── LLMs ── */}
       <section className="section-padding border-t border-white/5 bg-phi-blue/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-10">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">AI We Integrate</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Large Language Models</h2>
@@ -352,7 +352,7 @@ export default function TechnologyPage() {
 
       {/* ── Computer Vision ── */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-10">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">We Build With</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Computer Vision & Image Models</h2>
@@ -386,7 +386,7 @@ export default function TechnologyPage() {
 
       {/* ── Speech & Audio ── */}
       <section className="section-padding border-t border-white/5 bg-phi-blue/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-10">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">We Build With</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Speech & Audio Models</h2>
@@ -420,7 +420,7 @@ export default function TechnologyPage() {
 
       {/* ── Infrastructure ── */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">We Deploy On</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">AI Infrastructure & Orchestration</h2>
@@ -453,7 +453,7 @@ export default function TechnologyPage() {
 
       {/* ── Commercial Integrations ── */}
       <section className="section-padding border-t border-white/5 bg-phi-blue/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">When Appropriate</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Commercial API Integrations</h2>
@@ -492,7 +492,7 @@ export default function TechnologyPage() {
 
       {/* ── CTA ── */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Ready To Build?</p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Let's Find The Right<br />

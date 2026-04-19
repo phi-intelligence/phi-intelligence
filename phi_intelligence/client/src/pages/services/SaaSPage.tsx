@@ -66,11 +66,11 @@ export default function SaaSPage() {
 
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center pt-32 pb-20 overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Service 01</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 SaaS<br />
                 <span className="text-phi-blue/60 italic">Applications.</span>
               </h1>
@@ -105,7 +105,7 @@ export default function SaaSPage() {
 
       {/* Capabilities */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">What We Build</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
@@ -124,7 +124,7 @@ export default function SaaSPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="flex gap-5 p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
+                className="flex gap-5 p-4 sm:p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-phi-blue group-hover:text-white transition-all duration-300 mt-0.5">
                   <cap.icon className="w-5 h-5" />
@@ -141,7 +141,7 @@ export default function SaaSPage() {
 
       {/* Why Custom SaaS */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">The Advantage</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Why Custom SaaS</h2>
@@ -154,7 +154,7 @@ export default function SaaSPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
+                className="p-4 sm:p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
               >
                 <h3 className="font-bold text-white/90 mb-2 text-lg">{d.title}</h3>
                 <p className="text-sm text-white/40 font-light leading-relaxed">{d.desc}</p>
@@ -166,7 +166,7 @@ export default function SaaSPage() {
 
       {/* Process */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">How We Work</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">From Idea to Production</h2>
@@ -192,8 +192,8 @@ export default function SaaSPage() {
 
       {/* Cross-sell Callout */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
-          <div className="rounded-2xl border border-white/8 p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-8 hover:border-white/15 transition-colors">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="rounded-2xl border border-white/8 p-5 sm:p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-4 md:gap-8 hover:border-white/15 transition-colors">
             <div className="flex-grow space-y-2">
               <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-white/30">Need Mobile or Web Access?</p>
               <h3 className="text-2xl sm:text-3xl font-bold tracking-tighter uppercase">We Build Those Too.</h3>
@@ -219,7 +219,7 @@ export default function SaaSPage() {
 
       {/* CTA */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Ready to Build<br />
             <span className="text-phi-blue/60 italic">Your Platform?</span>

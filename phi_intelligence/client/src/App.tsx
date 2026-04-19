@@ -23,6 +23,32 @@ import AdminLayout from "@/pages/admin/AdminLayout";
 import AuthGuard from "@/components/auth/AuthGuard";
 import { AdminProvider } from "@/contexts/AdminContext";
 
+// Employee Portal
+import { EmployeeProvider } from "@/contexts/EmployeeContext";
+import { EmployeeGuard } from "@/components/employee/EmployeeGuard";
+import EmployeeLogin from "@/pages/employee/EmployeeLogin";
+import EmployeeLayout from "@/pages/employee/EmployeeLayout";
+import EmployeeHome, { EmployeeOnly, AdminOnly } from "@/pages/employee/EmployeeHome";
+import AttendanceClock from "@/pages/employee/attendance/AttendanceClock";
+import AttendanceHistory from "@/pages/employee/attendance/AttendanceHistory";
+import Leaves from "@/pages/employee/leaves/Leaves";
+import MyTasks from "@/pages/employee/tasks/MyTasks";
+import ProjectList from "@/pages/employee/projects/ProjectList";
+import ProjectDetail from "@/pages/employee/projects/ProjectDetail";
+import TaskBoard from "@/pages/employee/projects/TaskBoard";
+import Timesheet from "@/pages/employee/time/Timesheet";
+import ApprovalsDefaultRoute from "@/pages/employee/admin/ApprovalsDefaultRoute";
+import ApprovalsLeaveRoute from "@/pages/employee/admin/ApprovalsLeaveRoute";
+import EmployeeAdminDashboard from "@/pages/employee/admin/EmployeeAdminDashboard";
+import EmployeeDirectory from "@/pages/employee/admin/EmployeeDirectory";
+import EmployeeAdminSettings from "@/pages/employee/admin/EmployeeAdminSettings";
+import EmployeeAnalytics from "@/pages/employee/admin/EmployeeAnalytics";
+import AdminAttendanceReport from "@/pages/employee/attendance/AdminAttendanceReport";
+import PlanPage from "@/pages/employee/ai/PlanPage";
+import ReportPage from "@/pages/employee/ai/ReportPage";
+import ProjectFormPage from "@/pages/employee/projects/ProjectFormPage";
+import AdminReports from "@/pages/employee/admin/AdminReports";
+
 // Service Pages
 import ServicesIndex from "@/pages/services";
 import AIConsultingPage from "@/pages/services/AIConsultingPage";
@@ -40,6 +66,7 @@ import ComputerVisionPage from "@/pages/services/ComputerVisionPage";
 import TechnologyPage from "@/pages/technology";
 import IndustriesPage from "@/pages/industries";
 import PortfolioPage from "@/pages/portfolio";
+import ProductsPage from "@/pages/products";
 import AboutPage from "@/pages/about";
 import ContactPage from "@/pages/company/ContactPage";
 
@@ -81,10 +108,12 @@ function Router() {
   };
 
   const isChatRoute = location === "/chat";
+  const isEmployeeRoute = location.startsWith("/employee");
+  const hideHeaderFooter = isChatRoute || isEmployeeRoute;
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {!isChatRoute && <Navigation />}
+      {!hideHeaderFooter && <Navigation />}
       <Switch>
         <Route path="/" component={Home} />
 
@@ -106,6 +135,7 @@ function Router() {
         <Route path="/technology" component={TechnologyPage} />
         <Route path="/industries" component={IndustriesPage} />
         <Route path="/portfolio" component={PortfolioPage} />
+        <Route path="/products" component={ProductsPage} />
         <Route path="/contact" component={ContactPage} />
 
         {/* Careers Routes */}
@@ -120,13 +150,63 @@ function Router() {
           </AuthGuard>
         </Route>
 
+        {/* Employee Portal Routes */}
+        <Route path="/employee/login" component={EmployeeLogin} />
+        {/* /employee/*? matches /employee and /employee/... (bare /employee is not matched by /employee/* alone in wouter v3) */}
+        <Route path="/employee/*?">
+          <EmployeeGuard>
+            <EmployeeLayout>
+              <Switch>
+                <Route path="/employee" component={EmployeeHome} />
+                <Route path="/employee/admin/dashboard" component={EmployeeAdminDashboard} />
+                <Route path="/employee/admin/employees" component={EmployeeDirectory} />
+                <Route path="/employee/admin/settings" component={EmployeeAdminSettings} />
+                <Route path="/employee/admin/analytics" component={EmployeeAnalytics} />
+                <Route path="/employee/admin/reports" component={AdminReports} />
+                <Route path="/employee/attendance/admin" component={AdminAttendanceReport} />
+                <Route path="/employee/attendance/history">
+                  <EmployeeOnly><AttendanceHistory /></EmployeeOnly>
+                </Route>
+                <Route path="/employee/attendance">
+                  <EmployeeOnly><AttendanceClock /></EmployeeOnly>
+                </Route>
+                <Route path="/employee/ai/plan">
+                  <AdminOnly><PlanPage /></AdminOnly>
+                </Route>
+                <Route path="/employee/ai/report">
+                  <EmployeeOnly><ReportPage /></EmployeeOnly>
+                </Route>
+                <Route path="/employee/leaves">
+                  <EmployeeOnly><Leaves /></EmployeeOnly>
+                </Route>
+                <Route path="/employee/tasks">
+                  <EmployeeOnly><MyTasks /></EmployeeOnly>
+                </Route>
+                <Route path="/employee/projects/new">
+                  <AdminOnly><ProjectFormPage /></AdminOnly>
+                </Route>
+                <Route path="/employee/projects/:id/edit" component={ProjectFormPage} />
+                <Route path="/employee/projects/:id/tasks" component={TaskBoard} />
+                <Route path="/employee/projects/:id" component={ProjectDetail} />
+                <Route path="/employee/projects" component={ProjectList} />
+                <Route path="/employee/timesheet">
+                  <EmployeeOnly><Timesheet /></EmployeeOnly>
+                </Route>
+                <Route path="/employee/time/approvals" component={ApprovalsDefaultRoute} />
+                <Route path="/employee/leave/admin" component={ApprovalsLeaveRoute} />
+                <Route path="/employee/approvals" component={ApprovalsDefaultRoute} />
+              </Switch>
+            </EmployeeLayout>
+          </EmployeeGuard>
+        </Route>
+
         {/* Other Routes */}
         <Route path="/insights" component={Insights} />
         <Route path="/blog" component={Insights} />
         <Route path="/chat" component={Chat} />
         <Route component={NotFound} />
       </Switch>
-      {!isChatRoute && <Footer />}
+      {!hideHeaderFooter && <Footer />}
     </div>
   );
 }
@@ -145,8 +225,10 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <AdminProvider>
-            <Toaster />
-            <Router />
+            <EmployeeProvider>
+              <Toaster />
+              <Router />
+            </EmployeeProvider>
           </AdminProvider>
         </TooltipProvider>
       </QueryClientProvider>

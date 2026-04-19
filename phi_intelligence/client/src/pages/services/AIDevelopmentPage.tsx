@@ -27,11 +27,11 @@ export default function AIDevelopmentPage() {
 
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center pt-32 pb-20">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Service 05</p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 Custom AI<br />Application<br />
                 <span className="text-phi-blue/60 italic">Development.</span>
               </h1>
@@ -62,7 +62,7 @@ export default function AIDevelopmentPage() {
 
       {/* What We Build */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">What We Build</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Application Types</h2>
@@ -92,12 +92,12 @@ export default function AIDevelopmentPage() {
 
       {/* How We Build */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6 max-w-4xl">
+        <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Our Approach</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">How We Build</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
             {approach.map((item, i) => (
               <motion.div
                 key={item.title}
@@ -118,7 +118,7 @@ export default function AIDevelopmentPage() {
 
       {/* CTA */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Build Your AI<br />
             <span className="text-phi-blue/60 italic">Application.</span>

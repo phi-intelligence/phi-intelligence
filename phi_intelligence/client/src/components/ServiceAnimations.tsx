@@ -122,42 +122,113 @@ export function SaaSDashboardMini() {
   );
 }
 
-/* ─── Phone Mockup ─── */
-export function PhoneMockupMini() {
+/* ─── Phone Mockup — `compact` for homepage bento slot; default = full hero on service page ─── */
+export function PhoneMockupMini({ compact = false }: { compact?: boolean }) {
+  const shell = compact
+    ? `relative border-2 border-white/15 bg-white/[0.02] flex flex-col items-center justify-between overflow-hidden
+          w-[5.5rem] h-[10.35rem] rounded-[1.2rem] p-1.5 gap-0.5
+          sm:w-[7rem] sm:h-[13.2rem] sm:rounded-[1.65rem] sm:p-2.5 sm:gap-1
+          md:w-[8.15rem] md:h-[15.45rem] md:rounded-[1.9rem] md:p-3
+          lg:w-[9rem] lg:h-[17.05rem] lg:rounded-[2.1rem] lg:p-3.5`
+    : `relative w-48 h-[380px] rounded-[2.4rem] border-2 border-white/15 bg-white/[0.02] flex flex-col items-center justify-between p-3.5 overflow-hidden`;
+
+  const outer = compact
+    ? "w-full h-full min-h-0 flex items-end justify-center pb-0.5 sm:pb-1 md:pb-1.5 relative"
+    : "w-full h-full flex items-center justify-center relative";
+
   return (
-    <div className="w-full h-full flex items-center justify-center relative">
-      <div className="relative">
-        <div className="relative w-48 h-[380px] rounded-[2.4rem] border-2 border-white/15 bg-white/[0.02] flex flex-col items-center justify-between p-3.5 overflow-hidden">
-          <div className="w-16 h-4 rounded-full bg-white/10 mt-1" />
-          <div className="flex-grow flex flex-col items-center justify-center gap-2.5 w-full px-2 py-2">
-            {/* Phi logo as app brand */}
-            <div className="flex items-center gap-2 mb-1">
-              <img src="/assets/logophi.png" alt="Phi" className="w-6 h-6 object-contain" style={{ filter: PHI_FILTER }} />
-              <span className="text-[8px] font-bold tracking-widest uppercase text-phi-blue/70">Phi AI</span>
+    <div className={outer}>
+      <div className="relative shrink-0">
+        <div className={shell}>
+          <div
+            className={
+              compact
+                ? "w-10 sm:w-12 md:w-14 h-2.5 sm:h-3 md:h-3.5 rounded-full bg-white/10 mt-0.5 shrink-0"
+                : "w-16 h-4 rounded-full bg-white/10 mt-1"
+            }
+          />
+          <div
+            className={
+              compact
+                ? "flex min-h-0 flex-1 flex-col items-center justify-center gap-1 sm:gap-1.5 md:gap-2 w-full px-1 sm:px-1.5 py-0.5 sm:py-1"
+                : "flex-grow flex flex-col items-center justify-center gap-2.5 w-full px-2 py-2"
+            }
+          >
+            <div className={`flex items-center ${compact ? "gap-1 sm:gap-1.5 mb-0 sm:mb-0.5" : "gap-2 mb-1"}`}>
+              <img
+                src="/assets/logophi.png"
+                alt="Phi"
+                className={
+                  compact
+                    ? "w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 object-contain"
+                    : "w-6 h-6 object-contain"
+                }
+                style={{ filter: PHI_FILTER }}
+              />
+              <span
+                className={
+                  compact
+                    ? "text-[6px] sm:text-[7px] md:text-[8px] font-bold tracking-widest uppercase text-phi-blue/70"
+                    : "text-[8px] font-bold tracking-widest uppercase text-phi-blue/70"
+                }
+              >
+                Phi AI
+              </span>
             </div>
-            <div className="w-full h-7 rounded-lg bg-white/5 border border-phi-blue/20 flex items-center gap-2 px-2">
-              <Mic className="w-3 h-3 text-phi-blue/60" />
+            <div
+              className={
+                compact
+                  ? "w-full h-5 sm:h-6 md:h-7 rounded-md sm:rounded-lg bg-white/5 border border-phi-blue/20 flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2 shrink-0"
+                  : "w-full h-7 rounded-lg bg-white/5 border border-phi-blue/20 flex items-center gap-2 px-2"
+              }
+            >
+              <Mic className={compact ? "w-2.5 h-2.5 sm:w-3 sm:h-3 text-phi-blue/60 shrink-0" : "w-3 h-3 text-phi-blue/60"} />
               <div className="flex-grow h-0.5 rounded-full bg-white/10" />
             </div>
-            <div className="grid grid-cols-2 gap-1.5 w-full">
+            <div
+              className={
+                compact
+                  ? "grid grid-cols-2 gap-1 sm:gap-1.5 w-full min-h-0 flex-1"
+                  : "grid grid-cols-2 gap-1.5 w-full"
+              }
+            >
               {[Camera, Brain, BarChart3, Bell].map((Icon, i) => (
-                <div key={i} className={`aspect-square rounded-lg border flex items-center justify-center ${i === 0 ? 'bg-phi-blue/10 border-phi-blue/20' : 'bg-white/5 border-white/8'}`}>
-                  <Icon className={`w-4 h-4 ${i === 0 ? 'text-phi-blue/60' : 'text-white/25'}`} />
+                <div
+                  key={i}
+                  className={`${compact ? "min-h-0 aspect-square rounded-md sm:rounded-lg" : "aspect-square rounded-lg"} border flex items-center justify-center ${i === 0 ? "bg-phi-blue/10 border-phi-blue/20" : "bg-white/5 border-white/8"}`}
+                >
+                  <Icon
+                    className={`${compact ? "w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4" : "w-4 h-4"} ${i === 0 ? "text-phi-blue/60" : "text-white/25"}`}
+                  />
                 </div>
               ))}
             </div>
-            <div className="w-full space-y-1.5">
+            <div className={compact ? "w-full space-y-1 sm:space-y-1.5 shrink-0" : "w-full space-y-1.5"}>
               {[65, 45, 80].map((w, i) => (
-                <div key={i} className={`h-1.5 rounded-full ${i === 2 ? 'bg-phi-blue/30' : 'bg-white/8'}`} style={{ width: `${w}%` }} />
+                <div
+                  key={i}
+                  className={`${compact ? "h-1 sm:h-1.5" : "h-1.5"} rounded-full ${i === 2 ? "bg-phi-blue/30" : "bg-white/8"}`}
+                  style={{ width: `${w}%` }}
+                />
               ))}
             </div>
           </div>
-          <div className="w-16 h-0.5 rounded-full bg-white/20 mb-1" />
+          <div
+            className={
+              compact
+                ? "w-10 sm:w-14 md:w-16 h-0.5 rounded-full bg-white/20 mb-0.5 shrink-0"
+                : "w-16 h-0.5 rounded-full bg-white/20 mb-1"
+            }
+          />
         </div>
         <motion.div
           animate={{ y: [0, -5, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -left-20 top-8 bg-black border border-phi-blue/20 rounded-lg px-2.5 py-1.5 space-y-0.5 hidden md:block"
+          className={
+            compact
+              ? "absolute -left-16 lg:-left-20 top-4 sm:top-6 md:top-8 bg-black border border-phi-blue/20 rounded-lg px-2 py-1 sm:px-2.5 sm:py-1.5 space-y-0.5 hidden md:block"
+              : "absolute -left-20 top-8 bg-black border border-phi-blue/20 rounded-lg px-2.5 py-1.5 space-y-0.5 hidden md:block"
+          }
         >
           <p className="text-[7px] font-bold tracking-widest uppercase text-white/30">On-Device AI</p>
           <p className="text-[10px] font-bold text-phi-blue/80">&lt;50ms</p>
@@ -165,7 +236,11 @@ export function PhoneMockupMini() {
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          className="absolute -right-18 top-1/3 bg-black border border-white/15 rounded-lg px-2.5 py-1.5 space-y-0.5 hidden md:block"
+          className={
+            compact
+              ? "absolute -right-16 lg:-right-20 top-[28%] bg-black border border-white/15 rounded-lg px-2 py-1 sm:px-2.5 sm:py-1.5 space-y-0.5 hidden md:block"
+              : "absolute -right-20 top-1/3 bg-black border border-white/15 rounded-lg px-2.5 py-1.5 space-y-0.5 hidden md:block"
+          }
         >
           <p className="text-[7px] font-bold tracking-widest uppercase text-white/30">Platforms</p>
           <p className="text-[10px] font-bold text-white/80">iOS + Android</p>
@@ -173,7 +248,11 @@ export function PhoneMockupMini() {
         <motion.div
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute -left-18 bottom-14 bg-black border border-white/15 rounded-lg px-2.5 py-1.5 space-y-0.5 hidden md:block"
+          className={
+            compact
+              ? "absolute -left-14 lg:-left-20 bottom-[12%] sm:bottom-[14%] md:bottom-[16%] bg-black border border-white/15 rounded-lg px-2 py-1 sm:px-2.5 sm:py-1.5 space-y-0.5 hidden md:block"
+              : "absolute -left-20 bottom-14 bg-black border border-white/15 rounded-lg px-2.5 py-1.5 space-y-0.5 hidden md:block"
+          }
         >
           <p className="text-[7px] font-bold tracking-widest uppercase text-white/30">Offline AI</p>
           <p className="text-[10px] font-bold text-white/80">Works Offline</p>

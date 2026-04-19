@@ -199,16 +199,16 @@ export default function ParticleWavesAnimation() {
     // Cleanup function
     return () => {
       console.log('🧹 Cleaning up ParticleWavesAnimation...');
-      
+
+      animationIdRef.current = null;
+
       // Use comprehensive cleanup system
       cleanup();
-      
+
       // Remove DOM element
       if (mountRef.current && renderer.domElement && renderer.domElement.parentNode === mountRef.current) {
         mountRef.current.removeChild(renderer.domElement);
       }
-      
-
     };
   }, []);
 

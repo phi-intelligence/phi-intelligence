@@ -1,7 +1,6 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { ChevronRight, Cloud, Smartphone, Globe, Cpu, Mic, Layers, TrendingUp, Eye, ArrowRight } from "lucide-react";
-import ParticleWavesAnimation from "@/components/three/ParticleWavesAnimation";
 import { Button } from "@/components/ui/button";
 
 const services = [
@@ -77,12 +76,10 @@ export default function ServicesIndex() {
 
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-center pt-32 pb-16 overflow-hidden border-b border-white/5">
-        <div className="absolute inset-0 opacity-30">
-          <ParticleWavesAnimation />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] via-transparent to-black pointer-events-none" />
+        <div className="absolute top-1/4 right-0 w-[min(50vw,28rem)] h-[min(50vw,28rem)] rounded-full bg-phi-blue/[0.06] blur-[100px] pointer-events-none" />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -90,7 +87,7 @@ export default function ServicesIndex() {
             className="max-w-3xl space-y-6"
           >
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Our Services</p>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
               What We<br />
               <span className="text-phi-blue/60 italic">Build.</span>
             </h1>
@@ -103,7 +100,7 @@ export default function ServicesIndex() {
 
       {/* Services List */}
       <section className="section-padding">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="space-y-0">
             {services.map((service, i) => (
               <motion.div
@@ -115,7 +112,7 @@ export default function ServicesIndex() {
                 className="group border-b border-white/5 last:border-none"
               >
                 <Link href={service.href}>
-                  <div className="py-10 md:py-14 cursor-pointer transition-all duration-300 hover:pl-4 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
+                  <div className="py-10 md:py-14 cursor-pointer transition-all duration-300 hover:pl-4 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-6 md:gap-12">
                     {/* Number + Icon */}
                     <div className="flex items-center gap-6 lg:w-36 flex-shrink-0">
                       <span className="text-3xl md:text-4xl font-bold text-white/8 group-hover:text-white/20 transition-colors">
@@ -161,7 +158,7 @@ export default function ServicesIndex() {
 
       {/* CTA */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">
             Not Sure Where<br />
             <span className="text-phi-blue/60 italic">To Start?</span>

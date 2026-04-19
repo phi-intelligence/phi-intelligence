@@ -46,3 +46,16 @@ coverage/
 *.tmp
 *.temp
 *.tar.gz
+
+# Phi-TMS: local bundles not shipped with this repo
+Phi-TMS/plane/
+Phi-TMS/phi-hub/
+
+# Large video/media assets (store on CDN/R2, not in git)
+agilent-videos/
+smidees-video/
+uniqfloor-videos/
+*.avi
+*.mp4
+*.webm
+*.mov

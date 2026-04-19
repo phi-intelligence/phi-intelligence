@@ -84,3 +84,8 @@ phi_intelligence/
 - `VITE_ALLOWED_ORIGINS` — CORS allowed origins
 - `NODE_ENV` — development/production
 - `PORT` — Server port (default 5000)
+- `TMS_API_URL` — Phi-TMS FastAPI base URL for the employee portal proxy (`/api/tms` → e.g. `http://127.0.0.1:6000`). Run TMS on a different port than Express (see `Phi-TMS/RUN.md`), then `python3 -m app.scripts.seed` in `Phi-TMS/backend` for dev users.
+
+### Employee portal (Phi-TMS)
+
+The marketing site links to `/employee/login`. The Express app proxies authenticated requests to Phi-TMS at `TMS_API_URL` (see `server/index.ts`). Only the **Phi-TMS backend** must run for the portal; the standalone `Phi-TMS/frontend` app is optional reference UI.

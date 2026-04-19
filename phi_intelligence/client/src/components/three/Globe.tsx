@@ -160,6 +160,9 @@ const Globe = React.memo(function Globe({ className = '', isMobile = false }: Gl
     }
     
     const lineGeometry = new THREE.BufferGeometry().setFromPoints(lineSegments);
+    // Free temp arrays now that geometry has copied the data
+    lineSegments.length = 0;
+    points.length = 0;
     trackGeometry(lineGeometry);
     trackMaterial(lineMaterial);
     const lines = new THREE.LineSegments(lineGeometry, lineMaterial);

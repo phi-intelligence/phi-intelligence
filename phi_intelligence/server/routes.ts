@@ -666,8 +666,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: result.error });
       }
 
-      // Set new refresh token as HttpOnly cookie
-      res.cookie('admin_refresh_token', result.refreshToken, {
+      // Keep existing refresh token in HttpOnly cookie (access token only is rotated)
+      res.cookie('admin_refresh_token', refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
@@ -1206,7 +1206,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }));
 
         const geminiResponse = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${googleApiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${googleApiKey}`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

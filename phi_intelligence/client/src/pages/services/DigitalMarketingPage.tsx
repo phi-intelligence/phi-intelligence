@@ -82,9 +82,9 @@ export default function DigitalMarketingPage() {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-phi-blue selection:text-white">
       {/* ─── Hero ─── */}
-      <section className="relative min-h-[85vh] flex items-center pt-32 pb-20 overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="relative min-h-[60vh] md:min-h-[85vh] flex items-center pt-32 pb-20 overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
             {/* Left — Copy */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -95,7 +95,7 @@ export default function DigitalMarketingPage() {
               <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">
                 Service 07
               </p>
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
                 AI-Powered
                 <br />
                 Digital
@@ -139,7 +139,7 @@ export default function DigitalMarketingPage() {
 
       {/* ─── Capabilities ─── */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">
               Capabilities
@@ -156,7 +156,7 @@ export default function DigitalMarketingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
+                className="p-4 sm:p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300 group"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-5 group-hover:bg-phi-blue group-hover:text-white transition-all duration-300">
                   <cap.icon className="w-5 h-5" />
@@ -173,8 +173,8 @@ export default function DigitalMarketingPage() {
 
       {/* ─── Automated Social Posting ─── */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
             {/* Left — Copy */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -248,7 +248,7 @@ export default function DigitalMarketingPage() {
 
       {/* ─── AEO vs SEO ─── */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">
               The Shift
@@ -264,7 +264,7 @@ export default function DigitalMarketingPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="relative p-8 md:p-10 rounded-2xl border border-white/8 space-y-5 overflow-hidden"
+              className="relative p-5 sm:p-8 md:p-10 rounded-2xl border border-white/8 space-y-5 overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-white/[0.02] rounded-bl-[4rem]" />
               <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
@@ -305,7 +305,7 @@ export default function DigitalMarketingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="relative p-8 md:p-10 rounded-2xl border border-white/15 bg-white/[0.03] space-y-5 overflow-hidden"
+              className="relative p-5 sm:p-8 md:p-10 rounded-2xl border border-white/15 bg-white/[0.03] space-y-5 overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-white/[0.03] rounded-bl-[4rem]" />
               {/* Subtle glow */}
@@ -354,7 +354,7 @@ export default function DigitalMarketingPage() {
 
       {/* ─── Process ─── */}
       <section className="section-padding border-t border-white/5 bg-white/[0.01]">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">
               Our Approach
@@ -403,7 +403,7 @@ export default function DigitalMarketingPage() {
 
       {/* ─── Cross-Sell ─── */}
       <section className="section-padding border-t border-white/5">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">
               Related Services
@@ -422,7 +422,7 @@ export default function DigitalMarketingPage() {
               className="group"
             >
               <Link href="/services/web-development">
-                <div className="p-8 md:p-10 rounded-2xl border border-white/8 hover:border-white/20 transition-all duration-300 cursor-pointer space-y-4">
+                <div className="p-5 sm:p-8 md:p-10 rounded-2xl border border-white/8 hover:border-white/20 transition-all duration-300 cursor-pointer space-y-4">
                   <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-phi-blue group-hover:text-white transition-all duration-300">
                     <Globe className="w-5 h-5" />
                   </div>
@@ -451,7 +451,7 @@ export default function DigitalMarketingPage() {
               className="group"
             >
               <Link href="/services/saas">
-                <div className="p-8 md:p-10 rounded-2xl border border-white/8 hover:border-white/20 transition-all duration-300 cursor-pointer space-y-4">
+                <div className="p-5 sm:p-8 md:p-10 rounded-2xl border border-white/8 hover:border-white/20 transition-all duration-300 cursor-pointer space-y-4">
                   <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-phi-blue group-hover:text-white transition-all duration-300">
                     <Layers className="w-5 h-5" />
                   </div>
@@ -476,7 +476,7 @@ export default function DigitalMarketingPage() {
 
       {/* ─── CTA ─── */}
       <section className="section-padding border-t border-white/5 text-center">
-        <div className="container mx-auto px-6 max-w-3xl space-y-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl space-y-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -40,11 +40,11 @@ export default function Careers() {
         <div className="container mx-auto max-w-7xl px-6 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 max-w-3xl">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60">Careers</p>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter uppercase leading-[0.9]">
               Join Phi<br />
               <span className="text-phi-blue">Intelligence.</span>
             </h1>
-            <p className="text-lg text-white/40 font-light leading-relaxed max-w-xl">
+            <p className="text-base sm:text-lg text-white/40 font-light leading-relaxed max-w-xl">
               We're building AI solutions that transform how businesses operate. Join us in Nottingham or remotely to shape the future of AI integration.
             </p>
             <div className="pt-2">
@@ -76,7 +76,7 @@ export default function Careers() {
             <div className="grid gap-5">
               {safeJobs.map((job) => (
                 <div key={job.id} className="group p-6 md:p-8 rounded-2xl border border-white/8 hover:border-phi-blue/30 hover:bg-phi-blue/[0.02] transition-all duration-300">
-                  <div className="flex flex-col lg:flex-row justify-between gap-6">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-6">
                     <div className="space-y-3">
                       <div className="flex flex-wrap gap-2">
                         <Badge variant="outline" className="rounded-full px-3 py-1 border-white/10 text-[10px] font-bold tracking-widest uppercase text-white/40">{job.type}</Badge>
