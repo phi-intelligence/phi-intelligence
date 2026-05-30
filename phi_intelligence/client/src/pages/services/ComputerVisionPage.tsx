@@ -150,7 +150,7 @@ export default function ComputerVisionPage() {
                 Discuss Your Project <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
-            <Link href="/technology">
+            <Link href="/#technology">
               <Button variant="outline" className="pill-button border-white/10 hover:border-phi-blue/50 hover:bg-phi-blue/5 hover:text-white px-10 py-4 text-sm">
                 Our Model Stack <ChevronRight className="w-4 h-4 ml-1" />
               </Button>

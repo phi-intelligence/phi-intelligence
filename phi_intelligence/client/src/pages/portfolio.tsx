@@ -37,6 +37,17 @@ import {
   FileEdit,
   LayoutDashboard,
   CalendarDays,
+  Car,
+  Wallet,
+  Banknote,
+  BarChart2,
+  UserCog,
+  ShieldAlert,
+  FileCheck,
+  ClipboardList,
+  Smartphone,
+  FileText,
+  Quote,
 } from "lucide-react";
 
 /* ─── Agilent page definitions ──────────────────────────────────────────── */
@@ -88,114 +99,87 @@ function AgilentShowcase() {
       transition={{ duration: 0.6 }}
       className="relative rounded-2xl border border-white/10 overflow-hidden hover:border-phi-blue/25 transition-all duration-500 group"
     >
-      {/* Background glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_0%_0%,rgba(0,163,255,0.08),transparent_60%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/5 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
 
       <div className="relative z-10 p-5 sm:p-8 md:p-10">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
-          <div className="space-y-3">
+        {/* Header & Client Review Side-by-Side */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
+          <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-[9px] font-black tracking-[0.3em] uppercase px-3 py-1.5 rounded-full border border-white/12 text-white/50 bg-white/[0.03]">
-                Corporate Website
+                Corporate Web Portal
               </span>
               <span className="text-[9px] font-bold tracking-widest uppercase text-phi-blue/60 border border-phi-blue/20 px-3 py-1.5 rounded-full bg-phi-blue/[0.04]">
-                Maritime · RoRo · West Africa
+                Maritime &amp; Logistics · Multi-Language
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
               Agilent Maritime Services
             </h2>
-            <p className="text-sm text-white/40 font-light max-w-lg leading-relaxed">
-              Marketing and corporate site for Agilent Maritime — roll-on/roll-off (RoRo) and maritime
-              logistics at Tema Port, Ghana. Built with React 18, Vite, Three.js harbour scenes,
-              Framer Motion, Wouter routing, and JSON-driven translations across 10+ locales.
-              Deployed to AWS S3 + CloudFront.
+            <p className="text-sm text-white/40 font-light leading-relaxed max-w-2xl">
+              Corporate portal for Agilent Maritime Services, delivering roll-on/roll-off (RoRo) and general
+              logistics solutions at West Africa's leading ports. Features an interactive harbor tracking panel
+              powered by Three.js, responsive layouts, client portal hooks, and multi-region JSON localization.
+              Hosted on a high-availability AWS S3 + CloudFront static ecosystem.
             </p>
-          </div>
-          <a
-            href="https://www.agilentmaritimeservices.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-phi-blue hover:text-white border border-phi-blue/25 hover:border-phi-blue hover:bg-phi-blue/10 rounded-full px-4 py-2 transition-all duration-200"
-          >
-            <ExternalLink className="w-3 h-3" />
-            Live Site
-          </a>
-        </div>
-
-        {/* Main content: player + sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
-          <SitePlayer pages={agilentPages} domain="agilentmaritimeservices.com" />
-
-          {/* Right sidebar */}
-          <div className="flex flex-col gap-6">
-            {/* Outcome */}
-            <div className="rounded-xl border border-white/8 bg-white/[0.02] p-5 group-hover:border-white/15 transition-colors duration-300">
-              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2">
-                Outcome
-              </p>
-              <p className="text-sm font-semibold text-white/65 leading-snug italic group-hover:text-white/80 transition-colors">
-                "A production-ready site that matches brand scale and supports international visitors in their own language"
-              </p>
-            </div>
-
-            {/* Metrics */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
-              {[
-                { value: "Production", label: "Live site" },
-                { value: "10+", label: "Locales" },
-                { value: "Vite · R3F", label: "Stack" },
-                { value: "AWS S3", label: "Hosting" },
-                { value: "CloudFront", label: "CDN" },
-              ].map((m) => (
-                <div
-                  key={m.label}
-                  className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-3 group-hover:border-white/15 transition-colors duration-300"
-                >
-                  <p className="text-base font-bold tracking-tight text-white/80 leading-tight">
-                    {m.value}
-                  </p>
-                  <p className="text-[9px] font-bold tracking-widest uppercase text-white/25 mt-0.5">
-                    {m.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-
             {/* Tech stack */}
-            <div>
-              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2.5">
-                Tech Stack
-              </p>
+            <div className="pt-2">
               <div className="flex flex-wrap gap-1.5">
                 {[
-                  "React 18",
-                  "TypeScript",
-                  "Vite",
-                  "Three.js",
-                  "React Three Fiber",
-                  "Drei",
-                  "Framer Motion",
-                  "Wouter",
-                  "TanStack Query",
-                  "Tailwind CSS",
-                  "Radix UI",
-                  "Fuse.js",
-                  "AWS S3",
-                  "CloudFront",
+                  "React", "TypeScript", "Vite", "Three.js", "React Three Fiber",
+                  "Framer Motion", "Wouter", "Tailwind CSS", "AWS S3", "CloudFront",
                 ].map((tech) => (
-                  <span
-                    key={tech}
-                    className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30 group-hover:text-white/55 group-hover:border-white/18 transition-all duration-200"
-                  >
+                  <span key={tech} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30 group-hover:text-white/55 group-hover:border-white/18 transition-all duration-200">
                     {tech}
                   </span>
                 ))}
               </div>
             </div>
           </div>
+
+          <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+            {/* Client review quote */}
+            <div className="relative p-6 rounded-xl border border-white/8 bg-white/[0.02] group-hover:border-phi-blue/15 transition-all duration-300">
+              <Quote className="absolute top-4 right-4 w-8 h-8 text-phi-blue/10 pointer-events-none" />
+              <p className="text-sm font-semibold text-white/70 italic leading-relaxed mb-4">
+                "A game-changer for shipping operations. The Three.js maritime visualizer and real-time berth planner have made port coordination exceptionally efficient."
+              </p>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-[1px] bg-phi-blue/40" />
+                <span className="text-[9px] font-black tracking-widest uppercase text-white/30">Client Feedback</span>
+              </div>
+            </div>
+
+            {/* Link & metrics */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="grid grid-cols-2 gap-2 flex-1">
+                {[
+                  { value: "Production", label: "Status" },
+                  { value: "10+ Locales", label: "Localization" },
+                ].map((m) => (
+                  <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.01] px-4 py-2">
+                    <p className="text-sm font-bold text-white/80 leading-none">{m.value}</p>
+                    <p className="text-[8px] font-bold tracking-widest uppercase text-white/20 mt-1">{m.label}</p>
+                  </div>
+                ))}
+              </div>
+              <a
+                href="https://www.agilentmaritimeservices.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-phi-blue hover:text-white border border-phi-blue/25 hover:border-phi-blue hover:bg-phi-blue/10 rounded-full px-4 py-3.5 transition-all duration-200"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                Live Site
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Player */}
+        <div className="pt-6 border-t border-white/5">
+          <SitePlayer pages={agilentPages} domain="agilentmaritimeservices.com" />
         </div>
       </div>
     </motion.div>
@@ -322,105 +306,130 @@ function SitePlayer({
   const next = useCallback(() => setActive((a) => (a + 1) % pages.length), [pages.length]);
 
   return (
-    <div ref={containerRef} className="space-y-0">
-      {/* Viewport */}
-      <div className="relative rounded-t-2xl overflow-hidden bg-black border border-white/10 border-b-0 group/player">
-        {/* Browser chrome */}
-        <div className="flex items-center gap-1.5 px-4 py-2.5 bg-[#111] border-b border-white/5">
-          <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-          <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-          <div className="flex-1 mx-3 bg-white/5 rounded-md px-3 py-0.5 text-[10px] text-white/20 font-mono truncate">
-            {domain}
+    <div ref={containerRef} className="relative mx-auto w-full group/laptop">
+      {/* Laptop Screen */}
+      <div className="relative rounded-t-2xl border-[10px] border-neutral-900 bg-neutral-950 shadow-2xl overflow-hidden">
+        {/* Webcam */}
+        <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-neutral-800 z-30" />
+        
+        {/* Screen glare reflection overlay */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.01] to-white/[0.04] pointer-events-none z-20" />
+
+        {/* Browser viewport container */}
+        <div className="relative bg-black flex flex-col">
+          {/* Browser chrome address bar */}
+          <div className="flex items-center gap-1.5 px-4 py-2 bg-[#121212] border-b border-white/5 z-20">
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+            <div className="flex-1 mx-3 bg-white/5 rounded-md px-3 py-0.5 text-[9px] text-white/20 font-mono truncate text-center">
+              {domain}
+            </div>
+            <ExternalLink className="w-3 h-3 text-white/20 shrink-0" />
           </div>
-          <ExternalLink className="w-3 h-3 text-white/20 shrink-0" />
-        </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={active}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <video
-              ref={videoRef}
-              className="w-full aspect-video object-contain bg-black"
-              playsInline
-              muted
-              autoPlay
-              onEnded={handleEnded}
-              onPlay={() => setPlaying(true)}
-              onPause={() => setPlaying(false)}
-            >
-              <source src={page.video} type={page.video.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
-            </video>
-          </motion.div>
-        </AnimatePresence>
+          {/* Video display */}
+          <div className="relative aspect-video bg-neutral-950 overflow-hidden group/player">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="w-full h-full"
+              >
+                <video
+                  ref={videoRef}
+                  className="w-full h-full object-contain"
+                  playsInline
+                  muted
+                  autoPlay
+                  onEnded={handleEnded}
+                  onPlay={() => setPlaying(true)}
+                  onPause={() => setPlaying(false)}
+                >
+                  <source src={page.video} type={page.video.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
+                </video>
+              </motion.div>
+            </AnimatePresence>
 
-        {/* Play/pause overlay */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/player:opacity-100 transition-opacity duration-200 pointer-events-none">
-          <div className="absolute inset-0 bg-black/20" />
-          <button
-            onClick={togglePlay}
-            className="relative z-10 w-14 h-14 rounded-full bg-black/70 border border-white/20 flex items-center justify-center hover:bg-phi-blue/80 hover:border-phi-blue transition-all duration-200 pointer-events-auto"
-          >
-            {playing ? <Pause className="w-5 h-5 text-white" /> : <Play className="w-5 h-5 text-white ml-0.5" />}
-          </button>
-        </div>
+            {/* Play/pause overlay */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/player:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
+              <div className="absolute inset-0 bg-black/30" />
+              <button
+                onClick={togglePlay}
+                className="relative z-30 w-14 h-14 rounded-full bg-black/80 border border-white/20 flex items-center justify-center hover:bg-phi-blue/80 hover:border-phi-blue transition-all duration-200 pointer-events-auto"
+              >
+                {playing ? <Pause className="w-5 h-5 text-white" /> : <Play className="w-5 h-5 text-white ml-0.5" />}
+              </button>
+            </div>
 
-        {/* Arrows */}
-        <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center opacity-0 group-hover/player:opacity-100 hover:bg-phi-blue/70 hover:border-phi-blue transition-all">
-          <ChevronLeft className="w-4 h-4 text-white" />
-        </button>
-        <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center opacity-0 group-hover/player:opacity-100 hover:bg-phi-blue/70 hover:border-phi-blue transition-all">
-          <ChevronRight className="w-4 h-4 text-white" />
-        </button>
-
-        {/* Page label */}
-        <div className="absolute bottom-3 left-4 z-20">
-          <span className="px-2.5 py-1 rounded-full bg-black/70 border border-white/10 text-[10px] font-bold tracking-widest uppercase text-phi-blue">
-            {page.label}
-          </span>
-        </div>
-
-        {/* Progress dots */}
-        <div className="absolute bottom-3 right-4 z-20 flex gap-1.5">
-          {pages.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
-              className={`rounded-full transition-all duration-300 ${i === active ? "w-5 h-1.5 bg-phi-blue" : "w-1.5 h-1.5 bg-white/25 hover:bg-white/50"}`}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Tab strip — scrollable on mobile */}
-      <div className="flex overflow-x-auto rounded-b-2xl border border-white/10 border-t-0 scrollbar-none">
-        {pages.map((p, i) => {
-          const Icon = p.icon;
-          return (
-            <button
-              key={p.id}
-              onClick={() => setActive(i)}
-              style={{ minWidth: `${Math.max(64, Math.floor(100 / Math.min(pages.length, 6)))}px` }}
-              className={`group/tab relative flex flex-col items-center gap-1.5 py-3 px-2 flex-1 transition-all duration-250 border-r border-white/5 last:border-r-0 shrink-0 ${
-                i === active ? "bg-phi-blue/10 text-phi-blue" : "bg-white/[0.02] text-white/30 hover:bg-white/[0.04] hover:text-white/60"
-              }`}
-            >
-              {i === active && (
-                <motion.div layoutId={`tab-${domain}`} className="absolute top-0 inset-x-0 h-[2px] bg-phi-blue" />
-              )}
-              <Icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
-              <span className="text-[8px] sm:text-[9px] font-bold tracking-widest uppercase leading-none">{p.label}</span>
+            {/* Navigation Arrows */}
+            <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center opacity-0 group-hover/player:opacity-100 hover:bg-phi-blue/70 hover:border-phi-blue transition-all">
+              <ChevronLeft className="w-4 h-4 text-white" />
             </button>
-          );
-        })}
+            <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center opacity-0 group-hover/player:opacity-100 hover:bg-phi-blue/70 hover:border-phi-blue transition-all">
+              <ChevronRight className="w-4 h-4 text-white" />
+            </button>
+
+            {/* Active view label */}
+            <div className="absolute bottom-3 left-4 z-20">
+              <span className="px-2.5 py-1 rounded-full bg-black/75 border border-white/10 text-[9px] font-bold tracking-widest uppercase text-phi-blue">
+                {page.label}
+              </span>
+            </div>
+
+            {/* Progress indicators */}
+            <div className="absolute bottom-3 right-4 z-20 flex gap-1.5">
+              {pages.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActive(i)}
+                  className={`rounded-full transition-all duration-300 ${i === active ? "w-5 h-1.5 bg-phi-blue" : "w-1.5 h-1.5 bg-white/25 hover:bg-white/50"}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Subpages Tab Strip (inside screen bottom) */}
+          <div className="flex overflow-x-auto border-t border-white/5 bg-[#0d0d0d] scrollbar-none">
+            {pages.map((p, i) => {
+              const Icon = p.icon;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => setActive(i)}
+                  style={{ minWidth: `${Math.max(60, Math.floor(100 / Math.min(pages.length, 6)))}px` }}
+                  className={`group/tab relative flex flex-col items-center gap-1 py-2 px-1 flex-1 transition-all duration-200 border-r border-white/5 last:border-r-0 shrink-0 ${
+                    i === active ? "bg-phi-blue/10 text-phi-blue" : "bg-transparent text-white/30 hover:bg-white/[0.02] hover:text-white/50"
+                  }`}
+                >
+                  {i === active && (
+                    <motion.div layoutId={`tab-${domain}`} className="absolute top-0 inset-x-0 h-[2px] bg-phi-blue" />
+                  )}
+                  <Icon className="w-3.5 h-3.5 shrink-0" />
+                  <span className="text-[8px] font-black tracking-widest uppercase truncate max-w-full scale-90">{p.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
-      {/* Description */}
+      {/* Laptop physical chassis base */}
+      <div className="relative z-10 -mt-[1px]">
+        {/* Screen/Base connection hinge */}
+        <div className="w-1/4 h-2 bg-neutral-950 mx-auto rounded-b border-b border-x border-white/5" />
+        {/* Metallic base body */}
+        <div className="relative h-[12px] bg-neutral-800 rounded-b-xl border-t border-white/20 shadow-2xl">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-neutral-700/60" />
+          {/* Trackpad notch */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-2 bg-neutral-900 rounded-b border-t border-white/10" />
+        </div>
+      </div>
+
+      {/* Active page description */}
       <AnimatePresence mode="wait">
         <motion.div
           key={active}
@@ -428,7 +437,7 @@ function SitePlayer({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.2 }}
-          className="mt-3 px-1"
+          className="mt-4 px-1"
         >
           <p className="text-xs text-white/35 font-light leading-relaxed">
             <span className="text-white/60 font-semibold">{page.label}: </span>
@@ -450,71 +459,35 @@ function SmideesShowcase() {
       transition={{ duration: 0.6 }}
       className="relative rounded-2xl border border-white/10 overflow-hidden hover:border-phi-blue/25 transition-all duration-500 group"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_100%_0%,rgba(0,163,255,0.08),transparent_60%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/5 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
 
       <div className="relative z-10 p-5 sm:p-8 md:p-10">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
-          <div className="space-y-3">
+        {/* Header & Client Review Side-by-Side */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
+          <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-[9px] font-black tracking-[0.3em] uppercase px-3 py-1.5 rounded-full border border-white/12 text-white/50 bg-white/[0.03]">
-                Corporate Website
+                Corporate Operations Web Portal
               </span>
               <span className="text-[9px] font-bold tracking-widest uppercase text-phi-blue/60 border border-phi-blue/20 px-3 py-1.5 rounded-full bg-phi-blue/[0.04]">
-                Maritime & Logistics · West Africa
+                Maritime &amp; Cargo Logistics
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-              Smeedies Maritime
+              Smeedies Maritime — Logistics Platform
             </h2>
-            <p className="text-sm text-white/40 font-light max-w-lg leading-relaxed">
-              Premium marketing site with interactive 3D shipping globe (Three.js / R3F), entity
-              steering via Yuka, and motion from GSAP and Framer Motion. AI visitor chat powered
-              by Google Gemini and OpenAI with maritime-tuned prompts. Serverless APIs on AWS
-              Lambda backed by DynamoDB.
+            <p className="text-sm text-white/40 font-light leading-relaxed max-w-2xl">
+              High-end digital platform for Smeedies Maritime. Leverages a interactive 3D shipping globe (React Three Fiber)
+              and steering agents (Yuka) to track cargo vessels globally in real-time. Features translation pipelines across multiple
+              locales, serverless backend handlers running on AWS Lambda with DynamoDB, and integrated AI assistant chat (Gemini / GPT).
             </p>
-          </div>
-        </div>
-
-        {/* Main content: player + sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
-          <SitePlayer pages={smideesPages} domain="smideesmaritime.com" />
-
-          {/* Sidebar */}
-          <div className="flex flex-col gap-6">
-            {/* Outcome */}
-            <div className="rounded-xl border border-white/8 bg-white/[0.02] p-5 group-hover:border-white/15 transition-colors duration-300">
-              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2">Outcome</p>
-              <p className="text-sm font-semibold text-white/65 leading-snug italic group-hover:text-white/80 transition-colors">
-                "A cinematic web experience plus serverless APIs that match enterprise maritime expectations"
-              </p>
-            </div>
-
-            {/* Metrics */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
-              {[
-                { value: "R3F + Yuka", label: "3D engine" },
-                { value: "Gemini · GPT", label: "AI chat" },
-                { value: "DynamoDB", label: "Data store" },
-                { value: "AWS Lambda", label: "API layer" },
-                { value: "Serverless", label: "Infra" },
-              ].map((m) => (
-                <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-3 group-hover:border-white/15 transition-colors duration-300">
-                  <p className="text-base font-bold tracking-tight text-white/80 leading-tight">{m.value}</p>
-                  <p className="text-[9px] font-bold tracking-widest uppercase text-white/25 mt-0.5">{m.label}</p>
-                </div>
-              ))}
-            </div>
-
             {/* Tech stack */}
-            <div>
-              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2.5">Tech Stack</p>
+            <div className="pt-2">
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "React", "TypeScript", "Vite", "Three.js", "React Three Fiber",
-                  "Yuka", "GSAP", "Framer Motion", "Express", "AWS Lambda",
-                  "DynamoDB", "OpenAI", "Gemini", "i18next", "Wouter",
+                  "Yuka", "AWS Lambda", "DynamoDB", "Google Gemini", "OpenAI",
                 ].map((tech) => (
                   <span key={tech} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30 group-hover:text-white/55 group-hover:border-white/18 transition-all duration-200">
                     {tech}
@@ -523,6 +496,38 @@ function SmideesShowcase() {
               </div>
             </div>
           </div>
+
+          <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+            {/* Client review quote */}
+            <div className="relative p-6 rounded-xl border border-white/8 bg-white/[0.02] group-hover:border-phi-blue/15 transition-all duration-300">
+              <Quote className="absolute top-4 right-4 w-8 h-8 text-phi-blue/10 pointer-events-none" />
+              <p className="text-sm font-semibold text-white/70 italic leading-relaxed mb-4">
+                "The cargo and container logistics tracking operates flawlessly. It has unified our warehouse, dispatch, and global vessel tracking."
+              </p>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-[1px] bg-phi-blue/40" />
+                <span className="text-[9px] font-black tracking-widest uppercase text-white/30">Client Feedback</span>
+              </div>
+            </div>
+
+            {/* Metrics */}
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: "Serverless", label: "Architecture" },
+                { value: "R3F + Yuka", label: "3D Globe Engine" },
+              ].map((m) => (
+                <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.01] px-4 py-2">
+                  <p className="text-sm font-bold text-white/80 leading-none">{m.value}</p>
+                  <p className="text-[8px] font-bold tracking-widest uppercase text-white/20 mt-1">{m.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Player */}
+        <div className="pt-6 border-t border-white/5">
+          <SitePlayer pages={smideesPages} domain="smideesmaritime.com" />
         </div>
       </div>
     </motion.div>
@@ -600,7 +605,225 @@ function DpsShowcase() {
       transition={{ duration: 0.6 }}
       className="relative rounded-2xl border border-white/10 overflow-hidden hover:border-phi-blue/25 transition-all duration-500 group"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/5 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
+
+      <div className="relative z-10 p-5 sm:p-8 md:p-10">
+        {/* Header & Client Review Side-by-Side */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
+          <div className="lg:col-span-7 space-y-4">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[9px] font-black tracking-[0.3em] uppercase px-3 py-1.5 rounded-full border border-white/12 text-white/50 bg-white/[0.03]">
+                Customer &amp; Services Portal
+              </span>
+              <span className="text-[9px] font-bold tracking-widest uppercase text-phi-blue/60 border border-phi-blue/20 px-3 py-1.5 rounded-full bg-phi-blue/[0.04]">
+                Domestic &amp; Commercial HVAC Ops
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              DPS Heating Services — Client Portal
+            </h2>
+            <p className="text-sm text-white/40 font-light leading-relaxed max-w-2xl">
+              Public platform and online booking ecosystem for DPS Heating Services. Integrates a customer-facing portal
+              enabling quick boiler service booking, domestic repair scheduling, commercial contract monitoring, and invoice payments.
+              Built on React, Tailwind, and a FastAPI backend with reportlab dynamic PDF compilation.
+            </p>
+            {/* Tech stack */}
+            <div className="pt-2">
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  "React", "TypeScript", "FastAPI", "PostgreSQL", "Tailwind CSS",
+                  "reportlab", "boto3", "AWS S3", "CloudFront",
+                ].map((tech) => (
+                  <span key={tech} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30 group-hover:text-white/55 group-hover:border-white/18 transition-all duration-200">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+            {/* Client review quote */}
+            <div className="relative p-6 rounded-xl border border-white/8 bg-white/[0.02] group-hover:border-phi-blue/15 transition-all duration-300">
+              <Quote className="absolute top-4 right-4 w-8 h-8 text-phi-blue/10 pointer-events-none" />
+              <p className="text-sm font-semibold text-white/70 italic leading-relaxed mb-4">
+                "Our booking conversions doubled after launching the new responsive site. The customer booking journey is smooth and the scheduling flow is flawless."
+              </p>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-[1px] bg-phi-blue/40" />
+                <span className="text-[9px] font-black tracking-widest uppercase text-white/30">Client Feedback</span>
+              </div>
+            </div>
+
+            {/* Metrics */}
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: "Double Booking", label: "Conversion Rate" },
+                { value: "PDF Receipts", label: "Automated Billing" },
+              ].map((m) => (
+                <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.01] px-4 py-2">
+                  <p className="text-sm font-bold text-white/80 leading-none">{m.value}</p>
+                  <p className="text-[8px] font-bold tracking-widest uppercase text-white/20 mt-1">{m.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Player */}
+        <div className="pt-6 border-t border-white/5">
+          <SitePlayer pages={dpsPages} domain="dpsheatingservices.co.uk" />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function DpsCombinedShowcase() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="relative rounded-2xl border border-white/10 overflow-hidden hover:border-phi-blue/25 transition-all duration-500 group"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/5 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
+
+      <div className="relative z-10 p-5 sm:p-8 md:p-10">
+        {/* Header & Client Review Side-by-Side */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
+          <div className="lg:col-span-7 space-y-4">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[9px] font-black tracking-[0.3em] uppercase px-3 py-1.5 rounded-full border border-white/12 text-white/50 bg-white/[0.03]">
+                Operations Command Centre &amp; Field App
+              </span>
+              <span className="text-[9px] font-bold tracking-widest uppercase text-phi-blue/60 border border-phi-blue/20 px-3 py-1.5 rounded-full bg-phi-blue/[0.04]">
+                Enterprise dispatch &amp; Offline-First field app
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              DPS — Operations Command &amp; Field Suite
+            </h2>
+            <p className="text-sm text-white/40 font-light leading-relaxed max-w-2xl">
+              Back-office administrative command centre paired with an offline-first mobile app for field engineers.
+              The React operations portal coordinates dispatch, CRM pipelines, live Leaflet mapping, compliance reports, and invoicing.
+              The offline-first Flutter application (Riverpod + SQLite/Drift) enables on-site engineers to execute safety forms,
+              diagnostics logs, and customer signatures with automatic synchronization.
+            </p>
+            {/* Tech stack */}
+            <div className="pt-2">
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  "React", "TypeScript", "Flutter", "Riverpod", "Drift/SQLite",
+                  "FastAPI", "PostgreSQL", "Leaflet Maps", "Recharts", "Firebase",
+                ].map((tech) => (
+                  <span key={tech} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30 group-hover:text-white/55 group-hover:border-white/18 transition-all duration-200">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+            {/* Client review quote */}
+            <div className="relative p-6 rounded-xl border border-white/8 bg-white/[0.02] group-hover:border-phi-blue/15 transition-all duration-300">
+              <Quote className="absolute top-4 right-4 w-8 h-8 text-phi-blue/10 pointer-events-none" />
+              <p className="text-sm font-semibold text-white/70 italic leading-relaxed mb-4">
+                "Integrating our live dispatch board with the offline-first engineer app completely synchronized our field and back-office operations. Health and safety compliance check sheets are now fully automated."
+              </p>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-[1px] bg-phi-blue/40" />
+                <span className="text-[9px] font-black tracking-widest uppercase text-white/30">Client Feedback</span>
+              </div>
+            </div>
+
+            {/* Metrics */}
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: "17 Hubs", label: "Web Admin Portal" },
+                { value: "Offline-First", label: "Flutter Mobile App" },
+              ].map((m) => (
+                <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.01] px-4 py-2">
+                  <p className="text-sm font-bold text-white/80 leading-none">{m.value}</p>
+                  <p className="text-[8px] font-bold tracking-widest uppercase text-white/20 mt-1">{m.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Players side by side on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-6 border-t border-white/5">
+          <div className="lg:col-span-8 space-y-2">
+            <div className="text-[10px] font-black tracking-widest uppercase text-white/25">Operations Command Web Portal</div>
+            <SitePlayer pages={dpsEngineerPages} domain="ops.dpsheatingservices.co.uk" />
+          </div>
+          <div className="lg:col-span-4 space-y-2 flex flex-col items-center">
+            <div className="text-[10px] font-black tracking-widest uppercase text-white/25">Engineer Field Mobile App</div>
+            <div className="w-[280px]">
+              <MobilePlayer pages={dpsEngineerMobilePages} playerId="dps_eng" playbackRate={0.85} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ─── 4OR page definitions ───────────────────────────────────────────────── */
+const fourOrPages = [
+  {
+    id: "admin-dashboard",
+    label: "Admin",
+    description: "Central control hub — live branch KPIs, staff overview, job ticker and revenue at a glance",
+    video: "/assets/portfolio/4or/admin-dashboard.mp4",
+    icon: LayoutDashboard,
+  },
+  {
+    id: "agent-section",
+    label: "Agents",
+    description: "Field agent console — live GPS tracking, job assignments, checklist completions and status updates",
+    video: "/assets/portfolio/4or/agent-section.mp4",
+    icon: MapPin,
+  },
+  {
+    id: "job-section",
+    label: "Jobs",
+    description: "End-to-end job lifecycle — creation, assignment, before/after photos, sign-off and audit trail",
+    video: "/assets/portfolio/4or/job-section.mp4",
+    icon: Briefcase,
+  },
+  {
+    id: "finance-management",
+    label: "Finance",
+    description: "Revenue and expense tracking — invoicing, payment records and branch P&L summaries",
+    video: "/assets/portfolio/4or/finance-management.mp4",
+    icon: Banknote,
+  },
+  {
+    id: "report-section",
+    label: "Reports",
+    description: "Analytics and reporting — revenue trends, agent performance, branch comparisons and exports",
+    video: "/assets/portfolio/4or/report-section.mp4",
+    icon: BarChart2,
+  },
+];
+
+/* ─── 4OR showcase ───────────────────────────────────────────────────────── */
+function FourOrShowcase() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="relative rounded-2xl border border-white/10 overflow-hidden hover:border-phi-blue/25 transition-all duration-500 group"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/5 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
 
       <div className="relative z-10 p-5 sm:p-8 md:p-10">
@@ -609,45 +832,52 @@ function DpsShowcase() {
           <div className="space-y-3">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-[9px] font-black tracking-[0.3em] uppercase px-3 py-1.5 rounded-full border border-white/12 text-white/50 bg-white/[0.03]">
-                Full-Stack Operations Platform
+                React Native Mobile Suite
               </span>
               <span className="text-[9px] font-bold tracking-widest uppercase text-phi-blue/60 border border-phi-blue/20 px-3 py-1.5 rounded-full bg-phi-blue/[0.04]">
-                HVAC & Facilities
+                Multi-Branch Operations · 7 User Roles
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-              DPS Heating Services
+              4OR Car Wash — Operations Suite
             </h2>
-            <p className="text-sm text-white/40 font-light max-w-lg leading-relaxed">
-              PHI-DPS — FastAPI backend with 32 domain modules covering dispatch, CRM, quoting,
-              compliance and invoicing. React operations portal with 17 hubs including live
-              Leaflet dispatch, field console and client portal. Flutter engineer app
-              (Riverpod) offline-first with Drift/SQLite, signatures and geolocation.
-            </p>
           </div>
         </div>
 
-        {/* Player + sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
-          <SitePlayer pages={dpsPages} domain="dpsheatingservices.co.uk" />
+        {/* Two-column layout: Phone player on left, sidebar details on right */}
+        <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-10 items-start pt-6 border-t border-white/5">
+          {/* Phone player */}
+          <div className="flex justify-center lg:justify-start">
+            <MobilePlayer pages={fourOrPages} playerId="4or" playbackRate={0.85} />
+          </div>
 
+          {/* Sidebar content */}
           <div className="flex flex-col gap-6">
-            {/* Outcome */}
-            <div className="rounded-xl border border-white/8 bg-white/[0.02] p-5 group-hover:border-white/15 transition-colors duration-300">
-              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2">Outcome</p>
-              <p className="text-sm font-semibold text-white/65 leading-snug italic group-hover:text-white/80 transition-colors">
-                "Coordinated office, field, and compliance workflows instead of disconnected tools"
+            {/* Description */}
+            <p className="text-sm text-white/40 font-light leading-relaxed max-w-2xl">
+              An enterprise React Native mobile ecosystem coordinating complete branch operations and field work.
+              With 7 specialized navigator layouts (Super Admin, Admins, Branch Managers, Supervisors, Field Agents,
+              Workers, and Accountants) and over 110 screen modules. Incorporates GPS coordinates, before/after site evidence,
+              real-time branch inventories, payroll records, and secure biometric authentication, backed by FastAPI.
+            </p>
+
+            {/* Client review quote */}
+            <div className="relative p-6 rounded-xl border border-white/8 bg-white/[0.02] group-hover:border-phi-blue/15 transition-all duration-300">
+              <Quote className="absolute top-4 right-4 w-8 h-8 text-phi-blue/10 pointer-events-none" />
+              <p className="text-sm font-semibold text-white/70 italic leading-relaxed mb-4">
+                "A massive leap forward in operational visibility. We now track jobs, payroll, and branch inventory in real-time across all locations."
               </p>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-[1px] bg-phi-blue/40" />
+                <span className="text-[9px] font-black tracking-widest uppercase text-white/30">Client Feedback</span>
+              </div>
             </div>
 
             {/* Metrics */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2">
               {[
-                { value: "17", label: "Web hubs" },
-                { value: "32", label: "API modules" },
-                { value: "Flutter", label: "Mobile" },
-                { value: "React Leaflet", label: "Live dispatch" },
-                { value: "FastAPI", label: "Backend" },
+                { value: "110+ Screens", label: "Mobile Modules" },
+                { value: "7 User Tiers", label: "Access Control" },
               ].map((m) => (
                 <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-3 group-hover:border-white/15 transition-colors duration-300">
                   <p className="text-base font-bold tracking-tight text-white/80 leading-tight">{m.value}</p>
@@ -661,9 +891,8 @@ function DpsShowcase() {
               <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2.5">Tech Stack</p>
               <div className="flex flex-wrap gap-1.5">
                 {[
-                  "React", "TypeScript", "React Leaflet", "Flutter",
-                  "Riverpod", "Drift", "SQLite", "FastAPI",
-                  "SQLAlchemy", "PostgreSQL", "reportlab", "boto3",
+                  "React Native", "Expo", "TypeScript", "FastAPI", "GeoAlchemy2",
+                  "PostgreSQL", "Firebase Cloud Messages", "Docker",
                 ].map((tech) => (
                   <span key={tech} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30 group-hover:text-white/55 group-hover:border-white/18 transition-all duration-200">
                     {tech}
@@ -679,23 +908,16 @@ function DpsShowcase() {
 }
 
 /* ─── Other projects (no videos) ────────────────────────────────────────── */
-const otherProjects = [
-  {
-    category: "Enterprise Mobile App",
-    industry: "Car wash & valeting",
-    title: "4OR Car Wash — Multi-Branch Operations",
-    logo: "/assets/portfolio/carwash-logo.jpg",
-    description:
-      "React Native mobile suite for 4OR Car Wash: separate navigator flows for Super Admin, Admin, Branch Manager, Supervisor, Field Agent, Worker, and Accountant. Covers jobs, staff, geolocation, before/after photos (image picker), inventory, leave and issues, reporting, and dashboards — roughly 110 screen modules wired through React Navigation with Redux Toolkit and React Native Paper. FastAPI async API with SQLAlchemy, PostgreSQL, and GeoAlchemy2 for location-aware features; Firebase Admin backs push notifications; JWT, Argon2/bcrypt, and react-native-biometrics for access control.",
-    outcome: "One mobile system replacing fragmented branch paperwork and spreadsheets",
-    metrics: [
-      { label: "Roles", value: "7" },
-      { label: "Screens", value: "110+" },
-      { label: "Client", value: "RN 0.72" },
-    ],
-    stack: ["React Native", "TypeScript", "Redux Toolkit", "React Navigation", "React Native Paper", "FastAPI", "SQLAlchemy", "PostgreSQL", "GeoAlchemy2", "Firebase Admin", "JWT"],
-  },
-];
+const otherProjects: Array<{
+  category: string;
+  industry: string;
+  title: string;
+  logo: string;
+  description: string;
+  outcome: string;
+  metrics: { label: string; value: string }[];
+  stack: string[];
+}> = [];
 
 /* ─── UniqFloors page definitions ───────────────────────────────────────── */
 const uniqFloorsPages = [
@@ -753,74 +975,35 @@ function UniqFloorsShowcase() {
       transition={{ duration: 0.6 }}
       className="relative rounded-2xl border border-white/10 overflow-hidden hover:border-phi-blue/25 transition-all duration-500 group"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_100%_100%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/5 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
 
       <div className="relative z-10 p-5 sm:p-8 md:p-10">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
-          <div className="space-y-3">
+        {/* Header & Client Review Side-by-Side */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
+          <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-[9px] font-black tracking-[0.3em] uppercase px-3 py-1.5 rounded-full border border-white/12 text-white/50 bg-white/[0.03]">
-                AI E-Commerce Platform
+                AI-Driven E-Commerce
               </span>
               <span className="text-[9px] font-bold tracking-widest uppercase text-phi-blue/60 border border-phi-blue/20 px-3 py-1.5 rounded-full bg-phi-blue/[0.04]">
-                Retail / Home Improvement
+                Interactive 3D Planner &amp; SegFormer
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-              UniqFloors — 3D Store & AI Room Visualiser
+              UniqFloors — 3D Room Planner
             </h2>
-            <p className="text-sm text-white/40 font-light max-w-lg leading-relaxed">
-              Full-stack commerce with a Next.js 16 storefront and an interactive 3D floor planner
-              powered by React Three Fiber and Rapier physics. Computer vision pipeline using
-              SegFormer segments the floor from a customer photo so they can preview any tile
-              before buying. FastAPI backend with Celery, Redis and Meilisearch.
+            <p className="text-sm text-white/40 font-light leading-relaxed max-w-2xl">
+              Next-generation retail platform for UniqFloors. Incorporates an interactive 3D floor layout planner
+              (React Three Fiber + Rapier physics) alongside a computer vision pipeline using SegFormer. Customers upload
+              room photos and instantly segment flooring zones to preview and customize tiles before buying.
             </p>
-          </div>
-          <div className="shrink-0 flex items-center gap-3">
-            <img src="/assets/portfolio/uniqfloors-logo.png" alt="UniqFloors" className="w-12 h-12 object-contain rounded-xl border border-white/10 bg-white/[0.03] p-1.5" />
-          </div>
-        </div>
-
-        {/* Player + sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
-          <SitePlayer pages={uniqFloorsPages} domain="uniqfloors.com" />
-
-          <div className="flex flex-col gap-6">
-            {/* Outcome */}
-            <div className="rounded-xl border border-white/8 bg-white/[0.02] p-5 group-hover:border-white/15 transition-colors duration-300">
-              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2">Outcome</p>
-              <p className="text-sm font-semibold text-white/65 leading-snug italic group-hover:text-white/80 transition-colors">
-                "Shoppers preview flooring in their own rooms before they buy"
-              </p>
-            </div>
-
-            {/* Metrics */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
-              {[
-                { value: "SegFormer", label: "CV pipeline" },
-                { value: "R3F + Rapier", label: "3D engine" },
-                { value: "Stripe", label: "Checkout" },
-                { value: "Meilisearch", label: "Search" },
-                { value: "Celery + Redis", label: "Async jobs" },
-              ].map((m) => (
-                <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-3 group-hover:border-white/15 transition-colors duration-300">
-                  <p className="text-base font-bold tracking-tight text-white/80 leading-tight">{m.value}</p>
-                  <p className="text-[9px] font-bold tracking-widest uppercase text-white/25 mt-0.5">{m.label}</p>
-                </div>
-              ))}
-            </div>
-
             {/* Tech stack */}
-            <div>
-              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2.5">Tech Stack</p>
+            <div className="pt-2">
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "Next.js", "React", "TypeScript", "Three.js", "R3F",
-                  "Rapier", "Zustand", "TanStack Query", "Tailwind",
-                  "FastAPI", "Celery", "Redis", "Meilisearch",
-                  "Stripe", "PostgreSQL", "Transformers",
+                  "FastAPI", "Celery", "Redis", "Meilisearch", "Stripe",
                 ].map((tech) => (
                   <span key={tech} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30 group-hover:text-white/55 group-hover:border-white/18 transition-all duration-200">
                     {tech}
@@ -829,6 +1012,38 @@ function UniqFloorsShowcase() {
               </div>
             </div>
           </div>
+
+          <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+            {/* Client review quote */}
+            <div className="relative p-6 rounded-xl border border-white/8 bg-white/[0.02] group-hover:border-phi-blue/15 transition-all duration-300">
+              <Quote className="absolute top-4 right-4 w-8 h-8 text-phi-blue/10 pointer-events-none" />
+              <p className="text-sm font-semibold text-white/70 italic leading-relaxed mb-4">
+                "The interactive room planner is a massive differentiator. Customers can visualize flooring combinations instantly, leading to much higher conversion rates."
+              </p>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-[1px] bg-phi-blue/40" />
+                <span className="text-[9px] font-black tracking-widest uppercase text-white/30">Client Feedback</span>
+              </div>
+            </div>
+
+            {/* Metrics */}
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: "SegFormer CV", label: "Auto Segmentation" },
+                { value: "R3F + Rapier", label: "Physics 3D Mock" },
+              ].map((m) => (
+                <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.01] px-4 py-2">
+                  <p className="text-sm font-bold text-white/80 leading-none">{m.value}</p>
+                  <p className="text-[8px] font-bold tracking-widest uppercase text-white/20 mt-1">{m.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Player */}
+        <div className="pt-6 border-t border-white/5">
+          <SitePlayer pages={uniqFloorsPages} domain="uniqfloors.com" />
         </div>
       </div>
     </motion.div>
@@ -1031,42 +1246,42 @@ const cntPages = [
   {
     id: "landing",
     label: "Landing",
-    description: "Platform landing page — ministry branding, mission statement and entry CTA",
+    description: "Platform landing page — ministry branding, mission statement and app store entry CTA",
     video: "/assets/portfolio/cnt/landing.mp4",
     icon: Monitor,
   },
   {
     id: "home",
     label: "Home",
-    description: "Personalised home feed — featured content, live stream banner and quick access",
+    description: "Personalised home feed — featured content, live stream banner, quick-access shortcuts and personalised recommendations",
     video: "/assets/portfolio/cnt/home.mp4",
     icon: Home,
   },
   {
     id: "voice_agent",
     label: "AI Voice",
-    description: "AI voice agent — real-time conversation powered by OpenAI GPT-4o and Deepgram STT/TTS",
+    description: "AI voice agent — real-time conversation powered by OpenAI GPT-4o and Deepgram STT/TTS with live transcript overlay",
     video: "/assets/portfolio/cnt/voice_agent.mp4",
     icon: Mic,
   },
   {
     id: "live_streams",
     label: "Live",
-    description: "Live streaming hub — active streams, viewer count and real-time chat",
+    description: "Live streaming hub — active stream cards with viewer count, real-time chat and broadcast controls",
     video: "/assets/portfolio/cnt/live_streams.mp4",
     icon: Radio,
   },
   {
     id: "movies",
     label: "Movies",
-    description: "On-demand video library — sermon films, documentaries and ministry content",
+    description: "On-demand video library — sermon films, documentaries and animated Bible stories with detail pages",
     video: "/assets/portfolio/cnt/movies.mp4",
     icon: Video,
   },
   {
     id: "bible_reader",
     label: "Bible",
-    description: "Integrated Bible reader — chapter navigation, highlighting and note-taking",
+    description: "Integrated Bible reader — chapter navigation, highlighting, note-taking and daily verse",
     video: "/assets/portfolio/cnt/bible_reader.mp4",
     icon: BookOpen,
   },
@@ -1080,21 +1295,116 @@ const cntPages = [
   {
     id: "events",
     label: "Events",
-    description: "Church events calendar — RSVPs, reminders and event detail pages",
+    description: "Church events calendar — upcoming events, RSVPs, reminders and event detail pages",
     video: "/assets/portfolio/cnt/events.mp4",
     icon: CalendarDays,
   },
   {
     id: "admin_dashboard",
     label: "Admin",
-    description: "Admin dashboard — content management, user analytics and platform settings",
+    description: "Admin dashboard — content management, user analytics, moderation queue and platform settings",
     video: "/assets/portfolio/cnt/admin_dashboard.mp4",
     icon: LayoutDashboard,
   },
 ];
 
+/* ─── CNT Mobile page definitions ───────────────────────────────────────── */
+const cntMobilePages = [
+  {
+    id: "home",
+    label: "Home",
+    description: "Personalised home feed — Tabernacle Voice Assistant card, Audio Podcasts carousel, Bible Reader & Daily Quote shortcuts, Movies, Animated Bible Stories and Recently Played list",
+    video: "/assets/portfolio/cnt-mobile/home.mp4",
+    icon: Home,
+  },
+  {
+    id: "media_player",
+    label: "Player",
+    description: "In-app media player — full-screen video player (Pilgrim's Progress), movie detail page with description, and audio 'Now Playing' screen with seek, shuffle, repeat and download",
+    video: "/assets/portfolio/cnt-mobile/media_player.mp4",
+    icon: Play,
+  },
+  {
+    id: "bible_reader",
+    label: "Bible",
+    description: "Full Bible reader — multi-column scripture text across 409 pages (Matthew, Luke and more), chapter navigation and Daily Bible Verse modal (Romans 8:28, Hebrews 11:1)",
+    video: "/assets/portfolio/cnt-mobile/bible_reader.mp4",
+    icon: BookOpen,
+  },
+  {
+    id: "community",
+    label: "Community",
+    description: "Social community feed — scripture quote posts, image posts, live church service photos from Kofi Webb, with like/comment/share/bookmark interactions",
+    video: "/assets/portfolio/cnt-mobile/community.mp4",
+    icon: Users,
+  },
+  {
+    id: "create_hub",
+    label: "Create",
+    description: "Content creation hub — type picker (Video, Audio, Meeting, Live Stream, Quote, Events, admin-only Bulk Upload & Bible Docs), Create Audio sub-screen and Meeting Options modal",
+    video: "/assets/portfolio/cnt-mobile/create_hub.mp4",
+    icon: FileEdit,
+  },
+];
+
+/* ─── DPS Engineer page definitions ─────────────────────────────────────── */
+const dpsEngineerPages = [
+  {
+    id: "crm",
+    label: "CRM",
+    description: "CRM dashboard — client accounts pipeline, leads, sales quote manager and interactive customer profiles",
+    video: "/assets/portfolio/dps-engineer/crm.mp4",
+    icon: Users,
+  },
+  {
+    id: "field_ops",
+    label: "Field Ops",
+    description: "Field operations dashboard — live resource scheduling, drag-and-drop job planner, maps tracking and task dispatch",
+    video: "/assets/portfolio/dps-engineer/field ops.mp4",
+    icon: MapPin,
+  },
+  {
+    id: "jobs_surveys",
+    label: "Jobs",
+    description: "Jobs & surveys board — active site surveys list, field notes, work order assignment and custom checklists",
+    video: "/assets/portfolio/dps-engineer/job and survey.mp4",
+    icon: Briefcase,
+  },
+  {
+    id: "compliance",
+    label: "Compliance",
+    description: "Compliance & reports command — interactive report generation, certificate verification, audit logs and SLA status",
+    video: "/assets/portfolio/dps-engineer/compliance and reports.mp4",
+    icon: FileCheck,
+  },
+  {
+    id: "contracts",
+    label: "Contracts",
+    description: "Contracts & sites console — client site profile, maintenance schedules, SLA contracts and active site logs",
+    video: "/assets/portfolio/dps-engineer/contract and sites.mp4",
+    icon: ClipboardList,
+  },
+  {
+    id: "rams",
+    label: "RAMS",
+    description: "Risk Assessment & H&S console — compliance logs, risk forms manager, dynamic site check sheets and alert monitors",
+    video: "/assets/portfolio/dps-engineer/RAM and H&S.mp4",
+    icon: ShieldAlert,
+  },
+];
+
+const dpsEngineerMobilePages = [
+  {
+    id: "today",
+    label: "Today",
+    description: "Today's schedule — job assignments list, offline-first sync alerts, and quick actions tab",
+    video: "/assets/portfolio/dps-engineer/engineer app.mp4",
+    icon: Smartphone,
+  },
+];
+
 /* ─── CNT showcase ───────────────────────────────────────────────────────── */
-function CntShowcase() {
+function CntCombinedShowcase() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -1103,73 +1413,35 @@ function CntShowcase() {
       transition={{ duration: 0.6 }}
       className="relative rounded-2xl border border-white/10 overflow-hidden hover:border-phi-blue/25 transition-all duration-500 group"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/6 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_0%_100%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-phi-blue/5 via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,163,255,0.07),transparent_60%)] pointer-events-none" />
 
       <div className="relative z-10 p-5 sm:p-8 md:p-10">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
-          <div className="space-y-3">
+        {/* Header & Client Review Side-by-Side */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
+          <div className="lg:col-span-7 space-y-4">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-[9px] font-black tracking-[0.3em] uppercase px-3 py-1.5 rounded-full border border-white/12 text-white/50 bg-white/[0.03]">
-                Full-Stack Media Platform
+                Full-Stack Media Ecosystem
               </span>
               <span className="text-[9px] font-bold tracking-widest uppercase text-phi-blue/60 border border-phi-blue/20 px-3 py-1.5 rounded-full bg-phi-blue/[0.04]">
-                Religious · Community · Streaming
+                Web Portal &amp; iOS/Android Apps
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-              Christ New Tabernacle
+              Christ New Tabernacle — Community Platform
             </h2>
-            <p className="text-sm text-white/40 font-light max-w-lg leading-relaxed">
-              Full-stack Christian media platform built with Flutter Web and Flutter mobile (iOS/Android).
-              Features live streaming, on-demand video, podcasts, Bible reader, community hub, AI voice agent,
-              events and an admin dashboard. FastAPI backend with PostgreSQL, Redis, LiveKit and AWS S3/CloudFront.
+            <p className="text-sm text-white/40 font-light leading-relaxed max-w-2xl">
+              A comprehensive Christian media ecosystem built with Flutter for both Web and native Mobile (iOS &amp; Android).
+              Integrates live streaming (LiveKit), video on demand, audio podcasts, bible readers, community social feeds,
+              events management, and a custom GPT-4o voice assistant. Powered by a high-throughput FastAPI backend.
             </p>
-          </div>
-          <div className="shrink-0 flex items-center gap-3">
-            <img src="/assets/portfolio/cnt-logo.png" alt="Christ New Tabernacle" className="w-12 h-12 object-contain rounded-xl border border-white/10 bg-white/[0.03] p-1.5" />
-          </div>
-        </div>
-
-        {/* Player + sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
-          <SitePlayer pages={cntPages} domain="christnewtabernacle.com" playbackRate={0.75} />
-
-          <div className="flex flex-col gap-6">
-            {/* Outcome */}
-            <div className="rounded-xl border border-white/8 bg-white/[0.02] p-5 group-hover:border-white/15 transition-colors duration-300">
-              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2">Outcome</p>
-              <p className="text-sm font-semibold text-white/65 leading-snug italic group-hover:text-white/80 transition-colors">
-                "A complete digital ministry platform connecting congregations through live worship, media and AI"
-              </p>
-            </div>
-
-            {/* Metrics */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
-              {[
-                { value: "Flutter", label: "Web & Mobile" },
-                { value: "LiveKit", label: "Live streaming" },
-                { value: "GPT-4o", label: "AI voice" },
-                { value: "AWS S3", label: "Media storage" },
-                { value: "CloudFront", label: "CDN" },
-              ].map((m) => (
-                <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.02] px-3 py-3 group-hover:border-white/15 transition-colors duration-300">
-                  <p className="text-base font-bold tracking-tight text-white/80 leading-tight">{m.value}</p>
-                  <p className="text-[9px] font-bold tracking-widest uppercase text-white/25 mt-0.5">{m.label}</p>
-                </div>
-              ))}
-            </div>
-
             {/* Tech stack */}
-            <div>
-              <p className="text-[9px] font-black tracking-[0.3em] uppercase text-white/25 mb-2.5">Tech Stack</p>
+            <div className="pt-2">
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "Flutter Web", "Flutter Mobile", "FastAPI", "PostgreSQL",
-                  "Redis", "LiveKit", "Socket.IO", "AWS S3",
-                  "CloudFront", "AWS Amplify", "OpenAI", "Deepgram",
-                  "Stripe", "Firebase", "Docker",
+                  "Redis", "LiveKit", "AWS S3", "CloudFront", "OpenAI",
                 ].map((tech) => (
                   <span key={tech} className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 border border-white/8 rounded-full text-white/30 group-hover:text-white/55 group-hover:border-white/18 transition-all duration-200">
                     {tech}
@@ -1178,9 +1450,264 @@ function CntShowcase() {
               </div>
             </div>
           </div>
+
+          <div className="lg:col-span-5 flex flex-col justify-between gap-6">
+            {/* Client review quote */}
+            <div className="relative p-6 rounded-xl border border-white/8 bg-white/[0.02] group-hover:border-phi-blue/15 transition-all duration-300">
+              <Quote className="absolute top-4 right-4 w-8 h-8 text-phi-blue/10 pointer-events-none" />
+              <p className="text-sm font-semibold text-white/70 italic leading-relaxed mb-4">
+                "PHI-Intelligence transformed our congregation's reach. Having a voice-enabled mobile companion and a high-performance web stream keeps our community closer than ever."
+              </p>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-[1px] bg-phi-blue/40" />
+                <span className="text-[9px] font-black tracking-widest uppercase text-white/30">Client Feedback</span>
+              </div>
+            </div>
+
+            {/* Metrics */}
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: "LiveKit Stream", label: "Zero-Latency Video" },
+                { value: "GPT-4o Voice", label: "Interactive Assistant" },
+              ].map((m) => (
+                <div key={m.label} className="rounded-xl border border-white/8 bg-white/[0.01] px-4 py-2">
+                  <p className="text-sm font-bold text-white/80 leading-none">{m.value}</p>
+                  <p className="text-[8px] font-bold tracking-widest uppercase text-white/20 mt-1">{m.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Players side by side on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-6 border-t border-white/5">
+          <div className="lg:col-span-8 space-y-2">
+            <div className="text-[10px] font-black tracking-widest uppercase text-white/25">Web platform</div>
+            <SitePlayer pages={cntPages} domain="christnewtabernacle.com" playbackRate={0.75} />
+          </div>
+          <div className="lg:col-span-4 space-y-2 flex flex-col items-center">
+            <div className="text-[10px] font-black tracking-widest uppercase text-white/25">Mobile App</div>
+            <div className="w-[280px]">
+              <MobilePlayer pages={cntMobilePages} playerId="cnt" playbackRate={0.85} />
+            </div>
+          </div>
         </div>
       </div>
     </motion.div>
+  );
+}
+
+/* ─── Mobile phone player ────────────────────────────────────────────────── */
+interface MobilePage {
+  id: string;
+  label: string;
+  description: string;
+  video: string;
+  icon: React.ComponentType<any>;
+}
+
+function MobilePlayer({
+  pages,
+  playerId,
+  playbackRate = 1,
+}: {
+  pages: MobilePage[];
+  playerId: string;
+  playbackRate?: number;
+}) {
+  const [active, setActive] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inViewRef = useRef(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const page = pages[active];
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    if (observerRef.current) observerRef.current.disconnect();
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inViewRef.current = entry.isIntersecting;
+        const v = videoRef.current;
+        if (!v) return;
+        if (entry.isIntersecting) {
+          v.playbackRate = playbackRate;
+          v.play().catch(() => setPlaying(false));
+          setPlaying(true);
+        } else {
+          v.pause();
+          setPlaying(false);
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observerRef.current = observer;
+    observer.observe(container);
+    return () => {
+      observer.disconnect();
+      observerRef.current = null;
+      const v = videoRef.current;
+      if (v) { v.pause(); v.src = ''; }
+    };
+  }, [pages, playbackRate]);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.load();
+    if (inViewRef.current) {
+      v.playbackRate = playbackRate;
+      v.play().catch(() => setPlaying(false));
+      setPlaying(true);
+    }
+  }, [active, playbackRate]);
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) { v.play(); setPlaying(true); }
+    else { v.pause(); setPlaying(false); }
+  };
+
+  const handleEnded = () => {
+    setPlaying(true);
+    setActive((a) => (a + 1) % pages.length);
+  };
+
+  const prev = useCallback(() => setActive((a) => (a - 1 + pages.length) % pages.length), [pages.length]);
+  const next = useCallback(() => setActive((a) => (a + 1) % pages.length), [pages.length]);
+
+  return (
+    <div ref={containerRef} className="flex flex-col items-center gap-5">
+      {/* Phone mockup container */}
+      <div className="relative group/player" style={{ width: '260px' }}>
+        {/* Left Side Buttons (Volume controls) */}
+        <div className="absolute left-[-5px] top-[96px] w-[5px] h-9 bg-neutral-700 rounded-l-sm z-0" />
+        <div className="absolute left-[-5px] top-[148px] w-[5px] h-8 bg-neutral-700 rounded-l-sm z-0" />
+        <div className="absolute left-[-5px] top-[192px] w-[5px] h-8 bg-neutral-700 rounded-l-sm z-0" />
+        {/* Right Side Button (Power button) */}
+        <div className="absolute right-[-5px] top-[128px] w-[5px] h-14 bg-neutral-700 rounded-r-sm z-0" />
+
+        {/* Outer phone shell */}
+        <div className="relative z-10 rounded-[2.8rem] border-[8px] border-neutral-800 bg-black overflow-hidden shadow-[0_0_50px_rgba(0,163,255,0.10),0_25px_60px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.08)]">
+          {/* Speaker ear piece slot */}
+          <div className="absolute top-1 left-1/2 -translate-x-1/2 w-14 h-1 bg-neutral-950 rounded-full z-30" />
+          
+          {/* Dynamic Island */}
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-[18px] bg-black rounded-full z-30 flex items-center justify-center shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)]">
+            <div className="w-1.5 h-1.5 rounded-full bg-neutral-900 border border-neutral-800/80 mr-2 flex items-center justify-center">
+              <div className="w-0.5 h-0.5 rounded-full bg-blue-500/30" />
+            </div>
+            <div className="w-1 h-1 rounded-full bg-neutral-950" />
+          </div>
+
+          {/* Glass glare effect */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.01] to-white/[0.05] pointer-events-none z-20" />
+
+          {/* Video wrapper */}
+          <div className="relative" style={{ aspectRatio: '9/19.5' }}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="absolute inset-0"
+              >
+                <video
+                  ref={videoRef}
+                  className="w-full h-full object-cover"
+                  playsInline
+                  muted
+                  autoPlay
+                  onEnded={handleEnded}
+                  onPlay={() => setPlaying(true)}
+                  onPause={() => setPlaying(false)}
+                >
+                  <source src={page.video} type="video/mp4" />
+                </video>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Play/pause overlay */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/player:opacity-100 transition-opacity duration-200 z-10">
+              <div className="absolute inset-0 bg-black/20" />
+              <button
+                onClick={togglePlay}
+                className="relative z-10 w-12 h-12 rounded-full bg-black/70 border border-white/20 flex items-center justify-center hover:bg-phi-blue/80 hover:border-phi-blue transition-all duration-200"
+              >
+                {playing ? <Pause className="w-4 h-4 text-white" /> : <Play className="w-4 h-4 text-white ml-0.5" />}
+              </button>
+            </div>
+
+            {/* Arrows */}
+            <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-black/60 border border-white/10 flex items-center justify-center opacity-0 group-hover/player:opacity-100 hover:bg-phi-blue/70 transition-all">
+              <ChevronLeft className="w-3.5 h-3.5 text-white" />
+            </button>
+            <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-black/60 border border-white/10 flex items-center justify-center opacity-0 group-hover/player:opacity-100 hover:bg-phi-blue/70 transition-all">
+              <ChevronRight className="w-3.5 h-3.5 text-white" />
+            </button>
+
+            {/* Progress dots */}
+            <div className="absolute bottom-8 left-0 right-0 z-20 flex gap-1.5 justify-center">
+              {pages.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActive(i)}
+                  className={`rounded-full transition-all duration-300 ${i === active ? 'w-4 h-1.5 bg-phi-blue' : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/60'}`}
+                />
+              ))}
+            </div>
+
+            {/* Home gesture bar — inside the phone screen at the very bottom */}
+            <div className="absolute bottom-2 left-0 right-0 z-20 flex justify-center">
+              <div className="w-24 h-[5px] rounded-full bg-white/40" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Tab strip */}
+      <div className="flex gap-1 bg-white/[0.03] rounded-xl border border-white/8 p-1">
+        {pages.map((p, i) => {
+          const Icon = p.icon;
+          return (
+            <button
+              key={p.id}
+              onClick={() => setActive(i)}
+              className={`relative flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all duration-200 ${
+                i === active ? 'bg-phi-blue/15 text-phi-blue' : 'text-white/30 hover:text-white/60 hover:bg-white/[0.04]'
+              }`}
+            >
+              {i === active && (
+                <motion.div layoutId={`mobile-tab-${playerId}`} className="absolute inset-0 rounded-lg bg-phi-blue/10 border border-phi-blue/20" />
+              )}
+              <Icon className="relative z-10 w-3.5 h-3.5 shrink-0" />
+              <span className="relative z-10 text-[8px] font-bold tracking-widest uppercase leading-none">{p.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Description */}
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={active}
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -4 }}
+          transition={{ duration: 0.2 }}
+          className="text-xs text-white/35 font-light leading-relaxed text-center max-w-[280px]"
+        >
+          <span className="text-white/60 font-semibold">{page.label}: </span>
+          {page.description}
+        </motion.p>
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -1226,12 +1753,56 @@ export default function PortfolioPage() {
         </div>
       </section>
 
+      {/* Showcases */}
+      <section className="border-t border-white/5 section-padding">
+        <div className="container mx-auto px-6">
+          <div className="space-y-24">
+            <CntCombinedShowcase />
+            <DpsCombinedShowcase />
+            <FourOrShowcase />
+            <AgilentShowcase />
+            <SmideesShowcase />
+            <DpsShowcase />
+            <UniqFloorsShowcase />
+          </div>
+        </div>
+      </section>
+
+
+      {/* More Projects */}
+      <section className="border-t border-white/5 section-padding">
+        <div className="container mx-auto px-6">
+          {/* Section label */}
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3 mb-8"
+          >
+            <div className="w-6 h-[2px] bg-white/20" />
+            <span className="text-[10px] font-black tracking-[0.35em] uppercase text-white/30">
+              More Projects
+            </span>
+          </motion.div>
+
+          {otherProjects.length > 0 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {otherProjects.map((project, i) => (
+                <ProjectCard key={project.title} project={project} index={i} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-white/20 italic">More case studies coming soon.</p>
+          )}
+        </div>
+      </section>
+
       {/* Our Products */}
       <section className="section-padding border-t border-white/5">
         <div className="container mx-auto px-6">
           <div className="mb-12">
             <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-phi-blue/60 mb-3">Internal Platforms</p>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase">Our Products</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter uppercase font-display">Our Products</h2>
           </div>
           <div className="space-y-6">
             {/* Phi Voice Suite — full-width with video demos */}
@@ -1255,123 +1826,6 @@ export default function PortfolioPage() {
                 ))}
               </div>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured: Agilent Maritime */}
-      <section className="border-t border-white/5 section-padding">
-        <div className="container mx-auto px-6">
-          {/* Section label */}
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="w-6 h-[2px] bg-phi-blue" />
-            <span className="text-[10px] font-black tracking-[0.35em] uppercase text-phi-blue/70">
-              Featured Project
-            </span>
-          </motion.div>
-
-          <AgilentShowcase />
-        </div>
-      </section>
-
-      {/* CNT */}
-      <section className="border-t border-white/5 section-padding">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="w-6 h-[2px] bg-phi-blue" />
-            <span className="text-[10px] font-black tracking-[0.35em] uppercase text-phi-blue/70">
-              Featured Project
-            </span>
-          </motion.div>
-          <CntShowcase />
-        </div>
-      </section>
-
-      {/* Smidees Maritime */}
-      <section className="border-t border-white/5 section-padding">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="w-6 h-[2px] bg-phi-blue" />
-            <span className="text-[10px] font-black tracking-[0.35em] uppercase text-phi-blue/70">
-              Featured Project
-            </span>
-          </motion.div>
-
-          <SmideesShowcase />
-        </div>
-      </section>
-
-      {/* DPS Heating */}
-      <section className="border-t border-white/5 section-padding">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="w-6 h-[2px] bg-phi-blue" />
-            <span className="text-[10px] font-black tracking-[0.35em] uppercase text-phi-blue/70">
-              Featured Project
-            </span>
-          </motion.div>
-          <DpsShowcase />
-        </div>
-      </section>
-
-      {/* UniqFloors */}
-      <section className="border-t border-white/5 section-padding">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="w-6 h-[2px] bg-phi-blue" />
-            <span className="text-[10px] font-black tracking-[0.35em] uppercase text-phi-blue/70">
-              Featured Project
-            </span>
-          </motion.div>
-          <UniqFloorsShowcase />
-        </div>
-      </section>
-
-      {/* More Projects */}
-      <section className="border-t border-white/5 section-padding">
-        <div className="container mx-auto px-6">
-          {/* Section label */}
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="w-6 h-[2px] bg-white/20" />
-            <span className="text-[10px] font-black tracking-[0.35em] uppercase text-white/30">
-              More Projects
-            </span>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {otherProjects.map((project, i) => (
-              <ProjectCard key={project.title} project={project} index={i} />
-            ))}
           </div>
         </div>
       </section>

@@ -18,9 +18,7 @@ const services = [
 const flatLinks = [
   { href: "/products",    label: "Products"    },
   { href: "/portfolio",   label: "Portfolio"   },
-  { href: "/about",       label: "About"       },
   { href: "/careers",     label: "Careers"     },
-  { href: "/technology",  label: "Technology"  },
   { href: "/insights",    label: "Insights"    },
 ];
 

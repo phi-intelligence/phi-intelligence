@@ -63,11 +63,9 @@ import ProcessAutomationPage from "@/pages/services/ProcessAutomationPage";
 import ComputerVisionPage from "@/pages/services/ComputerVisionPage";
 
 // Other Pages
-import TechnologyPage from "@/pages/technology";
 import IndustriesPage from "@/pages/industries";
 import PortfolioPage from "@/pages/portfolio";
 import ProductsPage from "@/pages/products";
-import AboutPage from "@/pages/about";
 import ContactPage from "@/pages/company/ContactPage";
 
 // Careers Pages
@@ -131,8 +129,6 @@ function Router() {
         <Route path="/services/computer-vision" component={ComputerVisionPage} />
 
         {/* Company Routes */}
-        <Route path="/about" component={AboutPage} />
-        <Route path="/technology" component={TechnologyPage} />
         <Route path="/industries" component={IndustriesPage} />
         <Route path="/portfolio" component={PortfolioPage} />
         <Route path="/products" component={ProductsPage} />
@@ -185,13 +181,13 @@ function Router() {
                 <Route path="/employee/projects/new">
                   <AdminOnly><ProjectFormPage /></AdminOnly>
                 </Route>
-                <Route path="/employee/projects/:id/edit" component={ProjectFormPage} />
+                <Route path="/employee/projects/:id/edit">
+                  <AdminOnly><ProjectFormPage /></AdminOnly>
+                </Route>
                 <Route path="/employee/projects/:id/tasks" component={TaskBoard} />
                 <Route path="/employee/projects/:id" component={ProjectDetail} />
                 <Route path="/employee/projects" component={ProjectList} />
-                <Route path="/employee/timesheet">
-                  <EmployeeOnly><Timesheet /></EmployeeOnly>
-                </Route>
+                <Route path="/employee/timesheet" component={Timesheet} />
                 <Route path="/employee/time/approvals" component={ApprovalsDefaultRoute} />
                 <Route path="/employee/leave/admin" component={ApprovalsLeaveRoute} />
                 <Route path="/employee/approvals" component={ApprovalsDefaultRoute} />
